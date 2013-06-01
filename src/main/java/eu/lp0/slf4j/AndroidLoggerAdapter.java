@@ -29,17 +29,17 @@ import org.slf4j.helpers.MessageFormatter;
 
 import android.util.Log;
 
-class AndroidLoggerAdapter implements Logger {
+final class AndroidLoggerAdapter implements Logger {
 	private final String tag;
 	
-	AndroidLoggerAdapter(String name) {
+	AndroidLoggerAdapter(final String name) {
 		tag = createTag(name);
 	}
 	
 	private static final int MAX_TAG_LEN = 23;
-	static String createTag(String name) {
-		char[] tag = name.toCharArray();
-		int arrayLen = tag.length;
+	static final String createTag(final String name) {
+		final char[] tag = name.toCharArray();
+		final int arrayLen = tag.length;
 		int len = 0;
 		int mark = 0;
 		
@@ -87,352 +87,372 @@ class AndroidLoggerAdapter implements Logger {
 	}
 
 	@Override
-	public String getName() {
+	public final String getName() {
 		return tag;
 	}
-
+	
 	@Override
-	public boolean isTraceEnabled() {
+	public final boolean isTraceEnabled() {
 		return Log.isLoggable(tag, Log.VERBOSE);
 	}
 
 	@Override
-	public void trace(String msg) {
+	public final void trace(final String msg) {
 		Log.v(tag, msg);
 	}
 
 	@Override
-	public void trace(String format, Object arg) {
+	public final void trace(final String format, final Object arg) {
 		if (isTraceEnabled()) {
-			FormattingTuple ft = MessageFormatter.format(format, arg);
+			final FormattingTuple ft = MessageFormatter.format(format, arg);
 			trace(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
-	public void trace(String format, Object arg1, Object arg2) {
+	public final void trace(final String format, final Object arg1, final Object arg2) {
 		if (isTraceEnabled()) {
-			FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
+			final FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
 			trace(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
-	public void trace(String format, Object... arguments) {
+	public final void trace(final String format, final Object... arguments) {
 		if (isTraceEnabled()) {
-			FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
+			final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
 			trace(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
-	public void trace(String msg, Throwable t) {
-		Log.v(tag, msg, t);
+	public final void trace(final String msg, final Throwable t) {
+		if (t == null) {
+			Log.v(tag, msg);
+		} else {
+			Log.v(tag, msg, t);
+		}
 	}
 
 	@Override
-	public boolean isTraceEnabled(Marker marker) {
+	public final boolean isTraceEnabled(final Marker marker) {
 		return isTraceEnabled();
 	}
 
 	@Override
-	public void trace(Marker marker, String msg) {
+	public final void trace(final Marker marker, final String msg) {
 		trace(msg);
 	}
 
 	@Override
-	public void trace(Marker marker, String format, Object arg) {
+	public final void trace(final Marker marker, final String format, final Object arg) {
 		trace(format, arg);
 	}
 
 	@Override
-	public void trace(Marker marker, String format, Object arg1, Object arg2) {
+	public final void trace(final Marker marker, final String format, final Object arg1, final Object arg2) {
 		trace(format, arg1, arg2);
 	}
 
 	@Override
-	public void trace(Marker marker, String format, Object... argArray) {
+	public final void trace(final Marker marker, final String format, final Object... argArray) {
 		trace(format, argArray);
 	}
 
 	@Override
-	public void trace(Marker marker, String msg, Throwable t) {
+	public final void trace(final Marker marker, final String msg, final Throwable t) {
 		trace(msg, t);
 	}
 
 	@Override
-	public boolean isDebugEnabled() {
+	public final boolean isDebugEnabled() {
 		return Log.isLoggable(tag, Log.DEBUG);
 	}
 
 	@Override
-	public void debug(String msg) {
+	public final void debug(final String msg) {
 		Log.d(tag, msg);
 	}
 
 	@Override
-	public void debug(String format, Object arg) {
+	public final void debug(final String format, final Object arg) {
 		if (isDebugEnabled()) {
-			FormattingTuple ft = MessageFormatter.format(format, arg);
+			final FormattingTuple ft = MessageFormatter.format(format, arg);
 			debug(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
-	public void debug(String format, Object arg1, Object arg2) {
+	public final void debug(final String format, final Object arg1, final Object arg2) {
 		if (isDebugEnabled()) {
-			FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
+			final FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
 			debug(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
-	public void debug(String format, Object... arguments) {
+	public final void debug(final String format, final Object... arguments) {
 		if (isDebugEnabled()) {
-			FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
+			final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
 			debug(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
-	public void debug(String msg, Throwable t) {
-		Log.d(tag, msg, t);
+	public final void debug(final String msg, final Throwable t) {
+		if (t == null) {
+			Log.d(tag, msg);
+		} else {
+			Log.d(tag, msg, t);
+		}
 	}
 
 	@Override
-	public boolean isDebugEnabled(Marker marker) {
+	public final boolean isDebugEnabled(final Marker marker) {
 		return isDebugEnabled();
 	}
 
 	@Override
-	public void debug(Marker marker, String msg) {
+	public final void debug(final Marker marker, final String msg) {
 		debug(msg);
 	}
 
 	@Override
-	public void debug(Marker marker, String format, Object arg) {
+	public final void debug(final Marker marker, final String format, final Object arg) {
 		debug(format, arg);
 	}
 
 	@Override
-	public void debug(Marker marker, String format, Object arg1, Object arg2) {
+	public final void debug(final Marker marker, final String format, final Object arg1, final Object arg2) {
 		debug(format, arg1, arg2);
 	}
 
 	@Override
-	public void debug(Marker marker, String format, Object... arguments) {
+	public final void debug(final Marker marker, final String format, final Object... arguments) {
 		debug(format, arguments);
 	}
 
 	@Override
-	public void debug(Marker marker, String msg, Throwable t) {
+	public final void debug(final Marker marker, final String msg, final Throwable t) {
 		debug(msg, t);
 	}
 
 	@Override
-	public boolean isInfoEnabled() {
+	public final boolean isInfoEnabled() {
 		return Log.isLoggable(tag, Log.INFO);
 	}
 
 	@Override
-	public void info(String msg) {
+	public final void info(final String msg) {
 		Log.i(tag, msg);
 	}
 
 	@Override
-	public void info(String format, Object arg) {
+	public final void info(final String format, final Object arg) {
 		if (isInfoEnabled()) {
-			FormattingTuple ft = MessageFormatter.format(format, arg);
+			final FormattingTuple ft = MessageFormatter.format(format, arg);
 			info(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
-	public void info(String format, Object arg1, Object arg2) {
+	public final void info(final String format, final Object arg1, final Object arg2) {
 		if (isInfoEnabled()) {
-			FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
+			final FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
 			info(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
-	public void info(String format, Object... arguments) {
+	public final void info(final String format, final Object... arguments) {
 		if (isInfoEnabled()) {
-			FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
+			final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
 			info(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
-	public void info(String msg, Throwable t) {
-		Log.i(tag, msg, t);
+	public final void info(final String msg, final Throwable t) {
+		if (t == null) {
+			Log.i(tag, msg);
+		} else {
+			Log.i(tag, msg, t);
+		}
 	}
 
 	@Override
-	public boolean isInfoEnabled(Marker marker) {
+	public final boolean isInfoEnabled(final Marker marker) {
 		return isInfoEnabled();
 	}
 
 	@Override
-	public void info(Marker marker, String msg) {
+	public final void info(final Marker marker, final String msg) {
 		info(msg);
 	}
 
 	@Override
-	public void info(Marker marker, String format, Object arg) {
+	public final void info(final Marker marker, final String format, final Object arg) {
 		info(format, arg);
 	}
 
 	@Override
-	public void info(Marker marker, String format, Object arg1, Object arg2) {
+	public final void info(final Marker marker, final String format, final Object arg1, final Object arg2) {
 		info(format, arg1, arg2);
 	}
 
 	@Override
-	public void info(Marker marker, String format, Object... arguments) {
+	public final void info(final Marker marker, final String format, final Object... arguments) {
 		info(format, arguments);
 	}
 
 	@Override
-	public void info(Marker marker, String msg, Throwable t) {
+	public final void info(final Marker marker, final String msg, final Throwable t) {
 		info(msg, t);
 	}
 	
 	@Override
-	public boolean isWarnEnabled() {
+	public final boolean isWarnEnabled() {
 		return Log.isLoggable(tag, Log.WARN);
 	}
 
 	@Override
-	public void warn(String msg) {
+	public final void warn(final String msg) {
 		Log.w(tag, msg);
 	}
 
 	@Override
-	public void warn(String format, Object arg) {
+	public final void warn(final String format, final Object arg) {
 		if (isWarnEnabled()) {
-			FormattingTuple ft = MessageFormatter.format(format, arg);
+			final FormattingTuple ft = MessageFormatter.format(format, arg);
 			warn(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
-	public void warn(String format, Object arg1, Object arg2) {
+	public final void warn(final String format, final Object arg1, final Object arg2) {
 		if (isWarnEnabled()) {
-			FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
+			final FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
 			warn(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
-	public void warn(String format, Object... arguments) {
+	public final void warn(final String format, final Object... arguments) {
 		if (isWarnEnabled()) {
-			FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
+			final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
 			warn(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
-	public void warn(String msg, Throwable t) {
-		Log.w(tag, msg, t);
+	public final void warn(final String msg, final Throwable t) {
+		if (t == null) {
+			Log.w(tag, msg);
+		} else {
+			Log.w(tag, msg, t);
+		}
 	}
 
 	@Override
-	public boolean isWarnEnabled(Marker marker) {
+	public final boolean isWarnEnabled(final Marker marker) {
 		return isWarnEnabled();
 	}
 
 	@Override
-	public void warn(Marker marker, String msg) {
+	public final void warn(final Marker marker, final String msg) {
 		warn(msg);
 	}
 
 	@Override
-	public void warn(Marker marker, String format, Object arg) {
+	public final void warn(final Marker marker, final String format, final Object arg) {
 		warn(format, arg);
 	}
 
 	@Override
-	public void warn(Marker marker, String format, Object arg1, Object arg2) {
+	public final void warn(final Marker marker, final String format, final Object arg1, final Object arg2) {
 		warn(format, arg1, arg2);
 	}
 
 	@Override
-	public void warn(Marker marker, String format, Object... arguments) {
+	public final void warn(final Marker marker, final String format, final Object... arguments) {
 		warn(format, arguments);
 	}
 
 	@Override
-	public void warn(Marker marker, String msg, Throwable t) {
+	public final void warn(final Marker marker, final String msg, final Throwable t) {
 		warn(msg, t);
 	}
 	
 	@Override
-	public boolean isErrorEnabled() {
+	public final boolean isErrorEnabled() {
 		return Log.isLoggable(tag, Log.ERROR);
 	}
 
 	@Override
-	public void error(String msg) {
+	public final void error(final String msg) {
 		Log.e(tag, msg);
 	}
 
 	@Override
-	public void error(String format, Object arg) {
+	public final void error(final String format, final Object arg) {
 		if (isErrorEnabled()) {
-			FormattingTuple ft = MessageFormatter.format(format, arg);
+			final FormattingTuple ft = MessageFormatter.format(format, arg);
 			error(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
-	public void error(String format, Object arg1, Object arg2) {
+	public final void error(final String format, final Object arg1, final Object arg2) {
 		if (isErrorEnabled()) {
-			FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
+			final FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
 			error(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
-	public void error(String format, Object... arguments) {
+	public final void error(final String format, final Object... arguments) {
 		if (isErrorEnabled()) {
-			FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
+			final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
 			error(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
-	public void error(String msg, Throwable t) {
-		Log.e(tag, msg, t);
+	public final void error(final String msg, final Throwable t) {
+		if (t == null) {
+			Log.e(tag, msg);
+		} else {
+			Log.e(tag, msg, t);
+		}
 	}
 
 	@Override
-	public boolean isErrorEnabled(Marker marker) {
+	public final boolean isErrorEnabled(final Marker marker) {
 		return isErrorEnabled();
 	}
 
 	@Override
-	public void error(Marker marker, String msg) {
+	public final void error(final Marker marker, final String msg) {
 		error(msg);
 	}
 
 	@Override
-	public void error(Marker marker, String format, Object arg) {
+	public final void error(final Marker marker, final String format, final Object arg) {
 		error(format, arg);
 	}
 
 	@Override
-	public void error(Marker marker, String format, Object arg1, Object arg2) {
+	public final void error(final Marker marker, final String format, final Object arg1, final Object arg2) {
 		error(format, arg1, arg2);
 	}
 
 	@Override
-	public void error(Marker marker, String format, Object... arguments) {
+	public final void error(final Marker marker, final String format, final Object... arguments) {
 		error(format, arguments);
 	}
 
 	@Override
-	public void error(Marker marker, String msg, Throwable t) {
+	public final void error(final Marker marker, final String msg, final Throwable t) {
 		error(msg, t);
 	}
 }

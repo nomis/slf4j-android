@@ -34,17 +34,17 @@ import org.slf4j.Logger;
  * 
  * @author Simon Arlott
  */
-public class AndroidLoggerFactory implements ILoggerFactory {
-	private ConcurrentHashMap<String, Logger> loggerMap = new ConcurrentHashMap<String, Logger>();
+public final class AndroidLoggerFactory implements ILoggerFactory {
+	private final ConcurrentHashMap<String, Logger> loggerMap = new ConcurrentHashMap<String, Logger>();
 
 	@Override
-	public Logger getLogger(String name) {
-		Logger logger = loggerMap.get(name);
+	public final Logger getLogger(final String name) {
+		final Logger logger = loggerMap.get(name);
 		if (logger != null) {
 			return logger;
 		} else {
-			Logger newInstance = new AndroidLoggerAdapter(name);
-			Logger oldInstance = loggerMap.putIfAbsent(name, newInstance);
+			final Logger newInstance = new AndroidLoggerAdapter(name);
+			final Logger oldInstance = loggerMap.putIfAbsent(name, newInstance);
 			return oldInstance == null ? newInstance : oldInstance;
 		}
 	}
