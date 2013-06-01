@@ -1,0 +1,5 @@
+SLF4J binding for Android logger
+
+Automatically compacts logger names to fit the Android 23 character tag limit.
+
+Does not support SLF4J markers, these will be ignored.
