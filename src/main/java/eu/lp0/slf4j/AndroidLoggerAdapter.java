@@ -29,6 +29,15 @@ import org.slf4j.helpers.MessageFormatter;
 
 import android.util.Log;
 
+/**
+ * A wrapper for {@link android.util.Log android.util.Log} conforming to the {@link Logger} interface.
+ * 
+ * <p>
+ * Note that the logging levels mentioned in this class refer to those defined in the <a href="http://developer.android.com/reference/android/util/Log.html">
+ * <code>android.util.Log</code></a> class.
+ * 
+ * @author Simon Arlott
+ */
 final class AndroidLoggerAdapter implements Logger {
 	private final String tag;
 	private final boolean ERROR;
@@ -46,8 +55,16 @@ final class AndroidLoggerAdapter implements Logger {
 		TRACE = DEBUG && Log.isLoggable(tag, Log.VERBOSE);
 	}
 
+	/**
+	 * Maximum length of a tag in the Android logging system.
+	 * 
+	 * This constant is not defined in the API but longer tags will cause exceptions in native code.
+	 */
 	private static final int MAX_TAG_LEN = 23;
 
+	/**
+	 * Create a compatible logging tag for Android based on the logger name.
+	 */
 	static final String createTag(final String name) {
 		final char[] tag = name.toCharArray();
 		final int arrayLen = tag.length;
@@ -115,7 +132,7 @@ final class AndroidLoggerAdapter implements Logger {
 			Log.v(tag, msg);
 		}
 	}
-	
+
 	private final void __trace(final String msg, final Throwable t) {
 		if (t == null) {
 			Log.v(tag, msg);
@@ -198,7 +215,7 @@ final class AndroidLoggerAdapter implements Logger {
 			Log.d(tag, msg);
 		}
 	}
-	
+
 	private final void __debug(final String msg, final Throwable t) {
 		if (t == null) {
 			Log.d(tag, msg);
@@ -281,7 +298,7 @@ final class AndroidLoggerAdapter implements Logger {
 			Log.i(tag, msg);
 		}
 	}
-	
+
 	private final void __info(final String msg, final Throwable t) {
 		if (t == null) {
 			Log.i(tag, msg);
@@ -364,7 +381,7 @@ final class AndroidLoggerAdapter implements Logger {
 			Log.w(tag, msg);
 		}
 	}
-	
+
 	private final void __warn(final String msg, final Throwable t) {
 		if (t == null) {
 			Log.w(tag, msg);
@@ -436,7 +453,6 @@ final class AndroidLoggerAdapter implements Logger {
 
 	/* Error */
 
-
 	@Override
 	public final boolean isErrorEnabled() {
 		return ERROR;
@@ -448,7 +464,7 @@ final class AndroidLoggerAdapter implements Logger {
 			Log.e(tag, msg);
 		}
 	}
-	
+
 	private final void __error(final String msg, final Throwable t) {
 		if (t == null) {
 			Log.e(tag, msg);
