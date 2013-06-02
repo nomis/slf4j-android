@@ -31,58 +31,69 @@ import android.util.Log;
 
 final class AndroidLoggerAdapter implements Logger {
 	private final String tag;
-	
+	private final boolean ERROR;
+	private final boolean WARN;
+	private final boolean INFO;
+	private final boolean DEBUG;
+	private final boolean TRACE;
+
 	AndroidLoggerAdapter(final String name) {
 		tag = createTag(name);
+		ERROR = Log.isLoggable(tag, Log.ERROR);
+		WARN = ERROR && Log.isLoggable(tag, Log.WARN);
+		INFO = WARN && Log.isLoggable(tag, Log.INFO);
+		DEBUG = INFO && Log.isLoggable(tag, Log.DEBUG);
+		TRACE = DEBUG && Log.isLoggable(tag, Log.VERBOSE);
 	}
-	
+
 	private static final int MAX_TAG_LEN = 23;
+
 	static final String createTag(final String name) {
 		final char[] tag = name.toCharArray();
 		final int arrayLen = tag.length;
 		int len = 0;
 		int mark = 0;
-		
+
 		if (arrayLen <= MAX_TAG_LEN)
 			return name;
-		
+
 		for (int i = 0; i < arrayLen; i++, len++) {
 			if (tag[i] == '.') {
 				len = mark;
-				
+
 				if (tag[len] != '.') {
 					len++;
 				}
-				
+
 				mark = len;
-				
-				if (i + 1 < arrayLen && tag[i+1] != '.') {
+
+				if (i + 1 < arrayLen && tag[i + 1] != '.') {
 					mark++;
 				}
 			}
-			
+
 			tag[len] = tag[i];
 		}
-		
+
 		if (len > MAX_TAG_LEN) {
 			int i = 0;
-			
+
 			mark--;
-			
+
 			for (int j = 0; j < len; j++) {
 				if (tag[j] == '.' && (((j & 1) == 1 && j != mark) || (i >= MAX_TAG_LEN - 1)))
 					continue;
-				
+
 				tag[i++] = tag[j];
 			}
-			
+
 			len = i;
-			
+
 			if (len > MAX_TAG_LEN) {
 				len = MAX_TAG_LEN;
 			}
 		}
-		
+
 		return new String(tag, 0, len);
 	}
 
@@ -93,10 +104,18 @@ final class AndroidLoggerAdapter implements Logger {
 
 	/* Trace */
 
-	private final void __trace(final String msg) {
-		Log.v(tag, msg);
+	@Override
+	public final boolean isTraceEnabled() {
+		return TRACE;
 	}
 
+	@Override
+	public final void trace(final String msg) {
+		if (TRACE) {
+			Log.v(tag, msg);
+		}
+	}
+	
 	private final void __trace(final String msg, final Throwable t) {
 		if (t == null) {
 			Log.v(tag, msg);
@@ -106,20 +125,8 @@ final class AndroidLoggerAdapter implements Logger {
 	}
 
 	@Override
-	public final boolean isTraceEnabled() {
-		return Log.isLoggable(tag, Log.VERBOSE);
-	}
-
-	@Override
-	public final void trace(final String msg) {
-		if (isTraceEnabled()) {
-			__trace(msg);
-		}
-	}
-
-	@Override
 	public final void trace(final String format, final Object arg) {
-		if (isTraceEnabled()) {
+		if (TRACE) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg);
 			__trace(ft.getMessage(), ft.getThrowable());
 		}
@@ -127,7 +134,7 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void trace(final String format, final Object arg1, final Object arg2) {
-		if (isTraceEnabled()) {
+		if (TRACE) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
 			__trace(ft.getMessage(), ft.getThrowable());
 		}
@@ -135,7 +142,7 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void trace(final String format, final Object... arguments) {
-		if (isTraceEnabled()) {
+		if (TRACE) {
 			final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
 			__trace(ft.getMessage(), ft.getThrowable());
 		}
@@ -143,14 +150,14 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void trace(final String msg, final Throwable t) {
-		if (isTraceEnabled()) {
+		if (TRACE) {
 			__trace(msg, t);
 		}
 	}
 
 	@Override
 	public final boolean isTraceEnabled(final Marker marker) {
-		return isTraceEnabled();
+		return TRACE;
 	}
 
 	@Override
@@ -180,10 +187,18 @@ final class AndroidLoggerAdapter implements Logger {
 
 	/* Debug */
 
-	private final void __debug(final String msg) {
-		Log.d(tag, msg);
+	@Override
+	public final boolean isDebugEnabled() {
+		return DEBUG;
 	}
 
+	@Override
+	public final void debug(final String msg) {
+		if (DEBUG) {
+			Log.d(tag, msg);
+		}
+	}
+	
 	private final void __debug(final String msg, final Throwable t) {
 		if (t == null) {
 			Log.d(tag, msg);
@@ -193,20 +208,8 @@ final class AndroidLoggerAdapter implements Logger {
 	}
 
 	@Override
-	public final boolean isDebugEnabled() {
-		return Log.isLoggable(tag, Log.DEBUG);
-	}
-
-	@Override
-	public final void debug(final String msg) {
-		if (isDebugEnabled()) {
-			__debug(msg);
-		}
-	}
-
-	@Override
 	public final void debug(final String format, final Object arg) {
-		if (isDebugEnabled()) {
+		if (DEBUG) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg);
 			__debug(ft.getMessage(), ft.getThrowable());
 		}
@@ -214,7 +217,7 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void debug(final String format, final Object arg1, final Object arg2) {
-		if (isDebugEnabled()) {
+		if (DEBUG) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
 			debug(ft.getMessage(), ft.getThrowable());
 		}
@@ -222,7 +225,7 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void debug(final String format, final Object... arguments) {
-		if (isDebugEnabled()) {
+		if (DEBUG) {
 			final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
 			__debug(ft.getMessage(), ft.getThrowable());
 		}
@@ -230,14 +233,14 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void debug(final String msg, final Throwable t) {
-		if (isDebugEnabled()) {
+		if (DEBUG) {
 			__debug(msg, t);
 		}
 	}
 
 	@Override
 	public final boolean isDebugEnabled(final Marker marker) {
-		return isDebugEnabled();
+		return DEBUG;
 	}
 
 	@Override
@@ -267,10 +270,18 @@ final class AndroidLoggerAdapter implements Logger {
 
 	/* Info */
 
-	private final void __info(final String msg) {
-		Log.i(tag, msg);
+	@Override
+	public final boolean isInfoEnabled() {
+		return INFO;
 	}
 
+	@Override
+	public final void info(final String msg) {
+		if (INFO) {
+			Log.i(tag, msg);
+		}
+	}
+	
 	private final void __info(final String msg, final Throwable t) {
 		if (t == null) {
 			Log.i(tag, msg);
@@ -280,20 +291,8 @@ final class AndroidLoggerAdapter implements Logger {
 	}
 
 	@Override
-	public final boolean isInfoEnabled() {
-		return Log.isLoggable(tag, Log.INFO);
-	}
-
-	@Override
-	public final void info(final String msg) {
-		if (isInfoEnabled()) {
-			__info(msg);
-		}
-	}
-
-	@Override
 	public final void info(final String format, final Object arg) {
-		if (isInfoEnabled()) {
+		if (INFO) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg);
 			__info(ft.getMessage(), ft.getThrowable());
 		}
@@ -301,7 +300,7 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void info(final String format, final Object arg1, final Object arg2) {
-		if (isInfoEnabled()) {
+		if (INFO) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
 			__info(ft.getMessage(), ft.getThrowable());
 		}
@@ -309,7 +308,7 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void info(final String format, final Object... arguments) {
-		if (isInfoEnabled()) {
+		if (INFO) {
 			final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
 			__info(ft.getMessage(), ft.getThrowable());
 		}
@@ -317,14 +316,14 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void info(final String msg, final Throwable t) {
-		if (isInfoEnabled()) {
+		if (INFO) {
 			__info(msg, t);
 		}
 	}
 
 	@Override
 	public final boolean isInfoEnabled(final Marker marker) {
-		return isInfoEnabled();
+		return INFO;
 	}
 
 	@Override
@@ -354,10 +353,18 @@ final class AndroidLoggerAdapter implements Logger {
 
 	/* Warn */
 
-	private final void __warn(final String msg) {
-		Log.w(tag, msg);
+	@Override
+	public final boolean isWarnEnabled() {
+		return WARN;
 	}
 
+	@Override
+	public final void warn(final String msg) {
+		if (WARN) {
+			Log.w(tag, msg);
+		}
+	}
+	
 	private final void __warn(final String msg, final Throwable t) {
 		if (t == null) {
 			Log.w(tag, msg);
@@ -367,20 +374,8 @@ final class AndroidLoggerAdapter implements Logger {
 	}
 
 	@Override
-	public final boolean isWarnEnabled() {
-		return Log.isLoggable(tag, Log.WARN);
-	}
-
-	@Override
-	public final void warn(final String msg) {
-		if (isWarnEnabled()) {
-			__warn(msg);
-		}
-	}
-
-	@Override
 	public final void warn(final String format, final Object arg) {
-		if (isWarnEnabled()) {
+		if (WARN) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg);
 			__warn(ft.getMessage(), ft.getThrowable());
 		}
@@ -388,7 +383,7 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void warn(final String format, final Object arg1, final Object arg2) {
-		if (isWarnEnabled()) {
+		if (WARN) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
 			__warn(ft.getMessage(), ft.getThrowable());
 		}
@@ -396,7 +391,7 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void warn(final String format, final Object... arguments) {
-		if (isWarnEnabled()) {
+		if (WARN) {
 			final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
 			__warn(ft.getMessage(), ft.getThrowable());
 		}
@@ -404,14 +399,14 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void warn(final String msg, final Throwable t) {
-		if (isWarnEnabled()) {
+		if (WARN) {
 			__warn(msg, t);
 		}
 	}
 
 	@Override
 	public final boolean isWarnEnabled(final Marker marker) {
-		return isWarnEnabled();
+		return WARN;
 	}
 
 	@Override
@@ -441,10 +436,19 @@ final class AndroidLoggerAdapter implements Logger {
 
 	/* Error */
 
-	private final void __error(final String msg) {
-		Log.e(tag, msg);
+
+	@Override
+	public final boolean isErrorEnabled() {
+		return ERROR;
 	}
 
+	@Override
+	public final void error(final String msg) {
+		if (ERROR) {
+			Log.e(tag, msg);
+		}
+	}
+	
 	private final void __error(final String msg, final Throwable t) {
 		if (t == null) {
 			Log.e(tag, msg);
@@ -454,20 +458,8 @@ final class AndroidLoggerAdapter implements Logger {
 	}
 
 	@Override
-	public final boolean isErrorEnabled() {
-		return Log.isLoggable(tag, Log.ERROR);
-	}
-
-	@Override
-	public final void error(final String msg) {
-		if (isErrorEnabled()) {
-			__error(msg);
-		}
-	}
-
-	@Override
 	public final void error(final String format, final Object arg) {
-		if (isErrorEnabled()) {
+		if (ERROR) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg);
 			__error(ft.getMessage(), ft.getThrowable());
 		}
@@ -475,7 +467,7 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void error(final String format, final Object arg1, final Object arg2) {
-		if (isErrorEnabled()) {
+		if (ERROR) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
 			__error(ft.getMessage(), ft.getThrowable());
 		}
@@ -483,7 +475,7 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void error(final String format, final Object... arguments) {
-		if (isErrorEnabled()) {
+		if (ERROR) {
 			final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
 			__error(ft.getMessage(), ft.getThrowable());
 		}
@@ -491,14 +483,14 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void error(final String msg, final Throwable t) {
-		if (isErrorEnabled()) {
+		if (ERROR) {
 			__error(msg, t);
 		}
 	}
 
 	@Override
 	public final boolean isErrorEnabled(final Marker marker) {
-		return isErrorEnabled();
+		return ERROR;
 	}
 
 	@Override
