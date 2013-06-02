@@ -26,7 +26,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /* Copied from http://www.slf4j.org/android/ examples */
-public class AndroidTagTests {
+public class AndroidTagTest {
 	@Test
 	public void name1() {
 		Assert.assertEquals("o.e.p.MyClass", AndroidLoggerAdapter.createTag("org.example.project.MyClass"));
