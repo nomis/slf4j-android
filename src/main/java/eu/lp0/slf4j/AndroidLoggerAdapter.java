@@ -90,7 +90,21 @@ final class AndroidLoggerAdapter implements Logger {
 	public final String getName() {
 		return tag;
 	}
-	
+
+	/* Trace */
+
+	private final void __trace(final String msg) {
+		Log.v(tag, msg);
+	}
+
+	private final void __trace(final String msg, final Throwable t) {
+		if (t == null) {
+			Log.v(tag, msg);
+		} else {
+			Log.v(tag, msg, t);
+		}
+	}
+
 	@Override
 	public final boolean isTraceEnabled() {
 		return Log.isLoggable(tag, Log.VERBOSE);
@@ -98,14 +112,16 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void trace(final String msg) {
-		Log.v(tag, msg);
+		if (isTraceEnabled()) {
+			__trace(msg);
+		}
 	}
 
 	@Override
 	public final void trace(final String format, final Object arg) {
 		if (isTraceEnabled()) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg);
-			trace(ft.getMessage(), ft.getThrowable());
+			__trace(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
@@ -113,7 +129,7 @@ final class AndroidLoggerAdapter implements Logger {
 	public final void trace(final String format, final Object arg1, final Object arg2) {
 		if (isTraceEnabled()) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
-			trace(ft.getMessage(), ft.getThrowable());
+			__trace(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
@@ -121,16 +137,14 @@ final class AndroidLoggerAdapter implements Logger {
 	public final void trace(final String format, final Object... arguments) {
 		if (isTraceEnabled()) {
 			final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
-			trace(ft.getMessage(), ft.getThrowable());
+			__trace(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
 	public final void trace(final String msg, final Throwable t) {
-		if (t == null) {
-			Log.v(tag, msg);
-		} else {
-			Log.v(tag, msg, t);
+		if (isTraceEnabled()) {
+			__trace(msg, t);
 		}
 	}
 
@@ -164,6 +178,20 @@ final class AndroidLoggerAdapter implements Logger {
 		trace(msg, t);
 	}
 
+	/* Debug */
+
+	private final void __debug(final String msg) {
+		Log.d(tag, msg);
+	}
+
+	private final void __debug(final String msg, final Throwable t) {
+		if (t == null) {
+			Log.d(tag, msg);
+		} else {
+			Log.d(tag, msg, t);
+		}
+	}
+
 	@Override
 	public final boolean isDebugEnabled() {
 		return Log.isLoggable(tag, Log.DEBUG);
@@ -171,14 +199,16 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void debug(final String msg) {
-		Log.d(tag, msg);
+		if (isDebugEnabled()) {
+			__debug(msg);
+		}
 	}
 
 	@Override
 	public final void debug(final String format, final Object arg) {
 		if (isDebugEnabled()) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg);
-			debug(ft.getMessage(), ft.getThrowable());
+			__debug(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
@@ -194,16 +224,14 @@ final class AndroidLoggerAdapter implements Logger {
 	public final void debug(final String format, final Object... arguments) {
 		if (isDebugEnabled()) {
 			final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
-			debug(ft.getMessage(), ft.getThrowable());
+			__debug(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
 	public final void debug(final String msg, final Throwable t) {
-		if (t == null) {
-			Log.d(tag, msg);
-		} else {
-			Log.d(tag, msg, t);
+		if (isDebugEnabled()) {
+			__debug(msg, t);
 		}
 	}
 
@@ -237,6 +265,20 @@ final class AndroidLoggerAdapter implements Logger {
 		debug(msg, t);
 	}
 
+	/* Info */
+
+	private final void __info(final String msg) {
+		Log.i(tag, msg);
+	}
+
+	private final void __info(final String msg, final Throwable t) {
+		if (t == null) {
+			Log.i(tag, msg);
+		} else {
+			Log.i(tag, msg, t);
+		}
+	}
+
 	@Override
 	public final boolean isInfoEnabled() {
 		return Log.isLoggable(tag, Log.INFO);
@@ -244,14 +286,16 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void info(final String msg) {
-		Log.i(tag, msg);
+		if (isInfoEnabled()) {
+			__info(msg);
+		}
 	}
 
 	@Override
 	public final void info(final String format, final Object arg) {
 		if (isInfoEnabled()) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg);
-			info(ft.getMessage(), ft.getThrowable());
+			__info(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
@@ -259,7 +303,7 @@ final class AndroidLoggerAdapter implements Logger {
 	public final void info(final String format, final Object arg1, final Object arg2) {
 		if (isInfoEnabled()) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
-			info(ft.getMessage(), ft.getThrowable());
+			__info(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
@@ -267,16 +311,14 @@ final class AndroidLoggerAdapter implements Logger {
 	public final void info(final String format, final Object... arguments) {
 		if (isInfoEnabled()) {
 			final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
-			info(ft.getMessage(), ft.getThrowable());
+			__info(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
 	public final void info(final String msg, final Throwable t) {
-		if (t == null) {
-			Log.i(tag, msg);
-		} else {
-			Log.i(tag, msg, t);
+		if (isInfoEnabled()) {
+			__info(msg, t);
 		}
 	}
 
@@ -309,7 +351,21 @@ final class AndroidLoggerAdapter implements Logger {
 	public final void info(final Marker marker, final String msg, final Throwable t) {
 		info(msg, t);
 	}
-	
+
+	/* Warn */
+
+	private final void __warn(final String msg) {
+		Log.w(tag, msg);
+	}
+
+	private final void __warn(final String msg, final Throwable t) {
+		if (t == null) {
+			Log.w(tag, msg);
+		} else {
+			Log.w(tag, msg, t);
+		}
+	}
+
 	@Override
 	public final boolean isWarnEnabled() {
 		return Log.isLoggable(tag, Log.WARN);
@@ -317,14 +373,16 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void warn(final String msg) {
-		Log.w(tag, msg);
+		if (isWarnEnabled()) {
+			__warn(msg);
+		}
 	}
 
 	@Override
 	public final void warn(final String format, final Object arg) {
 		if (isWarnEnabled()) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg);
-			warn(ft.getMessage(), ft.getThrowable());
+			__warn(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
@@ -332,7 +390,7 @@ final class AndroidLoggerAdapter implements Logger {
 	public final void warn(final String format, final Object arg1, final Object arg2) {
 		if (isWarnEnabled()) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
-			warn(ft.getMessage(), ft.getThrowable());
+			__warn(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
@@ -340,16 +398,14 @@ final class AndroidLoggerAdapter implements Logger {
 	public final void warn(final String format, final Object... arguments) {
 		if (isWarnEnabled()) {
 			final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
-			warn(ft.getMessage(), ft.getThrowable());
+			__warn(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
 	public final void warn(final String msg, final Throwable t) {
-		if (t == null) {
-			Log.w(tag, msg);
-		} else {
-			Log.w(tag, msg, t);
+		if (isWarnEnabled()) {
+			__warn(msg, t);
 		}
 	}
 
@@ -382,7 +438,21 @@ final class AndroidLoggerAdapter implements Logger {
 	public final void warn(final Marker marker, final String msg, final Throwable t) {
 		warn(msg, t);
 	}
-	
+
+	/* Error */
+
+	private final void __error(final String msg) {
+		Log.e(tag, msg);
+	}
+
+	private final void __error(final String msg, final Throwable t) {
+		if (t == null) {
+			Log.e(tag, msg);
+		} else {
+			Log.e(tag, msg, t);
+		}
+	}
+
 	@Override
 	public final boolean isErrorEnabled() {
 		return Log.isLoggable(tag, Log.ERROR);
@@ -390,14 +460,16 @@ final class AndroidLoggerAdapter implements Logger {
 
 	@Override
 	public final void error(final String msg) {
-		Log.e(tag, msg);
+		if (isErrorEnabled()) {
+			__error(msg);
+		}
 	}
 
 	@Override
 	public final void error(final String format, final Object arg) {
 		if (isErrorEnabled()) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg);
-			error(ft.getMessage(), ft.getThrowable());
+			__error(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
@@ -405,7 +477,7 @@ final class AndroidLoggerAdapter implements Logger {
 	public final void error(final String format, final Object arg1, final Object arg2) {
 		if (isErrorEnabled()) {
 			final FormattingTuple ft = MessageFormatter.format(format, arg1, arg2);
-			error(ft.getMessage(), ft.getThrowable());
+			__error(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
@@ -413,16 +485,14 @@ final class AndroidLoggerAdapter implements Logger {
 	public final void error(final String format, final Object... arguments) {
 		if (isErrorEnabled()) {
 			final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
-			error(ft.getMessage(), ft.getThrowable());
+			__error(ft.getMessage(), ft.getThrowable());
 		}
 	}
 
 	@Override
 	public final void error(final String msg, final Throwable t) {
-		if (t == null) {
-			Log.e(tag, msg);
-		} else {
-			Log.e(tag, msg, t);
+		if (isErrorEnabled()) {
+			__error(msg, t);
 		}
 	}
 
