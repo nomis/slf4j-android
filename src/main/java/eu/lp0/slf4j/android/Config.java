@@ -25,8 +25,6 @@ package eu.lp0.slf4j.android;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
@@ -37,33 +35,23 @@ import org.slf4j.Logger;
  * 
  * <dl>
  * <dt>{code tag.}<em>logger.package.name</em>.<em>logger.class.name</em></dt>
- * <dd>Set the tag for the specified logger name. Supports Ant-style pattern matches.</dd>
+ * <dd>Set the tag for the specified logger name/prefix.</dd>
  * <dt>{code level.}<em>logger.package.name</em>.<em>logger.class.name</em></dt>
- * <dd>Override the {@linkplain LogLevel log level} for the specified logger name. Supports Ant-style pattern matches.</dd>
+ * <dd>Override the {@linkplain LogLevel log level} for the specified logger name/prefix.</dd>
  * </dl>
  * 
  * @author Simon Arlott
  */
 final class Config {
 	private final Logger log = LoggerFactory.getInternalLogger();
-	private final PatternList<String> tag = new PatternList<String>();
-	private final PatternList<LogLevel> level = new PatternList<LogLevel>();
+	private final CategoryList<String> tag = new CategoryList<String>();
+	private final CategoryList<LogLevel> level = new CategoryList<LogLevel>();
 
 	Config() {
-		final Map<String, String> orderedProps = new LinkedHashMap<String, String>();
+		final Properties props = new Properties();
 		final URL url = getClass().getResource("config.properties");
 
 		if (url != null) {
-			final Properties props = new Properties() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public synchronized Object put(Object key, Object value) {
-					orderedProps.remove(key);
-					return orderedProps.put((String)key, (String)value);
-				}
-			};
-			
 			log.debug("Loading properties file from {}", url);
 
 			try {
@@ -71,20 +59,19 @@ final class Config {
 			} catch (IOException e) {
 				log.error("Error loading properties file from {}", url, e);
 				props.clear();
-				orderedProps.clear();
 			}
 		}
 
-		for (final Entry<String, String> entry : orderedProps.entrySet()) {
-			final String key = entry.getKey();
-			final String value = entry.getValue();
+		for (final Entry<Object, Object> entry : props.entrySet()) {
+			final String key = (String)entry.getKey();
+			final String value = (String)entry.getValue();
 
 			if (key.startsWith("tag")) {
 				if (key.length() == 3) {
 					if (value.isEmpty() || value.length() > LoggerFactory.MAX_TAG_LEN) {
 						log.warn("Ignoring invalid tag {} for {}", value, key);
 					} else {
-						tag.put("**", value);
+						tag.put("", value);
 					}
 				} else if (key.charAt(3) == '.') {
 					if (value.isEmpty() || value.length() > LoggerFactory.MAX_TAG_LEN) {
@@ -96,7 +83,7 @@ final class Config {
 			} else if (key.startsWith("level")) {
 				try {
 					if (key.length() == 5) {
-						level.put("**", LogLevel.valueOf(value));
+						level.put("", LogLevel.valueOf(value));
 					} else if (key.charAt(5) == '.') {
 						level.put(key.substring(6), LogLevel.valueOf(value));
 					}
