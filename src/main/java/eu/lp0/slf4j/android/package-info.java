@@ -30,4 +30,4 @@
  * <li>Compatible with API version 1.</li>
  * </ul>
  */
-package eu.lp0.slf4j;
+package eu.lp0.slf4j.android;

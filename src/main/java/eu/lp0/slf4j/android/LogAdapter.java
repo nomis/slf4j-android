@@ -20,7 +20,7 @@
  * OF CONTRACT, TORT OR OTHERWISE,  ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eu.lp0.slf4j;
+package eu.lp0.slf4j.android;
 
 import org.slf4j.Logger;
 import org.slf4j.Marker;
@@ -38,7 +38,7 @@ import android.util.Log;
  * 
  * @author Simon Arlott
  */
-final class AndroidLoggerAdapter implements Logger {
+final class LogAdapter implements Logger {
 	private final String tag;
 	private final boolean ERROR;
 	private final boolean WARN;
@@ -46,13 +46,22 @@ final class AndroidLoggerAdapter implements Logger {
 	private final boolean DEBUG;
 	private final boolean TRACE;
 
-	AndroidLoggerAdapter(final String name) {
+	LogAdapter(final String name, LogLevel level) {
 		tag = name;
-		ERROR = Log.isLoggable(tag, Log.ERROR);
-		WARN = ERROR && Log.isLoggable(tag, Log.WARN);
-		INFO = WARN && Log.isLoggable(tag, Log.INFO);
-		DEBUG = INFO && Log.isLoggable(tag, Log.DEBUG);
-		TRACE = DEBUG && Log.isLoggable(tag, Log.VERBOSE);
+		
+		if (level == null) {
+			ERROR = Log.isLoggable(tag, Log.ERROR);
+			WARN = ERROR && Log.isLoggable(tag, Log.WARN);
+			INFO = WARN && Log.isLoggable(tag, Log.INFO);
+			DEBUG = INFO && Log.isLoggable(tag, Log.DEBUG);
+			TRACE = DEBUG && Log.isLoggable(tag, Log.VERBOSE);
+		} else {
+			ERROR = level.compareTo(LogLevel.ERROR) >= 0;
+			WARN = ERROR && level.compareTo(LogLevel.WARN) >= 0;
+			INFO = WARN && level.compareTo(LogLevel.INFO) >= 0;
+			DEBUG = INFO && level.compareTo(LogLevel.DEBUG) >= 0;
+			TRACE = DEBUG && level.compareTo(LogLevel.TRACE) >= 0;
+		}
 	}
 
 	@Override

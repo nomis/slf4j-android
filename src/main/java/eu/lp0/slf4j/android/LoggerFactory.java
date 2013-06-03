@@ -21,7 +21,7 @@
  * OF CONTRACT, TORT OR OTHERWISE,  ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package eu.lp0.slf4j;
+package eu.lp0.slf4j.android;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -30,12 +30,14 @@ import org.slf4j.Logger;
 
 /**
  * AndroidLoggerFactory is an implementation of {@link ILoggerFactory} returning
- * the appropriate named {@link AndroidLoggerAdapter} instance.
+ * the appropriate named {@link LogAdapter} instance.
  * 
  * @author Simon Arlott
  */
-public final class AndroidLoggerFactory implements ILoggerFactory {
+public final class LoggerFactory implements ILoggerFactory {
+	private static final Logger LOG = new LogAdapter("slf4j-android", null);
 	private final ConcurrentHashMap<String, Logger> loggerMap = new ConcurrentHashMap<String, Logger>();
+	private final Config config = new Config();
 
 	@Override
 	public final Logger getLogger(final String name) {
@@ -43,10 +45,14 @@ public final class AndroidLoggerFactory implements ILoggerFactory {
 		if (logger != null) {
 			return logger;
 		} else {
-			final Logger newInstance = new AndroidLoggerAdapter(getTag(name));
+			final Logger newInstance = new LogAdapter(getTag(name), config.getLevel(name));
 			final Logger oldInstance = loggerMap.putIfAbsent(name, newInstance);
 			return oldInstance == null ? newInstance : oldInstance;
 		}
+	}
+	
+	static Logger getInternalLogger() {
+		return LOG;
 	}
 
 	/**
@@ -108,7 +114,11 @@ public final class AndroidLoggerFactory implements ILoggerFactory {
 		return new String(tag, 0, len);
 	}
 
-	private static final String getTag(final String name) {
+	private final String getTag(final String name) {
+		final String tag = config.getTag(name);
+		if (tag != null) {
+			return tag;
+		}
 		return createTag(name);
 	}
 }

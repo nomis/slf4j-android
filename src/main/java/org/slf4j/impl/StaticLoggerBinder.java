@@ -27,8 +27,6 @@ import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 import org.slf4j.spi.LoggerFactoryBinder;
 
-import eu.lp0.slf4j.AndroidLoggerFactory;
-
 /**
  * The binding of {@link LoggerFactory} class with an actual instance of
  * {@link ILoggerFactory} is performed using information returned by this class.
@@ -60,7 +58,7 @@ public class StaticLoggerBinder implements LoggerFactoryBinder {
 	// to avoid constant folding by the compiler, this field must *not* be final
 	public static String REQUESTED_API_VERSION = "1.6.99"; // !final
 
-	private static final String loggerFactoryClassStr = AndroidLoggerFactory.class.getName();
+	private static final String loggerFactoryClassStr = eu.lp0.slf4j.android.LoggerFactory.class.getName();
 
 	/**
 	 * The ILoggerFactory instance returned by the {@link #getLoggerFactory}
@@ -69,7 +67,7 @@ public class StaticLoggerBinder implements LoggerFactoryBinder {
 	private final ILoggerFactory loggerFactory;
 
 	private StaticLoggerBinder() {
-		loggerFactory = new AndroidLoggerFactory();
+		loggerFactory = new eu.lp0.slf4j.android.LoggerFactory();
 	}
 
 	public ILoggerFactory getLoggerFactory() {
