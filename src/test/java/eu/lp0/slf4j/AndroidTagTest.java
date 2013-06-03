@@ -29,86 +29,86 @@ import org.junit.Test;
 public class AndroidTagTest {
 	@Test
 	public void name1() {
-		Assert.assertEquals("o.e.p.MyClass", AndroidLoggerAdapter.createTag("org.example.project.MyClass"));
+		Assert.assertEquals("o.e.p.MyClass", AndroidLoggerFactory.createTag("org.example.project.MyClass"));
 	}
 	
 	@Test
 	public void name2() {
-		Assert.assertEquals("o.e.p.s.MyClass", AndroidLoggerAdapter.createTag("org.example.project.subproject.MyClass"));
+		Assert.assertEquals("o.e.p.s.MyClass", AndroidLoggerFactory.createTag("org.example.project.subproject.MyClass"));
 	}
 	
 	@Test
 	public void name3() {
-		Assert.assertEquals("oe.MyQuiteLongNamedClas", AndroidLoggerAdapter.createTag("org.example.MyQuiteLongNamedClassOfTooMuchCharacters"));
+		Assert.assertEquals("oe.MyQuiteLongNamedClas", AndroidLoggerFactory.createTag("org.example.MyQuiteLongNamedClassOfTooMuchCharacters"));
 	}
 	
 	@Test
 	public void name4() {
-		Assert.assertEquals("o.e.p.s.MyClass", AndroidLoggerAdapter.createTag("o.e.project.subproject.MyClass"));
+		Assert.assertEquals("o.e.p.s.MyClass", AndroidLoggerFactory.createTag("o.e.project.subproject.MyClass"));
 	}
 	
 	@Test
 	public void name5() {
-		Assert.assertEquals("MyQuiteLongNamedClassNo", AndroidLoggerAdapter.createTag("MyQuiteLongNamedClassNotInAPackage"));
+		Assert.assertEquals("MyQuiteLongNamedClassNo", AndroidLoggerFactory.createTag("MyQuiteLongNamedClassNotInAPackage"));
 	}
 	
 	@Test
 	public void empty() {
-		Assert.assertEquals("", AndroidLoggerAdapter.createTag(""));
+		Assert.assertEquals("", AndroidLoggerFactory.createTag(""));
 	}
 	
 	@Test
 	public void dot1() {
-		Assert.assertEquals(".", AndroidLoggerAdapter.createTag("."));
+		Assert.assertEquals(".", AndroidLoggerFactory.createTag("."));
 	}
 	
 	@Test
 	public void dot2() {
-		Assert.assertEquals("..", AndroidLoggerAdapter.createTag(".."));
+		Assert.assertEquals("..", AndroidLoggerFactory.createTag(".."));
 	}
 	
 	@Test
 	public void dot3() {
-		Assert.assertEquals("...", AndroidLoggerAdapter.createTag("..."));
+		Assert.assertEquals("...", AndroidLoggerFactory.createTag("..."));
 	}
 	
 	@Test
 	public void dot23() {
-		Assert.assertEquals(".......................", AndroidLoggerAdapter.createTag("......................."));
+		Assert.assertEquals(".......................", AndroidLoggerFactory.createTag("......................."));
 	}
 	
 	@Test
 	public void dot24() {
-		Assert.assertEquals(".", AndroidLoggerAdapter.createTag("........................"));
+		Assert.assertEquals(".", AndroidLoggerFactory.createTag("........................"));
 	}
 	
 	@Test
 	public void tooLong1() {
-		Assert.assertEquals("tqbfjotldlidsamamnhbm.J", AndroidLoggerAdapter.createTag("the.quick.brown.fox.jumps.over.the.lazy.dog.lorem.ipsum.dolor.sit.amet.more.and.more.names.here.blah.moo.Java"));
+		Assert.assertEquals("tqbfjotldlidsamamnhbm.J", AndroidLoggerFactory.createTag("the.quick.brown.fox.jumps.over.the.lazy.dog.lorem.ipsum.dolor.sit.amet.more.and.more.names.here.blah.moo.Java"));
 	}
 	
 	@Test
 	public void tooLong2() {
-		Assert.assertEquals("tqbfjotldlidsamamnhbmjT", AndroidLoggerAdapter.createTag("the.quick.brown.fox.jumps.over.the.lazy.dog.lorem.ipsum.dolor.sit.amet.more.and.more.names.here.blah.moo.java.Test"));
+		Assert.assertEquals("tqbfjotldlidsamamnhbmjT", AndroidLoggerFactory.createTag("the.quick.brown.fox.jumps.over.the.lazy.dog.lorem.ipsum.dolor.sit.amet.more.and.more.names.here.blah.moo.java.Test"));
 	}
 	
 	@Test
 	public void unusal1() {
-		Assert.assertEquals(".j.l.t.c.moo", AndroidLoggerAdapter.createTag(".java.lang.test.class.moo"));
+		Assert.assertEquals(".j.l.t.c.moo", AndroidLoggerFactory.createTag(".java.lang.test.class.moo"));
 	}
 
 	@Test
 	public void unusal2() {
-		Assert.assertEquals(".j.l.t.c.moo", AndroidLoggerAdapter.createTag("..java..lang..test..class..moo"));
+		Assert.assertEquals(".j.l.t.c.moo", AndroidLoggerFactory.createTag("..java..lang..test..class..moo"));
 	}
 	
 	@Test
 	public void unusal3() {
-		Assert.assertEquals(".j.l.t.c.moo", AndroidLoggerAdapter.createTag("...java...lang...test...class...moo"));
+		Assert.assertEquals(".j.l.t.c.moo", AndroidLoggerFactory.createTag("...java...lang...test...class...moo"));
 	}
 	
 	@Test
 	public void unusal4() {
-		Assert.assertEquals(".j.l.t.c.", AndroidLoggerAdapter.createTag("...java...lang...test...class..."));
+		Assert.assertEquals(".j.l.t.c.", AndroidLoggerFactory.createTag("...java...lang...test...class..."));
 	}
 }

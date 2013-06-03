@@ -43,9 +43,72 @@ public final class AndroidLoggerFactory implements ILoggerFactory {
 		if (logger != null) {
 			return logger;
 		} else {
-			final Logger newInstance = new AndroidLoggerAdapter(name);
+			final Logger newInstance = new AndroidLoggerAdapter(getTag(name));
 			final Logger oldInstance = loggerMap.putIfAbsent(name, newInstance);
 			return oldInstance == null ? newInstance : oldInstance;
 		}
+	}
+
+	/**
+	 * Maximum length of a tag in the Android logging system.
+	 * 
+	 * This constant is not defined in the API but longer tags will cause exceptions in native code.
+	 */
+	static final int MAX_TAG_LEN = 23;
+
+	/**
+	 * Create a compatible logging tag for Android based on the logger name.
+	 */
+	static final String createTag(final String name) {
+		final char[] tag = name.toCharArray();
+		final int arrayLen = tag.length;
+		int len = 0;
+		int mark = 0;
+
+		if (arrayLen <= MAX_TAG_LEN)
+			return name;
+
+		for (int i = 0; i < arrayLen; i++, len++) {
+			if (tag[i] == '.') {
+				len = mark;
+
+				if (tag[len] != '.') {
+					len++;
+				}
+
+				mark = len;
+
+				if (i + 1 < arrayLen && tag[i + 1] != '.') {
+					mark++;
+				}
+			}
+
+			tag[len] = tag[i];
+		}
+
+		if (len > MAX_TAG_LEN) {
+			int i = 0;
+
+			mark--;
+
+			for (int j = 0; j < len; j++) {
+				if (tag[j] == '.' && (((j & 1) == 1 && j != mark) || (i >= MAX_TAG_LEN - 1)))
+					continue;
+
+				tag[i++] = tag[j];
+			}
+
+			len = i;
+
+			if (len > MAX_TAG_LEN) {
+				len = MAX_TAG_LEN;
+			}
+		}
+
+		return new String(tag, 0, len);
+	}
+
+	private static final String getTag(final String name) {
+		return createTag(name);
 	}
 }
