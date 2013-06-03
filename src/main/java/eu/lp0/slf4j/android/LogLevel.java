@@ -22,7 +22,7 @@
  */
 package eu.lp0.slf4j.android;
 
-enum LogLevel {
+public enum LogLevel {
 	NONE,
 	ERROR,
 	WARN,

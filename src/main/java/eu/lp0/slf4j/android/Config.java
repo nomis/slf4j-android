@@ -34,15 +34,17 @@ import org.slf4j.Logger;
  * Loads properties from {@code /eu/lp0/slf4j/android/config.properties}.
  * 
  * <dl>
- * <dt>{code tag.}<em>logger.package.name</em>.<em>logger.class.name</em></dt>
- * <dd>Set the tag for the specified logger name/prefix.</dd>
- * <dt>{code level.}<em>logger.package.name</em>.<em>logger.class.name</em></dt>
- * <dd>Override the {@linkplain LogLevel log level} for the specified logger name/prefix.</dd>
+ * <dt>{@code tag}<strong>.logger.package.name</strong><strong>.logger.class.name</strong>{@code =}<strong>TagName</strong></dt>
+ * <dd>Set the tag for the specified logger prefix.</dd>
+ * <dt>{@code level}<strong>.logger.package.name</strong><strong>.logger.class.name</strong>{@code =}<strong>LEVEL</strong></dt>
+ * <dd>Override the {@linkplain LogLevel log level} for the specified logger prefix.</dd>
  * </dl>
+ * 
+ * With no configuration, logger names are automatically compacted to fit the Android 23 character tag limit.
  * 
  * @author Simon Arlott
  */
-final class Config {
+public final class Config {
 	private final Logger log = LoggerFactory.getInternalLogger();
 	private final CategoryList<String> tag = new CategoryList<String>();
 	private final CategoryList<LogLevel> level = new CategoryList<LogLevel>();

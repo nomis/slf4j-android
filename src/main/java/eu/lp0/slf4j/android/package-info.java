@@ -25,9 +25,10 @@
  * SLF4J binding for the Android logger.
  * 
  * <ul>
- * <li>Automatically compacts logger names to fit the Android 23 character tag limit.</li>
  * <li>Does not support SLF4J markers, these will be ignored.</li>
  * <li>Compatible with API version 1.</li>
  * </ul>
+ * 
+ * @see eu.lp0.slf4j.android.Config Configuration
  */
 package eu.lp0.slf4j.android;
