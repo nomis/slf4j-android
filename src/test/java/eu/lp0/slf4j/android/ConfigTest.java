@@ -34,20 +34,46 @@ import org.slf4j.Logger;
 @SuppressStaticInitializationFor({ "eu.lp0.slf4j.android.LoggerFactory" })
 public class ConfigTest {
 	@Test
-	public void tags() {
-		Config config = new Config(Mockito.mock(Logger.class, Mockito.withSettings().verboseLogging()));
-		Assert.assertEquals("JavaApp", config.getTag("java.net.Socket"));
-		Assert.assertEquals("JavaLang", config.getTag("java.lang.Void"));
-		Assert.assertEquals("JavaUtil", config.getTag("java.util.List"));
-		Assert.assertEquals("JavaApp", config.getTag("java.oops.Test"));
+	public void tag() {
+		LoggingConfig config = new LoggingConfig(Mockito.mock(Logger.class, Mockito.withSettings().verboseLogging()));
+		Assert.assertEquals("JavaApp", config.get("java.net.Socket").tag);
+		Assert.assertEquals("JavaLang", config.get("java.lang.Void").tag);
+		Assert.assertEquals("JavaUtil", config.get("java.util.List").tag);
+		Assert.assertEquals("JavaApp", config.get("java.oops.Test").tag);
+		Assert.assertEquals("JavaUtil", config.get("java.util.concurrent.locks.ReentrantReadWriteLock").tag);
+		Assert.assertEquals("JavaApp", config.get("javax.swing.JFrame").tag);
 	}
 
 	@Test
-	public void levels() {
-		Config config = new Config(Mockito.mock(Logger.class, Mockito.withSettings().verboseLogging()));
-		Assert.assertEquals(LogLevel.DEBUG, config.getLevel("java.net.Socket"));
-		Assert.assertEquals(LogLevel.WARN, config.getLevel("java.lang.Void"));
-		Assert.assertEquals(LogLevel.WARN, config.getLevel("java.util.List"));
-		Assert.assertEquals(LogLevel.WARN, config.getLevel("java.oops.Test"));
+	public void level() {
+		LoggingConfig config = new LoggingConfig(Mockito.mock(Logger.class, Mockito.withSettings().verboseLogging()));
+		Assert.assertEquals(LogLevel.DEBUG, config.get("java.net.Socket").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.lang.Void").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.util.List").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.oops.Test").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.util.concurrent.locks.ReentrantReadWriteLock").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("javax.swing.JFrame").level);
+	}
+	
+	@Test
+	public void showName() {
+		LoggingConfig config = new LoggingConfig(Mockito.mock(Logger.class, Mockito.withSettings().verboseLogging()));
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.net.Socket").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.lang.Void").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.FALSE, config.get("java.util.List").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.oops.Test").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.FALSE, config.get("java.util.concurrent.locks.ReentrantReadWriteLock").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.LONG, config.get("javax.swing.JFrame").showName);
+	}
+	
+	@Test
+	public void showThread() {
+		LoggingConfig config = new LoggingConfig(Mockito.mock(Logger.class, Mockito.withSettings().verboseLogging()));
+		Assert.assertEquals(false, config.get("java.net.Socket").showThread);
+		Assert.assertEquals(false, config.get("java.lang.Void").showThread);
+		Assert.assertEquals(false, config.get("java.util.List").showThread);
+		Assert.assertEquals(false, config.get("java.oops.Test").showThread);
+		Assert.assertEquals(true, config.get("java.util.concurrent.locks.ReentrantReadWriteLock").showThread);
+		Assert.assertEquals(false, config.get("javax.swing.JFrame").showThread);
 	}
 }

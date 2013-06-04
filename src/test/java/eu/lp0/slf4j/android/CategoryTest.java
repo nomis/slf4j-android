@@ -25,41 +25,40 @@ package eu.lp0.slf4j.android;
 import org.junit.Assert;
 import org.junit.Test;
 
-
-public class PatternTest {
+public class CategoryTest {
 	@Test
 	public void all() {
-		CategoryList<String> matcher = new CategoryList<String>();
-		matcher.put("", "all");
+		CategoryMap matcher = new CategoryMap();
+		matcher.put("", new LoggerConfig("all"));
 		
-		Assert.assertEquals("all", matcher.get(""));
-		Assert.assertEquals("all", matcher.get("test1"));
-		Assert.assertEquals("all", matcher.get("test1.test2"));
-		Assert.assertEquals("all", matcher.get("test1.test2.test3"));
+		Assert.assertEquals("all", matcher.get("").tag);
+		Assert.assertEquals("all", matcher.get("test1").tag);
+		Assert.assertEquals("all", matcher.get("test1.test2").tag);
+		Assert.assertEquals("all", matcher.get("test1.test2.test3").tag);
 	}
 	
 	@Test
 	public void none() {
-		CategoryList<String> matcher = new CategoryList<String>();
+		CategoryMap matcher = new CategoryMap();
 		
-		Assert.assertEquals(null, matcher.get(""));
-		Assert.assertEquals(null, matcher.get("test1"));
-		Assert.assertEquals(null, matcher.get("test1.test2"));
-		Assert.assertEquals(null, matcher.get("test1.test2.test3"));
+		Assert.assertEquals(null, matcher.get("").tag);
+		Assert.assertEquals(null, matcher.get("test1").tag);
+		Assert.assertEquals(null, matcher.get("test1.test2").tag);
+		Assert.assertEquals(null, matcher.get("test1.test2.test3").tag);
 	}
 	
 	@Test
 	public void name() {
-		CategoryList<String> matcher = new CategoryList<String>();
-		matcher.put("java.lang", "name");
+		CategoryMap matcher = new CategoryMap();
+		matcher.put("java.lang", new LoggerConfig("name"));
 		
-		Assert.assertEquals(null, matcher.get(""));
-		Assert.assertEquals(null, matcher.get("test1"));
-		Assert.assertEquals(null, matcher.get("test1.test2"));
-		Assert.assertEquals(null, matcher.get("test1.test2.test3"));
-		Assert.assertEquals("name", matcher.get("java.lang"));
-		Assert.assertEquals("name", matcher.get("java.lang.Void"));
-		Assert.assertEquals("name", matcher.get("java.lang.String"));
-		Assert.assertEquals("name", matcher.get("java.lang.ref.PhantomReference"));
+		Assert.assertEquals(null, matcher.get("").tag);
+		Assert.assertEquals(null, matcher.get("test1").tag);
+		Assert.assertEquals(null, matcher.get("test1.test2").tag);
+		Assert.assertEquals(null, matcher.get("test1.test2.test3").tag);
+		Assert.assertEquals("name", matcher.get("java.lang").tag);
+		Assert.assertEquals("name", matcher.get("java.lang.Void").tag);
+		Assert.assertEquals("name", matcher.get("java.lang.String").tag);
+		Assert.assertEquals("name", matcher.get("java.lang.ref.PhantomReference").tag);
 	}
 }

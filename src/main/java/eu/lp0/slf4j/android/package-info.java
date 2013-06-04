@@ -29,6 +29,6 @@
  * <li>Compatible with API version 1.</li>
  * </ul>
  * 
- * @see eu.lp0.slf4j.android.Config Configuration
+ * @see eu.lp0.slf4j.android.LoggingConfig Configuration
  */
 package eu.lp0.slf4j.android;

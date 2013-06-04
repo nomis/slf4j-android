@@ -26,46 +26,55 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Compiles a list of Ant-style patterns to be used to match strings.  
+ * Compiles a map of logger categories to be used to match logger names.  
  * 
  * @author Simon Arlott
  */
-final class CategoryList<V> {
-	private final Map<String, V> categories = new HashMap<String, V>();
+final class CategoryMap {
+	private final Map<String, LoggerConfig> categories = new HashMap<String, LoggerConfig>();
 
-	CategoryList() {
+	CategoryMap() {
 	}
 
 	/**
 	 * Returns the first matching category name for the given input, or {code null} if no categories match.
 	 */
-	final V get(String name) {
-		V value;
+	final LoggerConfig get(String name) {
+		final LoggerConfig config = new LoggerConfig();
 		
 		if (categories.isEmpty())
-			return null;
+			return config;
 		
-		value = categories.get(name);
-		
-		while (value == null) {
-			final int index = name.lastIndexOf('.');
-			
-			if (index == -1) {
-				return categories.get("");
-			} else {
-				name = name.substring(0, index);
-			}
-			
-			value = categories.get(name);
+		if (name == null) {
+			name = "";
 		}
 		
-		return value;
+		while (true) {
+			final int index = name.lastIndexOf('.');
+
+			if (config.merge(categories.get(name)))
+				return config;
+
+			if (index != -1) {
+				name = name.substring(0, index);
+			} else {
+				if (!config.merge(categories.get(""))) {
+					config.merge(LoggerConfig.DEFAULT);
+				}
+				return config;
+			}
+		}
 	}
 
 	/**
-	 * Append a pattern to the list of patterns to check. 
+	 * Add a category to the config map. 
 	 */
-	final void put(final String name, final V value) {
-		categories.put(name, value);
+	final void put(final String name, final LoggerConfig value) {
+		LoggerConfig config = categories.get(name);
+		if (config != null) {
+			config.merge(value);
+		} else {
+			categories.put(name, value);
+		}
 	}
 }

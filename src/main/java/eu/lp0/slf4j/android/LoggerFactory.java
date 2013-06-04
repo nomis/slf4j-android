@@ -35,9 +35,15 @@ import org.slf4j.Logger;
  * @author Simon Arlott
  */
 public final class LoggerFactory implements ILoggerFactory {
-	private static final Logger LOG = new LogAdapter("eu.lp0.slf4j.android", "slf4j-android", null);
+	private static final Logger LOG;
+	static {
+		LoggerConfig config = new LoggerConfig("slf4j-android");
+		config.merge(LoggerConfig.DEFAULT);
+		LOG = new LogAdapter("eu.lp0.slf4j.android", config);
+	}
+	
 	private final ConcurrentHashMap<String, Logger> loggerMap = new ConcurrentHashMap<String, Logger>();
-	private final Config config = new Config(LOG);
+	private final LoggingConfig loggingConfig = new LoggingConfig(LOG);
 
 	@Override
 	public final Logger getLogger(final String name) {
@@ -45,12 +51,12 @@ public final class LoggerFactory implements ILoggerFactory {
 		if (logger != null) {
 			return logger;
 		} else {
-			final Logger newInstance = new LogAdapter(name, getTag(name), config.getLevel(name));
+			final Logger newInstance = new LogAdapter(name, getConfig(name));
 			final Logger oldInstance = loggerMap.putIfAbsent(name, newInstance);
 			return oldInstance == null ? newInstance : oldInstance;
 		}
 	}
-
+	
 	/**
 	 * Maximum length of a tag in the Android logging system.
 	 * 
@@ -110,11 +116,11 @@ public final class LoggerFactory implements ILoggerFactory {
 		return new String(tag, 0, len);
 	}
 
-	private final String getTag(final String name) {
-		final String tag = config.getTag(name);
-		if (tag != null) {
-			return tag;
+	private final LoggerConfig getConfig(final String name) {
+		final LoggerConfig config = loggingConfig.get(name);
+		if (config.tag == null) {
+			config.tag = createTag(name);
 		}
-		return createTag(name);
+		return config;
 	}
 }

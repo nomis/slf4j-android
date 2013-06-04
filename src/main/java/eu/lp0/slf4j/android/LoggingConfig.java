@@ -25,6 +25,7 @@ package eu.lp0.slf4j.android;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Properties;
 
@@ -33,22 +34,28 @@ import org.slf4j.Logger;
 /**
  * Loads properties from {@code /eu/lp0/slf4j/android/config.properties}.
  * 
+ * <p>
+ * Configuration can be applied per logger prefix or set the default by omitting the logger prefix: 
  * <dl>
- * <dt>{@code tag}<strong>.logger.package.name</strong><strong>.logger.class.name</strong>{@code =}<strong>TagName</strong></dt>
+ * <dt>{@code tag.*=TagName}</dt>
  * <dd>Set the tag for the specified logger prefix.</dd>
- * <dt>{@code level}<strong>.logger.package.name</strong><strong>.logger.class.name</strong>{@code =}<strong>LEVEL</strong></dt>
+ * <dt>{@code level.*=LEVEL}</dt>
  * <dd>Override the {@linkplain LogLevel log level} for the specified logger prefix.</dd>
+ * <dt>{@code showName.*=FALSE|SHORT|LONG}</dt>
+ * <dd>Show the logger name in short or long format for the specified logger prefix.</dd>
+ * <dt>{@code showThread.*=true|false}</dt>
+ * <dd>Show the current thread for the specified logger prefix.</dd>
  * </dl>
  * 
  * With no configuration, logger names are automatically compacted to fit the Android 23 character tag limit.
+ * The default configuration does not show the logger name or the current thread. 
  * 
  * @author Simon Arlott
  */
-public final class Config {
-	private final CategoryList<String> tag = new CategoryList<String>();
-	private final CategoryList<LogLevel> level = new CategoryList<LogLevel>();
+public final class LoggingConfig {
+	private final CategoryMap map = new CategoryMap();
 
-	Config(final Logger log) {
+	LoggingConfig(final Logger log) {
 		final Properties props = new Properties();
 		final URL url = getClass().getResource("config.properties");
 
@@ -62,7 +69,7 @@ public final class Config {
 				props.clear();
 			}
 		}
-
+		
 		for (final Entry<Object, Object> entry : props.entrySet()) {
 			final String key = (String)entry.getKey();
 			final String value = (String)entry.getValue();
@@ -72,38 +79,58 @@ public final class Config {
 					if (value.isEmpty() || value.length() > LoggerFactory.MAX_TAG_LEN) {
 						log.warn("Ignoring invalid default tag {}", value);
 					} else {
-						tag.put("", value);
+						map.put("", new LoggerConfig(value));
 					}
 				} else if (key.charAt(3) == '.') {
 					if (value.isEmpty() || value.length() > LoggerFactory.MAX_TAG_LEN) {
 						log.warn("Ignoring invalid tag {} for {}", value, key.substring(4));
 					} else {
-						tag.put(key.substring(4), value);
+						map.put(key.substring(4), new LoggerConfig(value));
 					}
 				}
 			} else if (key.startsWith("level")) {
 				if (key.length() == 5) {
 					try {
-						level.put("", LogLevel.valueOf(value));
+						map.put("", new LoggerConfig(LogLevel.valueOf(value.toUpperCase(Locale.ROOT))));
 					} catch (IllegalArgumentException e) {
 						log.warn("Ignoring invalid default log level {}", value);
 					}
 				} else if (key.charAt(5) == '.') {
 					try {
-						level.put(key.substring(6), LogLevel.valueOf(value));
+						map.put(key.substring(6), new LoggerConfig(LogLevel.valueOf(value.toUpperCase(Locale.ROOT))));
 					} catch (IllegalArgumentException e) {
 						log.warn("Ignoring invalid log level {} for {}", value, key.substring(6));
 					}
+				}
+			} else if (key.startsWith("showName")) {
+				if (key.length() == 8) {
+					try {
+						map.put("", new LoggerConfig(LoggerConfig.ShowName.valueOf(value.toUpperCase(Locale.ROOT))));
+					} catch (IllegalArgumentException e) {
+						log.warn("Ignoring invalid default show name setting {}", value);
+					}
+				} else if (key.charAt(8) == '.') {
+					try {
+						map.put(key.substring(9), new LoggerConfig(LoggerConfig.ShowName.valueOf(value.toUpperCase(Locale.ROOT))));
+					} catch (IllegalArgumentException e) {
+						log.warn("Ignoring invalid show name setting {} for {}", value, key.substring(9));
+					}
+				}
+			} else if (key.startsWith("showThread")) {
+				if (key.length() == 10) {
+					LoggerConfig config = new LoggerConfig();
+					config.showThread = Boolean.valueOf(value);
+					map.put("", config);
+				} else if (key.charAt(10) == '.') {
+					LoggerConfig config = new LoggerConfig();
+					config.showThread = Boolean.valueOf(value);
+					map.put(key.substring(11), config);
 				}
 			}
 		}
 	}
 
-	final String getTag(String name) {
-		return tag.get(name);
-	}
-
-	final LogLevel getLevel(String name) {
-		return level.get(name);
+	final LoggerConfig get(String name) {
+		return map.get(name);
 	}
 }
