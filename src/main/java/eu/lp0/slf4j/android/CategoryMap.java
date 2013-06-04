@@ -37,13 +37,15 @@ final class CategoryMap {
 	}
 
 	/**
-	 * Returns the first matching category name for the given input, or {code null} if no categories match.
+	 * Returns the merged config of all matching category names for the given input, using the defaults if no categories match.
 	 */
 	final LoggerConfig get(String name) {
 		final LoggerConfig config = new LoggerConfig();
 
-		if (categories.isEmpty())
+		if (categories.isEmpty()) {
+			config.merge(LoggerConfig.DEFAULT);
 			return config;
+		}
 
 		if (name == null) {
 			name = "";
