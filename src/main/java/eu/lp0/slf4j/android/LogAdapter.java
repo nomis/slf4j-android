@@ -206,14 +206,14 @@ final class LogAdapter implements Logger {
 	}
 
 	private final void __debug(final String msg) {
-		Log.v(config.tag, rewriteMsg(msg));
+		Log.d(config.tag, rewriteMsg(msg));
 	}
 
 	private final void __debug(final String msg, final Throwable t) {
 		if (t == null) {
-			Log.v(config.tag, rewriteMsg(msg));
+			Log.d(config.tag, rewriteMsg(msg));
 		} else {
-			Log.v(config.tag, rewriteMsg(msg), t);
+			Log.d(config.tag, rewriteMsg(msg), t);
 		}
 	}
 
@@ -295,14 +295,14 @@ final class LogAdapter implements Logger {
 	}
 
 	private final void __info(final String msg) {
-		Log.v(config.tag, rewriteMsg(msg));
+		Log.i(config.tag, rewriteMsg(msg));
 	}
 
 	private final void __info(final String msg, final Throwable t) {
 		if (t == null) {
-			Log.v(config.tag, rewriteMsg(msg));
+			Log.i(config.tag, rewriteMsg(msg));
 		} else {
-			Log.v(config.tag, rewriteMsg(msg), t);
+			Log.i(config.tag, rewriteMsg(msg), t);
 		}
 	}
 
@@ -384,14 +384,14 @@ final class LogAdapter implements Logger {
 	}
 
 	private final void __warn(final String msg) {
-		Log.v(config.tag, rewriteMsg(msg));
+		Log.w(config.tag, rewriteMsg(msg));
 	}
 
 	private final void __warn(final String msg, final Throwable t) {
 		if (t == null) {
-			Log.v(config.tag, rewriteMsg(msg));
+			Log.w(config.tag, rewriteMsg(msg));
 		} else {
-			Log.v(config.tag, rewriteMsg(msg), t);
+			Log.w(config.tag, rewriteMsg(msg), t);
 		}
 	}
 
@@ -473,14 +473,14 @@ final class LogAdapter implements Logger {
 	}
 
 	private final void __error(final String msg) {
-		Log.v(config.tag, rewriteMsg(msg));
+		Log.e(config.tag, rewriteMsg(msg));
 	}
 
 	private final void __error(final String msg, final Throwable t) {
 		if (t == null) {
-			Log.v(config.tag, rewriteMsg(msg));
+			Log.e(config.tag, rewriteMsg(msg));
 		} else {
-			Log.v(config.tag, rewriteMsg(msg), t);
+			Log.e(config.tag, rewriteMsg(msg), t);
 		}
 	}
 
