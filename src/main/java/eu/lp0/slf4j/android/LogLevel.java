@@ -23,11 +23,10 @@
 package eu.lp0.slf4j.android;
 
 public enum LogLevel {
-	NONE,
+	SUPPRESS,
 	ERROR,
 	WARN,
 	INFO,
 	DEBUG,
-	TRACE,
-	ALL;
+	VERBOSE;
 }

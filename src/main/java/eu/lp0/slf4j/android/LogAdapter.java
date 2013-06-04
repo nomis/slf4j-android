@@ -60,7 +60,7 @@ final class LogAdapter implements Logger {
 			WARN = ERROR && level.compareTo(LogLevel.WARN) >= 0;
 			INFO = WARN && level.compareTo(LogLevel.INFO) >= 0;
 			DEBUG = INFO && level.compareTo(LogLevel.DEBUG) >= 0;
-			TRACE = DEBUG && level.compareTo(LogLevel.TRACE) >= 0;
+			TRACE = DEBUG && level.compareTo(LogLevel.VERBOSE) >= 0;
 		}
 	}
 
