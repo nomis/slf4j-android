@@ -37,7 +37,7 @@ import org.slf4j.Logger;
 public final class LoggerFactory implements ILoggerFactory {
 	private static final Logger LOG = new LogAdapter("slf4j-android", null);
 	private final ConcurrentHashMap<String, Logger> loggerMap = new ConcurrentHashMap<String, Logger>();
-	private final Config config = new Config();
+	private final Config config = new Config(LOG);
 
 	@Override
 	public final Logger getLogger(final String name) {
@@ -49,10 +49,6 @@ public final class LoggerFactory implements ILoggerFactory {
 			final Logger oldInstance = loggerMap.putIfAbsent(name, newInstance);
 			return oldInstance == null ? newInstance : oldInstance;
 		}
-	}
-	
-	static Logger getInternalLogger() {
-		return LOG;
 	}
 
 	/**

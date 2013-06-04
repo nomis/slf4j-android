@@ -23,36 +23,19 @@
 package eu.lp0.slf4j.android;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.slf4j.Logger;
-import org.slf4j.impl.SimpleLoggerFactory;
 
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor({ "eu.lp0.slf4j.android.LoggerFactory" })
-@PrepareForTest(fullyQualifiedNames = { "eu.lp0.slf4j.android.LoggerFactory", "eu.lp0.slf4j.android.Config" })
 public class ConfigTest {
-	@Before
-	public void setup() throws Exception {
-		PowerMockito.mockStatic(LoggerFactory.class);
-		PowerMockito.when(LoggerFactory.getInternalLogger()).thenAnswer(new Answer<Logger>() {
-			@Override
-			public Logger answer(InvocationOnMock invocation) throws Throwable {
-				return new SimpleLoggerFactory().getLogger("slf4j-android");
-			}
-		});
-	}
-
 	@Test
 	public void tags() {
-		Config config = new Config();
+		Config config = new Config(Mockito.mock(Logger.class, Mockito.withSettings().verboseLogging()));
 		Assert.assertEquals("JavaApp", config.getTag("java.net.Socket"));
 		Assert.assertEquals("JavaLang", config.getTag("java.lang.Void"));
 		Assert.assertEquals("JavaUtil", config.getTag("java.util.List"));
@@ -61,7 +44,7 @@ public class ConfigTest {
 
 	@Test
 	public void levels() {
-		Config config = new Config();
+		Config config = new Config(Mockito.mock(Logger.class, Mockito.withSettings().verboseLogging()));
 		Assert.assertEquals(LogLevel.DEBUG, config.getLevel("java.net.Socket"));
 		Assert.assertEquals(LogLevel.WARN, config.getLevel("java.lang.Void"));
 		Assert.assertEquals(LogLevel.WARN, config.getLevel("java.util.List"));

@@ -45,11 +45,10 @@ import org.slf4j.Logger;
  * @author Simon Arlott
  */
 public final class Config {
-	private final Logger log = LoggerFactory.getInternalLogger();
 	private final CategoryList<String> tag = new CategoryList<String>();
 	private final CategoryList<LogLevel> level = new CategoryList<LogLevel>();
 
-	Config() {
+	Config(final Logger log) {
 		final Properties props = new Properties();
 		final URL url = getClass().getResource("config.properties");
 
