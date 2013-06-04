@@ -12,7 +12,7 @@ SLF4J binding for the Android logger
     * Override the log level for the specified logger prefix:
       `level.logger-prefix=SUPPRESS|ERROR|WARN|INFO|DEBUG|VERBOSE`
     * Show the logger name in short or long format:
-      `showName.logger-prefix=FALSE|SHORT|LONG`
+      `showName.logger-prefix=false|short|long`
     * Show the current thread:
       `showThread.*=true|false`
 * With no configuration, logger names are automatically compacted to fit the Android 23 character tag limit. 

@@ -41,7 +41,7 @@ import org.slf4j.Logger;
  * <dd>Set the tag for the specified logger prefix.</dd>
  * <dt>{@code level.*=LEVEL}</dt>
  * <dd>Override the {@linkplain LogLevel log level} for the specified logger prefix.</dd>
- * <dt>{@code showName.*=FALSE|SHORT|LONG}</dt>
+ * <dt>{@code showName.*=false|short|long}</dt>
  * <dd>Show the logger name in short or long format for the specified logger prefix.</dd>
  * <dt>{@code showThread.*=true|false}</dt>
  * <dd>Show the current thread for the specified logger prefix.</dd>
