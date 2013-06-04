@@ -71,26 +71,30 @@ public final class Config {
 			if (key.startsWith("tag")) {
 				if (key.length() == 3) {
 					if (value.isEmpty() || value.length() > LoggerFactory.MAX_TAG_LEN) {
-						log.warn("Ignoring invalid tag {} for {}", value, key);
+						log.warn("Ignoring invalid default tag {}", value);
 					} else {
 						tag.put("", value);
 					}
 				} else if (key.charAt(3) == '.') {
 					if (value.isEmpty() || value.length() > LoggerFactory.MAX_TAG_LEN) {
-						log.warn("Ignoring invalid tag {} for {}", value, key);
+						log.warn("Ignoring invalid tag {} for {}", value, key.substring(4));
 					} else {
 						tag.put(key.substring(4), value);
 					}
 				}
 			} else if (key.startsWith("level")) {
-				try {
-					if (key.length() == 5) {
+				if (key.length() == 5) {
+					try {
 						level.put("", LogLevel.valueOf(value));
-					} else if (key.charAt(5) == '.') {
-						level.put(key.substring(6), LogLevel.valueOf(value));
+					} catch (IllegalArgumentException e) {
+						log.warn("Ignoring invalid default log level {}", value);
 					}
-				} catch (IllegalArgumentException e) {
-					log.warn("Ignoring invalid log level {} for {}", value, key);
+				} else if (key.charAt(5) == '.') {
+					try {
+						level.put(key.substring(6), LogLevel.valueOf(value));
+					} catch (IllegalArgumentException e) {
+						log.warn("Ignoring invalid log level {} for {}", value, key.substring(6));
+					}
 				}
 			}
 		}
