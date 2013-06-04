@@ -35,7 +35,7 @@ import org.slf4j.Logger;
  * Loads properties from {@code /eu/lp0/slf4j/android/config.properties}.
  * 
  * <p>
- * Configuration can be applied per logger prefix or set the default by omitting the logger prefix: 
+ * Configuration can be applied per logger prefix or set the default by omitting the logger prefix:
  * <dl>
  * <dt>{@code tag.*=TagName}</dt>
  * <dd>Set the tag for the specified logger prefix.</dd>
@@ -48,7 +48,7 @@ import org.slf4j.Logger;
  * </dl>
  * 
  * With no configuration, logger names are automatically compacted to fit the Android 23 character tag limit.
- * The default configuration does not show the logger name or the current thread. 
+ * The default configuration does not show the logger name or the current thread.
  * 
  * @author Simon Arlott
  */
@@ -69,63 +69,69 @@ public final class LoggingConfig {
 				props.clear();
 			}
 		}
-		
+
 		for (final Entry<Object, Object> entry : props.entrySet()) {
-			final String key = (String)entry.getKey();
+			String key = (String)entry.getKey();
 			final String value = (String)entry.getValue();
 
 			if (key.startsWith("tag")) {
 				if (key.length() == 3) {
-					if (value.isEmpty() || value.length() > LoggerFactory.MAX_TAG_LEN) {
+					key = "";
+				} else if (key.charAt(3) == '.') {
+					key = key.substring(4);
+				}
+
+				if (value.isEmpty() || value.length() > LoggerFactory.MAX_TAG_LEN) {
+					if (key.isEmpty()) {
 						log.warn("Ignoring invalid default tag {}", value);
 					} else {
-						map.put("", new LoggerConfig(value));
+						log.warn("Ignoring invalid tag {} for {}", value, key);
 					}
-				} else if (key.charAt(3) == '.') {
-					if (value.isEmpty() || value.length() > LoggerFactory.MAX_TAG_LEN) {
-						log.warn("Ignoring invalid tag {} for {}", value, key.substring(4));
-					} else {
-						map.put(key.substring(4), new LoggerConfig(value));
-					}
+				} else {
+					map.put(key, new LoggerConfig(value));
 				}
 			} else if (key.startsWith("level")) {
 				if (key.length() == 5) {
-					try {
-						map.put("", new LoggerConfig(LogLevel.valueOf(value.toUpperCase(Locale.ROOT))));
-					} catch (IllegalArgumentException e) {
-						log.warn("Ignoring invalid default log level {}", value);
-					}
+					key = "";
 				} else if (key.charAt(5) == '.') {
-					try {
-						map.put(key.substring(6), new LoggerConfig(LogLevel.valueOf(value.toUpperCase(Locale.ROOT))));
-					} catch (IllegalArgumentException e) {
-						log.warn("Ignoring invalid log level {} for {}", value, key.substring(6));
+					key = key.substring(6);
+				}
+
+				try {
+					map.put(key, new LoggerConfig(LogLevel.valueOf(value.toUpperCase(Locale.ROOT))));
+				} catch (IllegalArgumentException e) {
+					if (key.isEmpty()) {
+						log.warn("Ignoring invalid default log level {}", value);
+					} else {
+						log.warn("Ignoring invalid log level {} for {}", value, key);
 					}
 				}
 			} else if (key.startsWith("showName")) {
 				if (key.length() == 8) {
-					try {
-						map.put("", new LoggerConfig(LoggerConfig.ShowName.valueOf(value.toUpperCase(Locale.ROOT))));
-					} catch (IllegalArgumentException e) {
-						log.warn("Ignoring invalid default show name setting {}", value);
-					}
+					key = "";
 				} else if (key.charAt(8) == '.') {
-					try {
-						map.put(key.substring(9), new LoggerConfig(LoggerConfig.ShowName.valueOf(value.toUpperCase(Locale.ROOT))));
-					} catch (IllegalArgumentException e) {
-						log.warn("Ignoring invalid show name setting {} for {}", value, key.substring(9));
+					key = key.substring(9);
+				}
+
+				try {
+					map.put(key, new LoggerConfig(LoggerConfig.ShowName.valueOf(value.toUpperCase(Locale.ROOT))));
+				} catch (IllegalArgumentException e) {
+					if (key.isEmpty()) {
+						log.warn("Ignoring invalid default show name setting {}", value);
+					} else {
+						log.warn("Ignoring invalid show name setting {} for {}", value, key);
 					}
 				}
 			} else if (key.startsWith("showThread")) {
 				if (key.length() == 10) {
-					LoggerConfig config = new LoggerConfig();
-					config.showThread = Boolean.valueOf(value);
-					map.put("", config);
+					key = "";
 				} else if (key.charAt(10) == '.') {
-					LoggerConfig config = new LoggerConfig();
-					config.showThread = Boolean.valueOf(value);
-					map.put(key.substring(11), config);
+					key = key.substring(11);
 				}
+
+				LoggerConfig config = new LoggerConfig();
+				config.showThread = Boolean.valueOf(value);
+				map.put(key, config);
 			}
 		}
 	}
