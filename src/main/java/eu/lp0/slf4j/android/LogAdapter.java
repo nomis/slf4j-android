@@ -39,6 +39,7 @@ import android.util.Log;
  * @author Simon Arlott
  */
 final class LogAdapter implements Logger {
+	private final String name;
 	private final String tag;
 	private final boolean ERROR;
 	private final boolean WARN;
@@ -46,8 +47,9 @@ final class LogAdapter implements Logger {
 	private final boolean DEBUG;
 	private final boolean TRACE;
 
-	LogAdapter(final String name, LogLevel level) {
-		tag = name;
+	LogAdapter(final String name, final String tag, LogLevel level) {
+		this.name = name;
+		this.tag = tag;
 		
 		if (level == null) {
 			ERROR = Log.isLoggable(tag, Log.ERROR);
@@ -66,7 +68,7 @@ final class LogAdapter implements Logger {
 
 	@Override
 	public final String getName() {
-		return tag;
+		return name;
 	}
 
 	/* Trace */
