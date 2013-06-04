@@ -28,27 +28,27 @@ final class LoggerConfig {
 		DEFAULT.showName = ShowName.FALSE;
 		DEFAULT.showThread = false;
 	}
-	
+
 	String tag;
 	LogLevel level;
 	ShowName showName;
 	Boolean showThread;
-	
+
 	LoggerConfig() {
 	}
-	
+
 	LoggerConfig(String tag) {
 		this.tag = tag;
 	}
-	
+
 	LoggerConfig(LogLevel level) {
 		this.level = level;
 	}
-	
+
 	LoggerConfig(ShowName showName) {
 		this.showName = showName;
 	}
-	
+
 	enum ShowName {
 		FALSE, SHORT, LONG;
 	}

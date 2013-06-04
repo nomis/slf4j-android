@@ -90,21 +90,21 @@ final class LogAdapter implements Logger {
 	private final String rewriteMsg(final String msg) {
 		if (config.showThread) {
 			final StringBuilder sb = new StringBuilder(msg.length() + 64);
-			
+
 			sb.append("[").append(Thread.currentThread().getName()).append("] ");
-			
+
 			if (prefixName != null) {
 				sb.append(prefixName);
 			}
-			
+
 			sb.append(msg);
-			
+
 			return sb.toString();
 		} else {
 			if (prefixName != null) {
 				return prefixName.concat(msg);
 			} else {
-				return msg; 
+				return msg;
 			}
 		}
 	}

@@ -41,7 +41,7 @@ public final class LoggerFactory implements ILoggerFactory {
 		config.merge(LoggerConfig.DEFAULT);
 		LOG = new LogAdapter("eu.lp0.slf4j.android", config);
 	}
-	
+
 	private final ConcurrentHashMap<String, Logger> loggerMap = new ConcurrentHashMap<String, Logger>();
 	private final LoggingConfig loggingConfig = new LoggingConfig(LOG);
 
@@ -56,7 +56,7 @@ public final class LoggerFactory implements ILoggerFactory {
 			return oldInstance == null ? newInstance : oldInstance;
 		}
 	}
-	
+
 	/**
 	 * Maximum length of a tag in the Android logging system.
 	 * 

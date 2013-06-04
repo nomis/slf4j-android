@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Compiles a map of logger categories to be used to match logger names.  
+ * Compiles a map of logger categories to be used to match logger names.
  * 
  * @author Simon Arlott
  */
@@ -41,14 +41,14 @@ final class CategoryMap {
 	 */
 	final LoggerConfig get(String name) {
 		final LoggerConfig config = new LoggerConfig();
-		
+
 		if (categories.isEmpty())
 			return config;
-		
+
 		if (name == null) {
 			name = "";
 		}
-		
+
 		while (true) {
 			final int index = name.lastIndexOf('.');
 
@@ -67,7 +67,7 @@ final class CategoryMap {
 	}
 
 	/**
-	 * Add a category to the config map. 
+	 * Add a category to the config map.
 	 */
 	final void put(final String name, final LoggerConfig value) {
 		LoggerConfig config = categories.get(name);
