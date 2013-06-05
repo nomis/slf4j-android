@@ -24,6 +24,7 @@
 package eu.lp0.slf4j.android;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
@@ -55,7 +56,7 @@ public final class LoggerFactory implements ILoggerFactory {
 		if (logger != null) {
 			if (TRACE) {
 				final long stop = System.nanoTime();
-				LOG.trace("Found logger {} in {}ns", name, stop - start);
+				LOG.trace("Found logger {} in {}µs", name, TimeUnit.NANOSECONDS.toMicros(stop - start));
 			}
 			return logger;
 		} else {
@@ -64,9 +65,9 @@ public final class LoggerFactory implements ILoggerFactory {
 			if (TRACE) {
 				final long stop = System.nanoTime();
 				if (oldInstance == null) {
-					LOG.trace("Created logger {} in {}ns", name, stop - start);
+					LOG.trace("Created logger {} in {}µs", name, TimeUnit.NANOSECONDS.toMicros(stop - start));
 				} else {
-					LOG.trace("Found duplicate logger {} in {}ns", name, stop - start);
+					LOG.trace("Found existing logger {} in {}µs", name, TimeUnit.NANOSECONDS.toMicros(stop - start));
 				}
 			}
 			return oldInstance == null ? newInstance : oldInstance;
@@ -145,7 +146,7 @@ public final class LoggerFactory implements ILoggerFactory {
 
 		if (TRACE) {
 			final long stop = System.nanoTime();
-			LOG.trace("Obtained config for {} in {}ns", name, stop - start);
+			LOG.trace("Retrieved config for {} in {}µs", name, TimeUnit.NANOSECONDS.toMicros(stop - start));
 		}
 
 		return config;

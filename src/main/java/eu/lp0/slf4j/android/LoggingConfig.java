@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Locale;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
 import java.util.Properties;
 
 import org.slf4j.Logger;
@@ -124,7 +125,7 @@ final class LoggingConfig {
 
 		if (log.isTraceEnabled()) {
 			final long stop = System.nanoTime();
-			log.trace("Config processing completed in {}ns", stop - start);
+			log.trace("Config processing completed in {}µs", TimeUnit.NANOSECONDS.toMicros(stop - start));
 		}
 	}
 
