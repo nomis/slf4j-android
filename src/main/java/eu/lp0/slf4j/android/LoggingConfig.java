@@ -68,7 +68,7 @@ final class LoggingConfig {
 					key = key.substring(4);
 				}
 
-				if (value.isEmpty() || value.length() > LoggerFactory.MAX_TAG_LEN) {
+				if (value.length() > LoggerFactory.MAX_TAG_LEN) {
 					if (key.isEmpty()) {
 						log.warn("Ignoring invalid default tag {}", value);
 					} else {

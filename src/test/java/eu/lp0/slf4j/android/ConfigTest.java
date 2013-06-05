@@ -41,7 +41,7 @@ public class ConfigTest {
 		Assert.assertEquals("JavaUtil", config.get("java.util.List").tag);
 		Assert.assertEquals("JavaApp", config.get("java.oops.Test").tag);
 		Assert.assertEquals("JavaUtil", config.get("java.util.concurrent.locks.ReentrantReadWriteLock").tag);
-		Assert.assertEquals("JavaApp", config.get("javax.swing.JFrame").tag);
+		Assert.assertEquals("", config.get("javax.swing.JFrame").tag);
 	}
 
 	@Test

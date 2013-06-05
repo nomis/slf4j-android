@@ -41,10 +41,10 @@ public class CategoryTest {
 	public void none() {
 		CategoryMap matcher = new CategoryMap();
 		
-		Assert.assertEquals(null, matcher.get("").tag);
-		Assert.assertEquals(null, matcher.get("test1").tag);
-		Assert.assertEquals(null, matcher.get("test1.test2").tag);
-		Assert.assertEquals(null, matcher.get("test1.test2.test3").tag);
+		Assert.assertEquals("", matcher.get("").tag);
+		Assert.assertEquals("", matcher.get("test1").tag);
+		Assert.assertEquals("", matcher.get("test1.test2").tag);
+		Assert.assertEquals("", matcher.get("test1.test2.test3").tag);
 	}
 	
 	@Test
@@ -52,10 +52,10 @@ public class CategoryTest {
 		CategoryMap matcher = new CategoryMap();
 		matcher.put("java.lang", new LoggerConfig("name"));
 		
-		Assert.assertEquals(null, matcher.get("").tag);
-		Assert.assertEquals(null, matcher.get("test1").tag);
-		Assert.assertEquals(null, matcher.get("test1.test2").tag);
-		Assert.assertEquals(null, matcher.get("test1.test2.test3").tag);
+		Assert.assertEquals("", matcher.get("").tag);
+		Assert.assertEquals("", matcher.get("test1").tag);
+		Assert.assertEquals("", matcher.get("test1.test2").tag);
+		Assert.assertEquals("", matcher.get("test1.test2.test3").tag);
 		Assert.assertEquals("name", matcher.get("java.lang").tag);
 		Assert.assertEquals("name", matcher.get("java.lang.Void").tag);
 		Assert.assertEquals("name", matcher.get("java.lang.String").tag);

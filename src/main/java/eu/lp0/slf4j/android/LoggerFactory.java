@@ -136,7 +136,7 @@ public final class LoggerFactory implements ILoggerFactory {
 		final long start = TRACE ? System.nanoTime() : 0;
 		final LoggerConfig config = loggingConfig.get(name);
 
-		if (config.tag == null) {
+		if (config.tag.isEmpty()) {
 			config.tag = createTag(name);
 			if (TRACE) {
 				LOG.trace("Created tag {} for {}", config.tag, name);

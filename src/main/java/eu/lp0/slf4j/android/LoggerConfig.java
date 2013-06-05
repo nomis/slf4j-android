@@ -25,6 +25,7 @@ package eu.lp0.slf4j.android;
 final class LoggerConfig {
 	static final LoggerConfig DEFAULT = new LoggerConfig();
 	static {
+		DEFAULT.tag = "";
 		DEFAULT.level = LogLevel.NATIVE;
 		DEFAULT.showName = ShowName.FALSE;
 		DEFAULT.showThread = false;
