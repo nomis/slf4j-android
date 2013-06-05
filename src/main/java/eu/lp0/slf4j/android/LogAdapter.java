@@ -52,7 +52,7 @@ final class LogAdapter implements Logger {
 		this.name = name;
 		this.config = config;
 
-		if (config.level == null) {
+		if (config.level == LogLevel.NATIVE) {
 			ERROR = Log.isLoggable(config.tag, Log.ERROR);
 			WARN = ERROR && Log.isLoggable(config.tag, Log.WARN);
 			INFO = WARN && Log.isLoggable(config.tag, Log.INFO);

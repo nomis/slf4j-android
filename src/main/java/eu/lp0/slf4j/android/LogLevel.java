@@ -22,6 +22,8 @@
  */
 package eu.lp0.slf4j.android;
 
+import android.util.Log;
+
 /**
  * Configuration of Android logging level.
  * 
@@ -44,5 +46,8 @@ public enum LogLevel {
 	DEBUG,
 
 	/** Log messages at TRACE level and above. */
-	VERBOSE;
+	VERBOSE,
+	
+	/** Use {@link Log#isLoggable(String, int)} to determine the log level. */
+	NATIVE;
 }
