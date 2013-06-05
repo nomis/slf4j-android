@@ -36,10 +36,13 @@ import org.slf4j.Logger;
  */
 public final class LoggerFactory implements ILoggerFactory {
 	private static final Logger LOG;
+	private static final boolean TRACE;
 	static {
 		LoggerConfig config = new LoggerConfig("slf4j-android");
+		config.showThread = true;
 		config.merge(LoggerConfig.DEFAULT);
 		LOG = new LogAdapter("eu.lp0.slf4j.android", config);
+		TRACE = LOG.isTraceEnabled();
 	}
 
 	private final ConcurrentHashMap<String, Logger> loggerMap = new ConcurrentHashMap<String, Logger>();
@@ -47,12 +50,25 @@ public final class LoggerFactory implements ILoggerFactory {
 
 	@Override
 	public final Logger getLogger(final String name) {
+		final long start = TRACE ? System.nanoTime() : 0;
 		final Logger logger = loggerMap.get(name);
 		if (logger != null) {
+			if (TRACE) {
+				final long stop = System.nanoTime();
+				LOG.trace("Found logger {} in {}ns", name, stop - start);
+			}
 			return logger;
 		} else {
 			final Logger newInstance = new LogAdapter(name, getConfig(name));
 			final Logger oldInstance = loggerMap.putIfAbsent(name, newInstance);
+			if (TRACE) {
+				final long stop = System.nanoTime();
+				if (oldInstance == null) {
+					LOG.trace("Created logger {} in {}ns", name, stop - start);
+				} else {
+					LOG.trace("Found duplicate logger {} in {}ns", name, stop - start);
+				}
+			}
 			return oldInstance == null ? newInstance : oldInstance;
 		}
 	}
@@ -117,10 +133,21 @@ public final class LoggerFactory implements ILoggerFactory {
 	}
 
 	private final LoggerConfig getConfig(final String name) {
+		final long start = TRACE ? System.nanoTime() : 0;
 		final LoggerConfig config = loggingConfig.get(name);
+
 		if (config.tag == null) {
 			config.tag = createTag(name);
+			if (TRACE) {
+				LOG.trace("Created tag {} for {}", config.tag, name);
+			}
 		}
+
+		if (TRACE) {
+			final long stop = System.nanoTime();
+			LOG.trace("Obtained config for {} in {}ns", name, stop - start);
+		}
+
 		return config;
 	}
 }

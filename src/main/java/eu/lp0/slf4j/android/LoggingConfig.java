@@ -56,6 +56,7 @@ public final class LoggingConfig {
 	private final CategoryMap map = new CategoryMap();
 
 	LoggingConfig(final Logger log) {
+		final long start = log.isTraceEnabled() ? System.nanoTime() : 0;
 		final Properties props = new Properties();
 		final URL url = getClass().getResource("config.properties");
 
@@ -68,6 +69,8 @@ public final class LoggingConfig {
 				log.error("Error loading properties file from {}", url, e);
 				props.clear();
 			}
+		} else {
+			log.debug("No config file");
 		}
 
 		for (final Entry<Object, Object> entry : props.entrySet()) {
@@ -133,6 +136,11 @@ public final class LoggingConfig {
 				config.showThread = Boolean.valueOf(value);
 				map.put(key, config);
 			}
+		}
+
+		if (log.isTraceEnabled()) {
+			final long stop = System.nanoTime();
+			log.trace("Config processing completed in {}ns", stop - start);
 		}
 	}
 
