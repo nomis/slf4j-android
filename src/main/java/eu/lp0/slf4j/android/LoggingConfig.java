@@ -34,25 +34,9 @@ import org.slf4j.Logger;
 /**
  * Loads properties from {@code /eu/lp0/slf4j/android/config.properties}.
  * 
- * <p>
- * Configuration can be applied per logger prefix or set the default by omitting the logger prefix:
- * <dl>
- * <dt>{@code tag.*=TagName}</dt>
- * <dd>Set the tag for the specified logger prefix.</dd>
- * <dt>{@code level.*=LEVEL}</dt>
- * <dd>Override the {@linkplain LogLevel log level} for the specified logger prefix.</dd>
- * <dt>{@code showName.*=false|short|long}</dt>
- * <dd>Show the logger name in short or long format for the specified logger prefix.</dd>
- * <dt>{@code showThread.*=true|false}</dt>
- * <dd>Show the current thread for the specified logger prefix.</dd>
- * </dl>
- * 
- * With no configuration, logger names are automatically compacted to fit the Android 23 character tag limit.
- * The default configuration does not show the logger name or the current thread.
- * 
  * @author Simon Arlott
  */
-public final class LoggingConfig {
+final class LoggingConfig {
 	private final CategoryMap map = new CategoryMap();
 
 	LoggingConfig(final Logger log) {

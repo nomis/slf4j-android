@@ -23,12 +23,5 @@
 
 /**
  * SLF4J binding for the Android logger.
- * 
- * <ul>
- * <li>Does not support SLF4J markers, these will be ignored.</li>
- * <li>Compatible with API version 1.</li>
- * </ul>
- * 
- * @see eu.lp0.slf4j.android.LoggingConfig Configuration
  */
 package eu.lp0.slf4j.android;
