@@ -52,7 +52,7 @@ final class LoggerConfig {
 	}
 
 	enum ShowName {
-		FALSE, SHORT, LONG;
+		FALSE, SHORT, COMPACT, LONG;
 	}
 
 	final boolean isComplete() {

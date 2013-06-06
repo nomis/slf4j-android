@@ -71,6 +71,10 @@ final class LogAdapter implements Logger {
 			prefixName = name.concat(": ");
 			break;
 
+		case COMPACT:
+			prefixName = getCompactName().concat(": ");
+			break;
+
 		case SHORT:
 			prefixName = name.substring(name.lastIndexOf('.') + 1).concat(": ");
 			break;
@@ -110,6 +114,33 @@ final class LogAdapter implements Logger {
 
 		nativeLevelMap.put(config.tag, level);
 		return level;
+	}
+
+	private final String getCompactName() {
+		final char[] compactName = name.toCharArray();
+		final int arrayLen = compactName.length;
+		int len = 0;
+		int mark = 0;
+
+		for (int i = 0; i < arrayLen; i++, len++) {
+			if (compactName[i] == '.') {
+				len = mark;
+
+				if (compactName[len] != '.') {
+					len++;
+				}
+
+				mark = len;
+
+				if (i + 1 < arrayLen && compactName[i + 1] != '.') {
+					mark++;
+				}
+			}
+
+			compactName[len] = compactName[i];
+		}
+
+		return new String(compactName, 0, len);
 	}
 
 	@Override
