@@ -24,6 +24,7 @@
 package eu.lp0.slf4j.android;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.ILoggerFactory;
@@ -46,7 +47,7 @@ public final class LoggerFactory implements ILoggerFactory {
 		TRACE = LOG.isTraceEnabled();
 	}
 
-	private final ConcurrentHashMap<String, Logger> loggerMap = new ConcurrentHashMap<String, Logger>();
+	private final ConcurrentMap<String, Logger> loggerMap = new ConcurrentHashMap<String, Logger>();
 	private final LoggingConfig loggingConfig = new LoggingConfig(LOG);
 
 	@Override

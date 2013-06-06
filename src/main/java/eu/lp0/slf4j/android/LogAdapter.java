@@ -22,6 +22,9 @@
  */
 package eu.lp0.slf4j.android;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.slf4j.helpers.FormattingTuple;
@@ -39,6 +42,7 @@ import android.util.Log;
  * @author Simon Arlott
  */
 final class LogAdapter implements Logger {
+	private static final ConcurrentMap<String, LogLevel> nativeLevelMap = new ConcurrentHashMap<String, LogLevel>();
 	private final String name;
 	private final String prefixName;
 	private final LoggerConfig config;
@@ -53,18 +57,14 @@ final class LogAdapter implements Logger {
 		this.config = config;
 
 		if (config.level == LogLevel.NATIVE) {
-			ERROR = Log.isLoggable(config.tag, Log.ERROR);
-			WARN = ERROR && Log.isLoggable(config.tag, Log.WARN);
-			INFO = WARN && Log.isLoggable(config.tag, Log.INFO);
-			DEBUG = INFO && Log.isLoggable(config.tag, Log.DEBUG);
-			TRACE = DEBUG && Log.isLoggable(config.tag, Log.VERBOSE);
-		} else {
-			ERROR = config.level.compareTo(LogLevel.ERROR) >= 0;
-			WARN = ERROR && config.level.compareTo(LogLevel.WARN) >= 0;
-			INFO = WARN && config.level.compareTo(LogLevel.INFO) >= 0;
-			DEBUG = INFO && config.level.compareTo(LogLevel.DEBUG) >= 0;
-			TRACE = DEBUG && config.level.compareTo(LogLevel.VERBOSE) >= 0;
+			config.level = getNativeLogLevel();
 		}
+
+		TRACE = (config.level == LogLevel.VERBOSE);
+		DEBUG = TRACE || (config.level == LogLevel.DEBUG);
+		INFO = DEBUG || (config.level == LogLevel.INFO);
+		WARN = INFO || (config.level == LogLevel.WARN);
+		ERROR = WARN || (config.level == LogLevel.ERROR);
 
 		switch (config.showName) {
 		case LONG:
@@ -80,6 +80,36 @@ final class LogAdapter implements Logger {
 			prefixName = null;
 			break;
 		}
+	}
+
+	private final LogLevel getNativeLogLevel() {
+		LogLevel level = nativeLevelMap.get(config.tag);
+		if (level != null) {
+			return level;
+		}
+
+		/* Requires no more than 3 calls to isLoggable to find any level */
+		if (Log.isLoggable(config.tag, Log.INFO)) {
+			if (Log.isLoggable(config.tag, Log.DEBUG)) {
+				if (Log.isLoggable(config.tag, Log.VERBOSE)) {
+					level = LogLevel.VERBOSE;
+				} else {
+					level = LogLevel.DEBUG;
+				}
+			} else {
+				/* Default log level */
+				level = LogLevel.INFO;
+			}
+		} else if (Log.isLoggable(config.tag, Log.WARN)) {
+			level = LogLevel.WARN;
+		} else if (Log.isLoggable(config.tag, Log.ERROR)) {
+			level = LogLevel.ERROR;
+		} else {
+			level = LogLevel.SUPPRESS;
+		}
+
+		nativeLevelMap.put(config.tag, level);
+		return level;
 	}
 
 	@Override
