@@ -86,13 +86,13 @@ public final class LoggerFactory implements ILoggerFactory {
 	 * Create a compatible logging tag for Android based on the logger name.
 	 */
 	static final String createTag(final String name) {
+		if (name.length() <= MAX_TAG_LEN)
+			return name;
+
 		final char[] tag = name.toCharArray();
 		final int arrayLen = tag.length;
 		int len = 0;
 		int mark = 0;
-
-		if (arrayLen <= MAX_TAG_LEN)
-			return name;
 
 		for (int i = 0; i < arrayLen; i++, len++) {
 			if (tag[i] == '.') {
