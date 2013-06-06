@@ -23,12 +23,11 @@
 package eu.lp0.slf4j.android;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Locale;
 import java.util.Map.Entry;
-import java.util.concurrent.TimeUnit;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 
@@ -49,7 +48,7 @@ final class LoggingConfig {
 			log.debug("Loading properties file from {}", url);
 
 			try {
-				props.load(new InputStreamReader(url.openStream()));
+				props.load(url.openStream());
 			} catch (IOException e) {
 				log.error("Error loading properties file from {}", url, e);
 				props.clear();
