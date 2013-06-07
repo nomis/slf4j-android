@@ -11,8 +11,8 @@ SLF4J binding for the Android logger
       `tag.logger-prefix=TagName`
     * Set the log level for the specified logger prefix:
       `level.logger-prefix=SUPPRESS|ERROR|WARN|INFO|DEBUG|VERBOSE|NATIVE`
-    * Show the logger name in short, compact or long format:
-      `showName.logger-prefix=false|short|compact|long`
+    * Show the logger name in short, compact, long format, or show caller stack frame:
+      `showName.logger-prefix=false|short|compact|long|caller`
     * Show the current thread:
       `showThread.*=true|false`
 * With no tag configured, logger names are automatically compacted to fit the Android 23 character tag limit. 

@@ -22,70 +22,12 @@
  */
 package eu.lp0.slf4j.android;
 
-final class LoggerConfig {
-	static final LoggerConfig DEFAULT = new LoggerConfig();
-	static {
-		DEFAULT.tag = "";
-		DEFAULT.level = LogLevel.NATIVE;
-		DEFAULT.showName = ShowName.FALSE;
-		DEFAULT.showThread = false;
-	}
+final class CallerStackTrace extends Throwable {
+	private static final long serialVersionUID = 1L;
+	private static final CallerStackTrace INSTANCE = new CallerStackTrace();
 
-	String tag;
-	LogLevel level;
-	ShowName showName;
-	Boolean showThread;
-
-	LoggerConfig() {
-	}
-
-	LoggerConfig(String tag) {
-		this.tag = tag;
-	}
-
-	LoggerConfig(LogLevel level) {
-		this.level = level;
-	}
-
-	LoggerConfig(ShowName showName) {
-		this.showName = showName;
-	}
-
-	enum ShowName {
-		FALSE, SHORT, COMPACT, LONG, CALLER;
-	}
-
-	final boolean isComplete() {
-		return (tag != null) && (level != null) && (showName != null) && (showThread != null);
-	}
-
-	final boolean merge(LoggerConfig config) {
-		if (config == null) {
-			return isComplete();
-		} else {
-			boolean complete = true;
-
-			if (tag == null) {
-				tag = config.tag;
-				complete = false;
-			}
-
-			if (level == null) {
-				level = config.level;
-				complete = false;
-			}
-
-			if (showName == null) {
-				showName = config.showName;
-				complete = false;
-			}
-
-			if (showThread == null) {
-				showThread = config.showThread;
-				complete = false;
-			}
-
-			return complete;
-		}
+	public static final StackTraceElement getCaller(final int frames) {
+		INSTANCE.fillInStackTrace();
+		return INSTANCE.getStackTrace()[frames + 1];
 	}
 }

@@ -43,9 +43,14 @@ import android.util.Log;
  */
 final class LogAdapter implements Logger {
 	private static final ConcurrentMap<String, LogLevel> nativeLevelMap = new ConcurrentHashMap<String, LogLevel>();
+	private static final int DIRECT_FRAMES = 1;
+	private static final int FORMAT_FRAMES = 2;
 	private final String name;
+	private final String tag;
 	private final String prefixName;
-	private final LoggerConfig config;
+	private final boolean showThread;
+	private final boolean showCaller;
+	private final boolean complexRewriteMsg;
 	private final boolean ERROR;
 	private final boolean WARN;
 	private final boolean INFO;
@@ -54,7 +59,7 @@ final class LogAdapter implements Logger {
 
 	LogAdapter(final String name, final LoggerConfig config) {
 		this.name = name;
-		this.config = config;
+		this.tag = config.tag;
 
 		if (config.level == LogLevel.NATIVE) {
 			config.level = getNativeLogLevel();
@@ -67,35 +72,47 @@ final class LogAdapter implements Logger {
 		ERROR = WARN || (config.level == LogLevel.ERROR);
 
 		switch (config.showName) {
+		case CALLER:
+			prefixName = null;
+			showCaller = true;
+			break;
+
 		case LONG:
 			prefixName = name.concat(": ");
+			showCaller = false;
 			break;
 
 		case COMPACT:
 			prefixName = getCompactName().concat(": ");
+			showCaller = false;
 			break;
 
 		case SHORT:
 			prefixName = name.substring(name.lastIndexOf('.') + 1).concat(": ");
+			showCaller = false;
 			break;
 
 		case FALSE:
 		default:
+			showCaller = false;
 			prefixName = null;
 			break;
 		}
+
+		showThread = config.showThread;
+		complexRewriteMsg = showThread || showCaller;
 	}
 
 	private final LogLevel getNativeLogLevel() {
-		LogLevel level = nativeLevelMap.get(config.tag);
+		LogLevel level = nativeLevelMap.get(tag);
 		if (level != null) {
 			return level;
 		}
 
 		/* Requires no more than 3 calls to isLoggable to find any level */
-		if (Log.isLoggable(config.tag, Log.INFO)) {
-			if (Log.isLoggable(config.tag, Log.DEBUG)) {
-				if (Log.isLoggable(config.tag, Log.VERBOSE)) {
+		if (Log.isLoggable(tag, Log.INFO)) {
+			if (Log.isLoggable(tag, Log.DEBUG)) {
+				if (Log.isLoggable(tag, Log.VERBOSE)) {
 					level = LogLevel.VERBOSE;
 				} else {
 					level = LogLevel.DEBUG;
@@ -104,15 +121,15 @@ final class LogAdapter implements Logger {
 				/* Default log level */
 				level = LogLevel.INFO;
 			}
-		} else if (Log.isLoggable(config.tag, Log.WARN)) {
+		} else if (Log.isLoggable(tag, Log.WARN)) {
 			level = LogLevel.WARN;
-		} else if (Log.isLoggable(config.tag, Log.ERROR)) {
+		} else if (Log.isLoggable(tag, Log.ERROR)) {
 			level = LogLevel.ERROR;
 		} else {
 			level = LogLevel.SUPPRESS;
 		}
 
-		nativeLevelMap.put(config.tag, level);
+		nativeLevelMap.put(tag, level);
 		return level;
 	}
 
@@ -148,13 +165,17 @@ final class LogAdapter implements Logger {
 		return name;
 	}
 
-	private final String rewriteMsg(final String msg) {
-		if (config.showThread) {
+	private final String rewriteMsg(final String msg, final int frames) {
+		if (complexRewriteMsg) {
 			final StringBuilder sb = new StringBuilder(msg.length() + 64);
 
-			sb.append("[").append(Thread.currentThread().getName()).append("] ");
+			if (showThread) {
+				sb.append('[').append(Thread.currentThread().getName()).append("] ");
+			}
 
-			if (prefixName != null) {
+			if (showCaller) {
+				sb.append(CallerStackTrace.getCaller(frames).toString()).append(": ");
+			} else if (prefixName != null) {
 				sb.append(prefixName);
 			}
 
@@ -178,54 +199,54 @@ final class LogAdapter implements Logger {
 	}
 
 	private final void __trace(final String msg) {
-		Log.v(config.tag, rewriteMsg(msg));
+		Log.v(tag, msg);
 	}
 
 	private final void __trace(final String msg, final Throwable t) {
 		if (t == null) {
-			Log.v(config.tag, rewriteMsg(msg));
+			Log.v(tag, msg);
 		} else {
-			Log.v(config.tag, rewriteMsg(msg), t);
+			Log.v(tag, msg, t);
 		}
 	}
 
-	private final void __trace(final String format, final Object... arguments) {
+	private final void __traceFormat(final String format, final Object... arguments) {
 		final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
-		__trace(ft.getMessage(), ft.getThrowable());
+		__trace(rewriteMsg(ft.getMessage(), FORMAT_FRAMES), ft.getThrowable());
 	}
 
 	@Override
 	public final void trace(final String msg) {
 		if (TRACE) {
-			__trace(msg);
+			__trace(rewriteMsg(msg, DIRECT_FRAMES));
 		}
 	}
 
 	@Override
 	public final void trace(final String format, final Object arg) {
 		if (TRACE) {
-			__trace(format, arg);
+			__traceFormat(format, arg);
 		}
 	}
 
 	@Override
 	public final void trace(final String format, final Object arg1, final Object arg2) {
 		if (TRACE) {
-			__trace(format, arg1, arg2);
+			__traceFormat(format, arg1, arg2);
 		}
 	}
 
 	@Override
 	public final void trace(final String format, final Object... arguments) {
 		if (TRACE) {
-			__trace(format, arguments);
+			__traceFormat(format, arguments);
 		}
 	}
 
 	@Override
 	public final void trace(final String msg, final Throwable t) {
 		if (TRACE) {
-			__trace(msg, t);
+			__trace(rewriteMsg(msg, DIRECT_FRAMES), t);
 		}
 	}
 
@@ -236,27 +257,37 @@ final class LogAdapter implements Logger {
 
 	@Override
 	public final void trace(final Marker marker, final String msg) {
-		trace(msg);
+		if (TRACE) {
+			__trace(rewriteMsg(msg, DIRECT_FRAMES));
+		}
 	}
 
 	@Override
 	public final void trace(final Marker marker, final String format, final Object arg) {
-		trace(format, arg);
+		if (TRACE) {
+			__traceFormat(format, arg);
+		}
 	}
 
 	@Override
 	public final void trace(final Marker marker, final String format, final Object arg1, final Object arg2) {
-		trace(format, arg1, arg2);
+		if (TRACE) {
+			__traceFormat(format, arg1, arg2);
+		}
 	}
 
 	@Override
 	public final void trace(final Marker marker, final String format, final Object... argArray) {
-		trace(format, argArray);
+		if (TRACE) {
+			__traceFormat(format, argArray);
+		}
 	}
 
 	@Override
 	public final void trace(final Marker marker, final String msg, final Throwable t) {
-		trace(msg, t);
+		if (TRACE) {
+			__trace(rewriteMsg(msg, DIRECT_FRAMES), t);
+		}
 	}
 
 	/* Debug */
@@ -267,54 +298,54 @@ final class LogAdapter implements Logger {
 	}
 
 	private final void __debug(final String msg) {
-		Log.d(config.tag, rewriteMsg(msg));
+		Log.d(tag, msg);
 	}
 
 	private final void __debug(final String msg, final Throwable t) {
 		if (t == null) {
-			Log.d(config.tag, rewriteMsg(msg));
+			Log.d(tag, msg);
 		} else {
-			Log.d(config.tag, rewriteMsg(msg), t);
+			Log.d(tag, msg, t);
 		}
 	}
 
-	private final void __debug(final String format, final Object... arguments) {
+	private final void __debugFormat(final String format, final Object... arguments) {
 		final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
-		__debug(ft.getMessage(), ft.getThrowable());
+		__debug(rewriteMsg(ft.getMessage(), FORMAT_FRAMES), ft.getThrowable());
 	}
 
 	@Override
 	public final void debug(final String msg) {
 		if (DEBUG) {
-			__debug(msg);
+			__debug(rewriteMsg(msg, DIRECT_FRAMES));
 		}
 	}
 
 	@Override
 	public final void debug(final String format, final Object arg) {
 		if (DEBUG) {
-			__debug(format, arg);
+			__debugFormat(format, arg);
 		}
 	}
 
 	@Override
 	public final void debug(final String format, final Object arg1, final Object arg2) {
 		if (DEBUG) {
-			__debug(format, arg1, arg2);
+			__debugFormat(format, arg1, arg2);
 		}
 	}
 
 	@Override
 	public final void debug(final String format, final Object... arguments) {
 		if (DEBUG) {
-			__debug(format, arguments);
+			__debugFormat(format, arguments);
 		}
 	}
 
 	@Override
 	public final void debug(final String msg, final Throwable t) {
 		if (DEBUG) {
-			__debug(msg, t);
+			__debug(rewriteMsg(msg, DIRECT_FRAMES), t);
 		}
 	}
 
@@ -325,27 +356,37 @@ final class LogAdapter implements Logger {
 
 	@Override
 	public final void debug(final Marker marker, final String msg) {
-		debug(msg);
+		if (DEBUG) {
+			__debug(rewriteMsg(msg, DIRECT_FRAMES));
+		}
 	}
 
 	@Override
 	public final void debug(final Marker marker, final String format, final Object arg) {
-		debug(format, arg);
+		if (DEBUG) {
+			__debugFormat(format, arg);
+		}
 	}
 
 	@Override
 	public final void debug(final Marker marker, final String format, final Object arg1, final Object arg2) {
-		debug(format, arg1, arg2);
+		if (DEBUG) {
+			__debugFormat(format, arg1, arg2);
+		}
 	}
 
 	@Override
 	public final void debug(final Marker marker, final String format, final Object... argArray) {
-		debug(format, argArray);
+		if (DEBUG) {
+			__debugFormat(format, argArray);
+		}
 	}
 
 	@Override
 	public final void debug(final Marker marker, final String msg, final Throwable t) {
-		debug(msg, t);
+		if (DEBUG) {
+			__debug(rewriteMsg(msg, DIRECT_FRAMES), t);
+		}
 	}
 
 	/* Info */
@@ -356,54 +397,54 @@ final class LogAdapter implements Logger {
 	}
 
 	private final void __info(final String msg) {
-		Log.i(config.tag, rewriteMsg(msg));
+		Log.i(tag, msg);
 	}
 
 	private final void __info(final String msg, final Throwable t) {
 		if (t == null) {
-			Log.i(config.tag, rewriteMsg(msg));
+			Log.i(tag, msg);
 		} else {
-			Log.i(config.tag, rewriteMsg(msg), t);
+			Log.i(tag, msg, t);
 		}
 	}
 
-	private final void __info(final String format, final Object... arguments) {
+	private final void __infoFormat(final String format, final Object... arguments) {
 		final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
-		__info(ft.getMessage(), ft.getThrowable());
+		__info(rewriteMsg(ft.getMessage(), FORMAT_FRAMES), ft.getThrowable());
 	}
 
 	@Override
 	public final void info(final String msg) {
 		if (INFO) {
-			__info(msg);
+			__info(rewriteMsg(msg, DIRECT_FRAMES));
 		}
 	}
 
 	@Override
 	public final void info(final String format, final Object arg) {
 		if (INFO) {
-			__info(format, arg);
+			__infoFormat(format, arg);
 		}
 	}
 
 	@Override
 	public final void info(final String format, final Object arg1, final Object arg2) {
 		if (INFO) {
-			__info(format, arg1, arg2);
+			__infoFormat(format, arg1, arg2);
 		}
 	}
 
 	@Override
 	public final void info(final String format, final Object... arguments) {
 		if (INFO) {
-			__info(format, arguments);
+			__infoFormat(format, arguments);
 		}
 	}
 
 	@Override
 	public final void info(final String msg, final Throwable t) {
 		if (INFO) {
-			__info(msg, t);
+			__info(rewriteMsg(msg, DIRECT_FRAMES), t);
 		}
 	}
 
@@ -414,27 +455,37 @@ final class LogAdapter implements Logger {
 
 	@Override
 	public final void info(final Marker marker, final String msg) {
-		info(msg);
+		if (INFO) {
+			__info(rewriteMsg(msg, DIRECT_FRAMES));
+		}
 	}
 
 	@Override
 	public final void info(final Marker marker, final String format, final Object arg) {
-		info(format, arg);
+		if (INFO) {
+			__infoFormat(format, arg);
+		}
 	}
 
 	@Override
 	public final void info(final Marker marker, final String format, final Object arg1, final Object arg2) {
-		info(format, arg1, arg2);
+		if (INFO) {
+			__infoFormat(format, arg1, arg2);
+		}
 	}
 
 	@Override
 	public final void info(final Marker marker, final String format, final Object... argArray) {
-		info(format, argArray);
+		if (INFO) {
+			__infoFormat(format, argArray);
+		}
 	}
 
 	@Override
 	public final void info(final Marker marker, final String msg, final Throwable t) {
-		info(msg, t);
+		if (INFO) {
+			__info(rewriteMsg(msg, DIRECT_FRAMES), t);
+		}
 	}
 
 	/* Warn */
@@ -445,54 +496,54 @@ final class LogAdapter implements Logger {
 	}
 
 	private final void __warn(final String msg) {
-		Log.w(config.tag, rewriteMsg(msg));
+		Log.w(tag, msg);
 	}
 
 	private final void __warn(final String msg, final Throwable t) {
 		if (t == null) {
-			Log.w(config.tag, rewriteMsg(msg));
+			Log.w(tag, msg);
 		} else {
-			Log.w(config.tag, rewriteMsg(msg), t);
+			Log.w(tag, msg, t);
 		}
 	}
 
-	private final void __warn(final String format, final Object... arguments) {
+	private final void __warnFormat(final String format, final Object... arguments) {
 		final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
-		__warn(ft.getMessage(), ft.getThrowable());
+		__warn(rewriteMsg(ft.getMessage(), FORMAT_FRAMES), ft.getThrowable());
 	}
 
 	@Override
 	public final void warn(final String msg) {
 		if (WARN) {
-			__warn(msg);
+			__warn(rewriteMsg(msg, DIRECT_FRAMES));
 		}
 	}
 
 	@Override
 	public final void warn(final String format, final Object arg) {
 		if (WARN) {
-			__warn(format, arg);
+			__warnFormat(format, arg);
 		}
 	}
 
 	@Override
 	public final void warn(final String format, final Object arg1, final Object arg2) {
 		if (WARN) {
-			__warn(format, arg1, arg2);
+			__warnFormat(format, arg1, arg2);
 		}
 	}
 
 	@Override
 	public final void warn(final String format, final Object... arguments) {
 		if (WARN) {
-			__warn(format, arguments);
+			__warnFormat(format, arguments);
 		}
 	}
 
 	@Override
 	public final void warn(final String msg, final Throwable t) {
 		if (WARN) {
-			__warn(msg, t);
+			__warn(rewriteMsg(msg, DIRECT_FRAMES), t);
 		}
 	}
 
@@ -503,27 +554,37 @@ final class LogAdapter implements Logger {
 
 	@Override
 	public final void warn(final Marker marker, final String msg) {
-		warn(msg);
+		if (WARN) {
+			__warn(rewriteMsg(msg, DIRECT_FRAMES));
+		}
 	}
 
 	@Override
 	public final void warn(final Marker marker, final String format, final Object arg) {
-		warn(format, arg);
+		if (WARN) {
+			__warnFormat(format, arg);
+		}
 	}
 
 	@Override
 	public final void warn(final Marker marker, final String format, final Object arg1, final Object arg2) {
-		warn(format, arg1, arg2);
+		if (WARN) {
+			__warnFormat(format, arg1, arg2);
+		}
 	}
 
 	@Override
 	public final void warn(final Marker marker, final String format, final Object... argArray) {
-		warn(format, argArray);
+		if (WARN) {
+			__warnFormat(format, argArray);
+		}
 	}
 
 	@Override
 	public final void warn(final Marker marker, final String msg, final Throwable t) {
-		warn(msg, t);
+		if (WARN) {
+			__warn(rewriteMsg(msg, DIRECT_FRAMES), t);
+		}
 	}
 
 	/* Error */
@@ -534,54 +595,54 @@ final class LogAdapter implements Logger {
 	}
 
 	private final void __error(final String msg) {
-		Log.e(config.tag, rewriteMsg(msg));
+		Log.e(tag, msg);
 	}
 
 	private final void __error(final String msg, final Throwable t) {
 		if (t == null) {
-			Log.e(config.tag, rewriteMsg(msg));
+			Log.e(tag, msg);
 		} else {
-			Log.e(config.tag, rewriteMsg(msg), t);
+			Log.e(tag, msg, t);
 		}
 	}
 
-	private final void __error(final String format, final Object... arguments) {
+	private final void __errorFormat(final String format, final Object... arguments) {
 		final FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
-		__error(ft.getMessage(), ft.getThrowable());
+		__error(rewriteMsg(ft.getMessage(), FORMAT_FRAMES), ft.getThrowable());
 	}
 
 	@Override
 	public final void error(final String msg) {
 		if (ERROR) {
-			__error(msg);
+			__error(rewriteMsg(msg, DIRECT_FRAMES));
 		}
 	}
 
 	@Override
 	public final void error(final String format, final Object arg) {
 		if (ERROR) {
-			__error(format, arg);
+			__errorFormat(format, arg);
 		}
 	}
 
 	@Override
 	public final void error(final String format, final Object arg1, final Object arg2) {
 		if (ERROR) {
-			__error(format, arg1, arg2);
+			__errorFormat(format, arg1, arg2);
 		}
 	}
 
 	@Override
 	public final void error(final String format, final Object... arguments) {
 		if (ERROR) {
-			__error(format, arguments);
+			__errorFormat(format, arguments);
 		}
 	}
 
 	@Override
 	public final void error(final String msg, final Throwable t) {
 		if (ERROR) {
-			__error(msg, t);
+			__error(rewriteMsg(msg, DIRECT_FRAMES), t);
 		}
 	}
 
@@ -592,26 +653,36 @@ final class LogAdapter implements Logger {
 
 	@Override
 	public final void error(final Marker marker, final String msg) {
-		error(msg);
+		if (ERROR) {
+			__error(rewriteMsg(msg, DIRECT_FRAMES));
+		}
 	}
 
 	@Override
 	public final void error(final Marker marker, final String format, final Object arg) {
-		error(format, arg);
+		if (ERROR) {
+			__errorFormat(format, arg);
+		}
 	}
 
 	@Override
 	public final void error(final Marker marker, final String format, final Object arg1, final Object arg2) {
-		error(format, arg1, arg2);
+		if (ERROR) {
+			__errorFormat(format, arg1, arg2);
+		}
 	}
 
 	@Override
 	public final void error(final Marker marker, final String format, final Object... argArray) {
-		error(format, argArray);
+		if (ERROR) {
+			__errorFormat(format, argArray);
+		}
 	}
 
 	@Override
 	public final void error(final Marker marker, final String msg, final Throwable t) {
-		error(msg, t);
+		if (ERROR) {
+			__error(rewriteMsg(msg, DIRECT_FRAMES), t);
+		}
 	}
 }
