@@ -174,7 +174,7 @@ final class LogAdapter implements Logger {
 			}
 
 			if (showCaller) {
-				sb.append(CallerStackTrace.getCaller(frames).toString()).append(": ");
+				sb.append(new CallerStackTrace(frames).toString()).append(": ");
 			} else if (prefixName != null) {
 				sb.append(prefixName);
 			}
