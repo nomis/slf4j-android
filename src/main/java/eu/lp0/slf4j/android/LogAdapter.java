@@ -198,10 +198,6 @@ final class LogAdapter implements Logger {
 		return TRACE;
 	}
 
-	private final void __trace(final String msg) {
-		Log.v(tag, msg);
-	}
-
 	private final void __trace(final String msg, final Throwable t) {
 		if (t == null) {
 			Log.v(tag, msg);
@@ -218,7 +214,7 @@ final class LogAdapter implements Logger {
 	@Override
 	public final void trace(final String msg) {
 		if (TRACE) {
-			__trace(rewriteMsg(msg, DIRECT_FRAMES));
+			Log.v(tag, rewriteMsg(msg, DIRECT_FRAMES));
 		}
 	}
 
@@ -258,7 +254,7 @@ final class LogAdapter implements Logger {
 	@Override
 	public final void trace(final Marker marker, final String msg) {
 		if (TRACE) {
-			__trace(rewriteMsg(msg, DIRECT_FRAMES));
+			Log.v(tag, rewriteMsg(msg, DIRECT_FRAMES));
 		}
 	}
 
@@ -297,10 +293,6 @@ final class LogAdapter implements Logger {
 		return DEBUG;
 	}
 
-	private final void __debug(final String msg) {
-		Log.d(tag, msg);
-	}
-
 	private final void __debug(final String msg, final Throwable t) {
 		if (t == null) {
 			Log.d(tag, msg);
@@ -317,7 +309,7 @@ final class LogAdapter implements Logger {
 	@Override
 	public final void debug(final String msg) {
 		if (DEBUG) {
-			__debug(rewriteMsg(msg, DIRECT_FRAMES));
+			Log.d(tag, rewriteMsg(msg, DIRECT_FRAMES));
 		}
 	}
 
@@ -357,7 +349,7 @@ final class LogAdapter implements Logger {
 	@Override
 	public final void debug(final Marker marker, final String msg) {
 		if (DEBUG) {
-			__debug(rewriteMsg(msg, DIRECT_FRAMES));
+			Log.d(tag, rewriteMsg(msg, DIRECT_FRAMES));
 		}
 	}
 
@@ -396,10 +388,6 @@ final class LogAdapter implements Logger {
 		return INFO;
 	}
 
-	private final void __info(final String msg) {
-		Log.i(tag, msg);
-	}
-
 	private final void __info(final String msg, final Throwable t) {
 		if (t == null) {
 			Log.i(tag, msg);
@@ -416,7 +404,7 @@ final class LogAdapter implements Logger {
 	@Override
 	public final void info(final String msg) {
 		if (INFO) {
-			__info(rewriteMsg(msg, DIRECT_FRAMES));
+			Log.i(tag, rewriteMsg(msg, DIRECT_FRAMES));
 		}
 	}
 
@@ -456,7 +444,7 @@ final class LogAdapter implements Logger {
 	@Override
 	public final void info(final Marker marker, final String msg) {
 		if (INFO) {
-			__info(rewriteMsg(msg, DIRECT_FRAMES));
+			Log.i(tag, rewriteMsg(msg, DIRECT_FRAMES));
 		}
 	}
 
@@ -495,10 +483,6 @@ final class LogAdapter implements Logger {
 		return WARN;
 	}
 
-	private final void __warn(final String msg) {
-		Log.w(tag, msg);
-	}
-
 	private final void __warn(final String msg, final Throwable t) {
 		if (t == null) {
 			Log.w(tag, msg);
@@ -515,7 +499,7 @@ final class LogAdapter implements Logger {
 	@Override
 	public final void warn(final String msg) {
 		if (WARN) {
-			__warn(rewriteMsg(msg, DIRECT_FRAMES));
+			Log.w(tag, rewriteMsg(msg, DIRECT_FRAMES));
 		}
 	}
 
@@ -555,7 +539,7 @@ final class LogAdapter implements Logger {
 	@Override
 	public final void warn(final Marker marker, final String msg) {
 		if (WARN) {
-			__warn(rewriteMsg(msg, DIRECT_FRAMES));
+			Log.w(tag, rewriteMsg(msg, DIRECT_FRAMES));
 		}
 	}
 
@@ -594,10 +578,6 @@ final class LogAdapter implements Logger {
 		return ERROR;
 	}
 
-	private final void __error(final String msg) {
-		Log.e(tag, msg);
-	}
-
 	private final void __error(final String msg, final Throwable t) {
 		if (t == null) {
 			Log.e(tag, msg);
@@ -614,7 +594,7 @@ final class LogAdapter implements Logger {
 	@Override
 	public final void error(final String msg) {
 		if (ERROR) {
-			__error(rewriteMsg(msg, DIRECT_FRAMES));
+			Log.e(tag, rewriteMsg(msg, DIRECT_FRAMES));
 		}
 	}
 
@@ -654,7 +634,7 @@ final class LogAdapter implements Logger {
 	@Override
 	public final void error(final Marker marker, final String msg) {
 		if (ERROR) {
-			__error(rewriteMsg(msg, DIRECT_FRAMES));
+			Log.e(tag, rewriteMsg(msg, DIRECT_FRAMES));
 		}
 	}
 
