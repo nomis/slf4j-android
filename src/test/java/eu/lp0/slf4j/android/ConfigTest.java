@@ -24,14 +24,9 @@ package eu.lp0.slf4j.android;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
-import org.powermock.modules.junit4.PowerMockRunner;
 import org.slf4j.Logger;
 
-@RunWith(PowerMockRunner.class)
-@SuppressStaticInitializationFor({ "eu.lp0.slf4j.android.LoggerFactory" })
 public class ConfigTest {
 	@Test
 	public void tag() {
@@ -54,7 +49,7 @@ public class ConfigTest {
 		Assert.assertEquals(LogLevel.WARN, config.get("java.util.concurrent.locks.ReentrantReadWriteLock").level);
 		Assert.assertEquals(LogLevel.WARN, config.get("javax.swing.JFrame").level);
 	}
-	
+
 	@Test
 	public void showName() {
 		LoggingConfig config = new LoggingConfig(Mockito.mock(Logger.class, Mockito.withSettings().verboseLogging()));
@@ -65,7 +60,7 @@ public class ConfigTest {
 		Assert.assertEquals(LoggerConfig.ShowName.FALSE, config.get("java.util.concurrent.locks.ReentrantReadWriteLock").showName);
 		Assert.assertEquals(LoggerConfig.ShowName.LONG, config.get("javax.swing.JFrame").showName);
 	}
-	
+
 	@Test
 	public void showThread() {
 		LoggingConfig config = new LoggingConfig(Mockito.mock(Logger.class, Mockito.withSettings().verboseLogging()));
