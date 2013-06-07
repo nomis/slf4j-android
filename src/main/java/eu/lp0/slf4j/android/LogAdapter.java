@@ -43,8 +43,8 @@ import android.util.Log;
  */
 final class LogAdapter implements Logger {
 	private static final ConcurrentMap<String, LogLevel> nativeLevelMap = new ConcurrentHashMap<String, LogLevel>();
-	private static final int DIRECT_FRAMES = 1;
-	private static final int FORMAT_FRAMES = 2;
+	private static final int DIRECT_FRAMES = 2;
+	private static final int FORMAT_FRAMES = 3;
 	private final String name;
 	private final String tag;
 	private final String prefixName;

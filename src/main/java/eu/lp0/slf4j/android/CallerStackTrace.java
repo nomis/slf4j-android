@@ -30,7 +30,7 @@ final class CallerStackTrace extends Throwable {
 	public CallerStackTrace(final int frames) {
 		StackTraceElement stackFrame;
 		try {
-			stackFrame = getStackTrace()[frames + 1];
+			stackFrame = getStackTrace()[frames];
 		} catch (ArrayIndexOutOfBoundsException e) {
 			stackFrame = UNKNOWN;
 		}
