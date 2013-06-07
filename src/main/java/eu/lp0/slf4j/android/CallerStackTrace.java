@@ -25,9 +25,14 @@ package eu.lp0.slf4j.android;
 final class CallerStackTrace extends Throwable {
 	private static final long serialVersionUID = 1L;
 	private static final CallerStackTrace INSTANCE = new CallerStackTrace();
+	private static final StackTraceElement UNKNOWN = new StackTraceElement("<unknown class>", "<unknown method>", null, -1);
 
 	public static final StackTraceElement getCaller(final int frames) {
 		INSTANCE.fillInStackTrace();
-		return INSTANCE.getStackTrace()[frames + 1];
+		try {
+			return INSTANCE.getStackTrace()[frames + 1];
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return UNKNOWN;
+		}
 	}
 }
