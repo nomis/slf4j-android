@@ -182,12 +182,10 @@ final class LogAdapter implements Logger {
 			sb.append(msg);
 
 			return sb.toString();
+		} else if (prefixName != null) {
+			return prefixName.concat(msg);
 		} else {
-			if (prefixName != null) {
-				return prefixName.concat(msg);
-			} else {
-				return msg;
-			}
+			return msg;
 		}
 	}
 
