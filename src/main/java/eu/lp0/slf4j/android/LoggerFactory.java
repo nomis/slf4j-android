@@ -119,7 +119,7 @@ public final class LoggerFactory implements ILoggerFactory {
 			mark--;
 
 			for (int j = 0; j < len; j++) {
-				if (tag[j] == '.' && (((j & 1) == 1 && j != mark) || (i >= MAX_TAG_LEN - 1))) {
+				if (tag[j] == '.' && ((j != mark) || (i >= MAX_TAG_LEN - 1))) {
 					continue;
 				}
 

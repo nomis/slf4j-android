@@ -104,7 +104,25 @@ public class AutoTagTest {
 	@Test
 	public void tooLong2() {
 		Assert.assertEquals("tqbfjotldlidsamamnhbmjT",
+				LoggerFactory.createTag("the.quick.brown.fox.jumps.over.the.lazy.dog.lorem.ipsum.dolor.sit.amet.more.and.more.names.here.blah.moo.java.T"));
+	}
+
+	@Test
+	public void tooLong3() {
+		Assert.assertEquals("tqbfjotldlidsamamnhbmjT",
 				LoggerFactory.createTag("the.quick.brown.fox.jumps.over.the.lazy.dog.lorem.ipsum.dolor.sit.amet.more.and.more.names.here.blah.moo.java.Test"));
+	}
+
+	@Test
+	public void tooLong4() {
+		Assert.assertEquals("tqbfjotldlidsamamnhbm.T",
+				LoggerFactory.createTag(".the.quick.brown.fox.jumps.over.the.lazy.dog.lorem.ipsum.dolor.sit.amet.more.and.more.names.here.blah.moo.Test"));
+	}
+
+	@Test
+	public void tooLong5() {
+		Assert.assertEquals("tqbfjotldlidsamamnhbmjT",
+				LoggerFactory.createTag(".the.quick.brown.fox.jumps.over.the.lazy.dog.lorem.ipsum.dolor.sit.amet.more.and.more.names.here.blah.moo.java.Test"));
 	}
 
 	@Test
