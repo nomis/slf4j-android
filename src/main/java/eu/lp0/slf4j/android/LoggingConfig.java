@@ -67,6 +67,8 @@ final class LoggingConfig {
 					key = "";
 				} else if (key.charAt(3) == '.') {
 					key = key.substring(4);
+				} else {
+					continue;
 				}
 
 				if (value.length() > LoggerFactory.MAX_TAG_LEN) {
@@ -83,6 +85,8 @@ final class LoggingConfig {
 					key = "";
 				} else if (key.charAt(5) == '.') {
 					key = key.substring(6);
+				} else {
+					continue;
 				}
 
 				try {
@@ -99,6 +103,8 @@ final class LoggingConfig {
 					key = "";
 				} else if (key.charAt(8) == '.') {
 					key = key.substring(9);
+				} else {
+					continue;
 				}
 
 				try {
@@ -115,6 +121,8 @@ final class LoggingConfig {
 					key = "";
 				} else if (key.charAt(10) == '.') {
 					key = key.substring(11);
+				} else {
+					continue;
 				}
 
 				LoggerConfig config = new LoggerConfig();
