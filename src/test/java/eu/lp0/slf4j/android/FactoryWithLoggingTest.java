@@ -27,16 +27,20 @@ import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.never;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.slf4j.Logger;
@@ -71,42 +75,6 @@ public class FactoryWithLoggingTest {
 		Assert.assertTrue(log1.isInfoEnabled());
 		Assert.assertFalse(log1.isDebugEnabled());
 		Assert.assertFalse(log1.isTraceEnabled());
-
-		// Some debug logging is expected
-		verifyStatic(never());
-		Log.e(eq("slf4j-android"), anyString());
-		verifyStatic(never());
-		Log.w(eq("slf4j-android"), anyString());
-		verifyStatic(never());
-		Log.i(eq("slf4j-android"), anyString());
-		verifyStatic(atLeastOnce());
-		Log.d(eq("slf4j-android"), anyString());
-		verifyStatic(atLeastOnce());
-		Log.v(eq("slf4j-android"), anyString());
-
-		// But nothing on other tags
-		verifyStatic(never());
-		Log.e(not(eq("slf4j-android")), anyString());
-		verifyStatic(never());
-		Log.w(not(eq("slf4j-android")), anyString());
-		verifyStatic(never());
-		Log.i(not(eq("slf4j-android")), anyString());
-		verifyStatic(never());
-		Log.d(not(eq("slf4j-android")), anyString());
-		verifyStatic(never());
-		Log.v(not(eq("slf4j-android")), anyString());
-
-		// or with exceptions
-		verifyStatic(never());
-		Log.e(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
-		Log.w(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
-		Log.i(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
-		Log.d(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
-		Log.v(anyString(), anyString(), any(Throwable.class));
 
 		// Request the logger again
 		Logger log2 = LoggerFactory.getLogger("java.logger.name.here.test1");
@@ -190,5 +158,94 @@ public class FactoryWithLoggingTest {
 		Assert.assertSame(log1, log3);
 		Assert.assertSame(log4, log5);
 		Assert.assertSame(log4, log6);
+
+		// But not the same as each other
+		Assert.assertNotSame(log1, log4);
+	}
+
+	@Test(timeout = 10000)
+	public void getLoggerFromMultipleThreads() throws Exception {
+		mockLogLevel("j.l.n.h.test3", LogLevel.DEBUG);
+
+		// Ensure logger factory is initialised
+		LoggerFactory.getILoggerFactory();
+
+		Callable<Logger> getLogger = new Callable<Logger>() {
+			@Override
+			public Logger call() {
+				return LoggerFactory.getLogger("java.logger.name.here.test3");
+			}
+		};
+
+		// Trap the instantiation of LogAdapter objects
+		CyclicBarrierNewInstanceAnswer<LogAdapter> barrier = new CyclicBarrierNewInstanceAnswer<LogAdapter>(3, LogAdapter.class, String.class,
+				LoggerConfig.class);
+		try {
+			PowerMockito.whenNew(LogAdapter.class).withAnyArguments().thenAnswer(barrier);
+
+			// Request the logger
+			FutureTask<Logger> futureLog1 = new FutureTask<Logger>(getLogger);
+			new Thread(futureLog1).start();
+
+			// Request the logger again
+			FutureTask<Logger> futureLog2 = new FutureTask<Logger>(getLogger);
+			new Thread(futureLog2).start();
+
+			// Both logger threads will be blocked in construction of the LogAdapter
+			barrier.await(5, TimeUnit.SECONDS);
+
+			Logger log1 = futureLog1.get();
+			Assert.assertEquals("java.logger.name.here.test3", log1.getName());
+			Assert.assertTrue(log1.isErrorEnabled());
+			Assert.assertTrue(log1.isWarnEnabled());
+			Assert.assertTrue(log1.isInfoEnabled());
+			Assert.assertTrue(log1.isDebugEnabled());
+			Assert.assertFalse(log1.isTraceEnabled());
+
+			Logger log2 = futureLog2.get();
+			Assert.assertEquals("java.logger.name.here.test3", log2.getName());
+			Assert.assertTrue(log2.isErrorEnabled());
+			Assert.assertTrue(log2.isWarnEnabled());
+			Assert.assertTrue(log2.isInfoEnabled());
+			Assert.assertTrue(log2.isDebugEnabled());
+			Assert.assertFalse(log2.isTraceEnabled());
+
+			// Only debug logging is expected
+			verifyStatic(never());
+			Log.e(eq("slf4j-android"), anyString());
+			verifyStatic(never());
+			Log.w(eq("slf4j-android"), anyString());
+			verifyStatic(never());
+			Log.i(eq("slf4j-android"), anyString());
+
+			// But nothing on other tags
+			verifyStatic(never());
+			Log.e(not(eq("slf4j-android")), anyString());
+			verifyStatic(never());
+			Log.w(not(eq("slf4j-android")), anyString());
+			verifyStatic(never());
+			Log.i(not(eq("slf4j-android")), anyString());
+			verifyStatic(never());
+			Log.d(not(eq("slf4j-android")), anyString());
+			verifyStatic(never());
+			Log.v(not(eq("slf4j-android")), anyString());
+
+			// or with exceptions
+			verifyStatic(never());
+			Log.e(anyString(), anyString(), any(Throwable.class));
+			verifyStatic(never());
+			Log.w(anyString(), anyString(), any(Throwable.class));
+			verifyStatic(never());
+			Log.i(anyString(), anyString(), any(Throwable.class));
+			verifyStatic(never());
+			Log.d(anyString(), anyString(), any(Throwable.class));
+			verifyStatic(never());
+			Log.v(anyString(), anyString(), any(Throwable.class));
+
+			// The loggers should be the same each time
+			Assert.assertSame(log1, log2);
+		} finally {
+			barrier.reset();
+		}
 	}
 }

@@ -26,11 +26,15 @@ import static eu.lp0.slf4j.android.MockUtil.mockLogLevel;
 import static eu.lp0.slf4j.android.MockUtil.mockLogLevelRestricted;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.slf4j.Logger;
@@ -39,7 +43,7 @@ import org.slf4j.LoggerFactory;
 import android.util.Log;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(value = FactoryNoLoggingTest.class, fullyQualifiedNames = { "android.util.Log", "eu.lp0.slf4j.android.LoggerFactory" })
+@PrepareForTest(value = { LogAdapter.class, FactoryNoLoggingTest.class }, fullyQualifiedNames = { "android.util.Log", "eu.lp0.slf4j.android.LoggerFactory" })
 public class FactoryNoLoggingTest {
 	@BeforeClass
 	public static void mockLogStatic() {
@@ -116,5 +120,62 @@ public class FactoryNoLoggingTest {
 		Assert.assertSame(log1, log3);
 		Assert.assertSame(log4, log5);
 		Assert.assertSame(log4, log6);
+
+		// But not the same as each other
+		Assert.assertNotSame(log1, log4);
+	}
+
+	@Test
+	public void getLoggerFromMultipleThreads() throws Exception {
+		mockLogLevel("j.l.n.h.test3", LogLevel.DEBUG);
+
+		// Ensure logger factory is initialised
+		LoggerFactory.getILoggerFactory();
+
+		Callable<Logger> getLogger = new Callable<Logger>() {
+			@Override
+			public Logger call() {
+				return LoggerFactory.getLogger("java.logger.name.here.test3");
+			}
+		};
+
+		// Trap the instantiation of LogAdapter objects
+		CyclicBarrierNewInstanceAnswer<LogAdapter> barrier = new CyclicBarrierNewInstanceAnswer<LogAdapter>(3, LogAdapter.class, String.class,
+				LoggerConfig.class);
+		try {
+			PowerMockito.whenNew(LogAdapter.class).withAnyArguments().thenAnswer(barrier);
+
+			// Request the logger
+			FutureTask<Logger> futureLog1 = new FutureTask<Logger>(getLogger);
+			new Thread(futureLog1).start();
+
+			// Request the logger again
+			FutureTask<Logger> futureLog2 = new FutureTask<Logger>(getLogger);
+			new Thread(futureLog2).start();
+
+			// Both logger threads will be blocked in construction of the LogAdapter
+			barrier.await();
+
+			Logger log1 = futureLog1.get();
+			Assert.assertEquals("java.logger.name.here.test3", log1.getName());
+			Assert.assertTrue(log1.isErrorEnabled());
+			Assert.assertTrue(log1.isWarnEnabled());
+			Assert.assertTrue(log1.isInfoEnabled());
+			Assert.assertTrue(log1.isDebugEnabled());
+			Assert.assertFalse(log1.isTraceEnabled());
+
+			Logger log2 = futureLog2.get();
+			Assert.assertEquals("java.logger.name.here.test3", log2.getName());
+			Assert.assertTrue(log2.isErrorEnabled());
+			Assert.assertTrue(log2.isWarnEnabled());
+			Assert.assertTrue(log2.isInfoEnabled());
+			Assert.assertTrue(log2.isDebugEnabled());
+			Assert.assertFalse(log2.isTraceEnabled());
+
+			// The loggers should be the same each time
+			Assert.assertSame(log1, log2);
+		} finally {
+			barrier.reset();
+		}
 	}
 }

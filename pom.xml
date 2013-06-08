@@ -150,4 +150,13 @@
 			</plugin>
 		</plugins>
 	</reporting>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.powermock</groupId>
+				<artifactId>powermock-core</artifactId>
+				<version>[1.5.1-SNAPSHOT, 1.5.1]</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>
