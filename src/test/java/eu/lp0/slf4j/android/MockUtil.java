@@ -303,7 +303,7 @@ public class MockUtil {
 	 * Mock the log level for the current test
 	 */
 	public static void mockLogLevel(LogLevel level) {
-		when(Log.isLoggable(eq(createTag(1)), anyInt())).then(new MockLogLevelAnswer(level));
+		mockLogLevel(createTag(1), level);
 	}
 
 	/**
@@ -317,7 +317,14 @@ public class MockUtil {
 	 * Mock the log level for the current test, and restrict logging calls to only that level
 	 */
 	public static void mockLogLevelRestricted(LogLevel level) {
-		when(Log.isLoggable(eq(createTag(1)), anyInt())).then(new MockLogLevelAnswer(level));
+		mockLogLevelRestricted(createTag(1), level);
+	}
+
+	/**
+	 * Mock the log level for a specified tag, and restrict logging calls to only that level
+	 */
+	public static void mockLogLevelRestricted(String tag, LogLevel level) {
+		when(Log.isLoggable(eq(tag), anyInt())).then(new MockLogLevelAnswer(level));
 
 		restrictLogCalls(level);
 	}
