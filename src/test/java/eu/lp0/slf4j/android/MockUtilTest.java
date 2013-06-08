@@ -27,17 +27,32 @@ import org.junit.Test;
 
 public class MockUtilTest {
 	@Test
-	public void test1() {
-		Assert.assertEquals("test1", MockUtil.currentMethodName());
+	public void testMethodName1() {
+		Assert.assertEquals("testMethodName1", MockUtil.currentMethodName());
 	}
 
 	@Test
-	public void test2() {
-		Assert.assertEquals("test2", MockUtil.currentMethodName());
+	public void testMethodName2() {
+		Assert.assertEquals("testMethodName2", MockUtil.currentMethodName());
 	}
 
 	@Test
-	public void test3() {
-		Assert.assertEquals("test3", MockUtil.currentMethodName());
+	public void testMethodName3() {
+		Assert.assertEquals("testMethodName3", MockUtil.currentMethodName());
+	}
+
+	@Test
+	public void testTagName1() {
+		Assert.assertEquals("eu.lp0.slf4j.android.MockUtilTest___testTagName1", MockUtil.createTag(0));
+	}
+
+	@Test
+	public void testTagName2() {
+		Assert.assertEquals("eu.lp0.slf4j.android.MockUtilTest___testTagName2", MockUtil.createTag(0));
+	}
+
+	@Test
+	public void testTagName3() {
+		Assert.assertEquals("eu.lp0.slf4j.android.MockUtilTest___testTagName3", MockUtil.createTag(0));
 	}
 }
