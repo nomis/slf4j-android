@@ -194,7 +194,7 @@ public class MockUtil {
 	}
 
 	/**
-	 * Create a mock logger config for the current test with showThread enabled
+	 * Create a mock logger config for the current test with showThread=true enabled
 	 */
 	public static LoggerConfig mockConfigThread() {
 		StackTraceElement ste = new CallerStackTrace(1).get();
@@ -208,7 +208,7 @@ public class MockUtil {
 	}
 
 	/**
-	 * Create a mock logger config for the current test with showThread enabled and overridden log level
+	 * Create a mock logger config for the current test with showThread=true and overridden log level
 	 */
 	public static LoggerConfig mockConfigThread(LogLevel override) {
 		StackTraceElement ste = new CallerStackTrace(1).get();
@@ -217,6 +217,130 @@ public class MockUtil {
 		LoggerConfig config = new LoggerConfig();
 		config.tag = tag;
 		config.level = override;
+		config.showThread = true;
+		config.merge(LoggerConfig.DEFAULT);
+		return config;
+	}
+
+	/**
+	 * Create a mock logger config for the current test with showName=short and showThread=true
+	 */
+	public static LoggerConfig mockConfigThreadShort() {
+		StackTraceElement ste = new CallerStackTrace(1).get();
+		String tag = ste.getClassName() + "." + ste.getMethodName();
+
+		LoggerConfig config = new LoggerConfig();
+		config.tag = tag;
+		config.showName = LoggerConfig.ShowName.SHORT;
+		config.showThread = true;
+		config.merge(LoggerConfig.DEFAULT);
+		return config;
+	}
+
+	/**
+	 * Create a mock logger config for the current test with showName=short, showThread enabled and overridden log level
+	 */
+	public static LoggerConfig mockConfigThreadShort(LogLevel override) {
+		StackTraceElement ste = new CallerStackTrace(1).get();
+		String tag = ste.getClassName() + "." + ste.getMethodName();
+
+		LoggerConfig config = new LoggerConfig();
+		config.tag = tag;
+		config.level = override;
+		config.showName = LoggerConfig.ShowName.SHORT;
+		config.showThread = true;
+		config.merge(LoggerConfig.DEFAULT);
+		return config;
+	}
+
+	/**
+	 * Create a mock logger config for the current test with showName=compact and showThread=true
+	 */
+	public static LoggerConfig mockConfigThreadCompact() {
+		StackTraceElement ste = new CallerStackTrace(1).get();
+		String tag = ste.getClassName() + "." + ste.getMethodName();
+
+		LoggerConfig config = new LoggerConfig();
+		config.tag = tag;
+		config.showName = LoggerConfig.ShowName.COMPACT;
+		config.showThread = true;
+		config.merge(LoggerConfig.DEFAULT);
+		return config;
+	}
+
+	/**
+	 * Create a mock logger config for the current test with showName=compact, showThread enabled and overridden log level
+	 */
+	public static LoggerConfig mockConfigThreadCompact(LogLevel override) {
+		StackTraceElement ste = new CallerStackTrace(1).get();
+		String tag = ste.getClassName() + "." + ste.getMethodName();
+
+		LoggerConfig config = new LoggerConfig();
+		config.tag = tag;
+		config.level = override;
+		config.showName = LoggerConfig.ShowName.COMPACT;
+		config.showThread = true;
+		config.merge(LoggerConfig.DEFAULT);
+		return config;
+	}
+
+	/**
+	 * Create a mock logger config for the current test with showName=long and showThread=true
+	 */
+	public static LoggerConfig mockConfigThreadLong() {
+		StackTraceElement ste = new CallerStackTrace(1).get();
+		String tag = ste.getClassName() + "." + ste.getMethodName();
+
+		LoggerConfig config = new LoggerConfig();
+		config.tag = tag;
+		config.showName = LoggerConfig.ShowName.LONG;
+		config.showThread = true;
+		config.merge(LoggerConfig.DEFAULT);
+		return config;
+	}
+
+	/**
+	 * Create a mock logger config for the current test with showName=long, showThread enabled and overridden log level
+	 */
+	public static LoggerConfig mockConfigThreadLong(LogLevel override) {
+		StackTraceElement ste = new CallerStackTrace(1).get();
+		String tag = ste.getClassName() + "." + ste.getMethodName();
+
+		LoggerConfig config = new LoggerConfig();
+		config.tag = tag;
+		config.level = override;
+		config.showName = LoggerConfig.ShowName.LONG;
+		config.showThread = true;
+		config.merge(LoggerConfig.DEFAULT);
+		return config;
+	}
+
+	/**
+	 * Create a mock logger config for the current test with showName=caller and showThread=true
+	 */
+	public static LoggerConfig mockConfigThreadCaller() {
+		StackTraceElement ste = new CallerStackTrace(1).get();
+		String tag = ste.getClassName() + "." + ste.getMethodName();
+
+		LoggerConfig config = new LoggerConfig();
+		config.tag = tag;
+		config.showName = LoggerConfig.ShowName.CALLER;
+		config.showThread = true;
+		config.merge(LoggerConfig.DEFAULT);
+		return config;
+	}
+
+	/**
+	 * Create a mock logger config for the current test with showName=caller, showThread enabled and overridden log level
+	 */
+	public static LoggerConfig mockConfigThreadCaller(LogLevel override) {
+		StackTraceElement ste = new CallerStackTrace(1).get();
+		String tag = ste.getClassName() + "." + ste.getMethodName();
+
+		LoggerConfig config = new LoggerConfig();
+		config.tag = tag;
+		config.level = override;
+		config.showName = LoggerConfig.ShowName.CALLER;
 		config.showThread = true;
 		config.merge(LoggerConfig.DEFAULT);
 		return config;

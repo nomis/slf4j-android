@@ -58,7 +58,7 @@ public class ThreadLoggerTest {
 	@Before
 	public void mockLog() {
 		mockStatic(Log.class);
-		Thread.currentThread().setName("ThreadLoggerTestThread");
+		Thread.currentThread().setName(getClass().getSimpleName() + "Thread");
 
 		// Not used
 		Mockito.when(Log.getStackTraceString(any(Throwable.class))).thenThrow(AssertionError.class);
