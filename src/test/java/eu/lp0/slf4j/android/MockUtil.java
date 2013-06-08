@@ -45,7 +45,7 @@ public class MockUtil {
 	/**
 	 * Create a mock logger config for the current test
 	 */
-	public static LoggerConfig mockConfig() {
+	public static LoggerConfig mockConfigDefault() {
 		StackTraceElement ste = new CallerStackTrace(1).get();
 		String tag = ste.getClassName() + "." + ste.getMethodName();
 
@@ -58,7 +58,7 @@ public class MockUtil {
 	/**
 	 * Create a mock logger config for the current test with overridden log level
 	 */
-	public static LoggerConfig mockConfig(LogLevel override) {
+	public static LoggerConfig mockConfigDefault(LogLevel override) {
 		StackTraceElement ste = new CallerStackTrace(1).get();
 		String tag = ste.getClassName() + "." + ste.getMethodName();
 

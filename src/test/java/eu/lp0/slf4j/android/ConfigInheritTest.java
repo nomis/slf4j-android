@@ -22,7 +22,7 @@
  */
 package eu.lp0.slf4j.android;
 
-import static eu.lp0.slf4j.android.MockUtil.mockConfig;
+import static eu.lp0.slf4j.android.MockUtil.mockConfigDefault;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 import org.junit.Assert;
@@ -45,7 +45,7 @@ public class ConfigInheritTest {
 	@Test
 	public void default_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("DefaultTag", config.get(null).tag);
 		Assert.assertEquals(LogLevel.INFO, config.get(null).level);
@@ -66,7 +66,7 @@ public class ConfigInheritTest {
 	@Test
 	public void default_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("DefaultTag", config.get(null).tag);
 		Assert.assertEquals(LogLevel.INFO, config.get(null).level);
@@ -89,7 +89,7 @@ public class ConfigInheritTest {
 	@Test
 	public void TLNT_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("TLNT", config.get("test.TLNT").tag);
 		Assert.assertEquals(LogLevel.WARN, config.get("test.TLNT").level);
@@ -100,7 +100,7 @@ public class ConfigInheritTest {
 	@Test
 	public void TLNT_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("TLNT", config.get("test.TLNT").tag);
 		Assert.assertEquals(LogLevel.WARN, config.get("test.TLNT").level);
@@ -113,7 +113,7 @@ public class ConfigInheritTest {
 	@Test
 	public void tLNT_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("DefaultTag", config.get("test.tLNT").tag);
 		Assert.assertEquals(LogLevel.WARN, config.get("test.tLNT").level);
@@ -124,7 +124,7 @@ public class ConfigInheritTest {
 	@Test
 	public void tLNT_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("DefaultTag", config.get("test.tLNT").tag);
 		Assert.assertEquals(LogLevel.WARN, config.get("test.tLNT").level);
@@ -137,7 +137,7 @@ public class ConfigInheritTest {
 	@Test
 	public void TlNT_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("TlNT", config.get("test.TlNT").tag);
 		Assert.assertEquals(LogLevel.INFO, config.get("test.TlNT").level);
@@ -148,7 +148,7 @@ public class ConfigInheritTest {
 	@Test
 	public void TlNT_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("TlNT", config.get("test.TlNT").tag);
 		Assert.assertEquals(LogLevel.INFO, config.get("test.TlNT").level);
@@ -161,7 +161,7 @@ public class ConfigInheritTest {
 	@Test
 	public void tlNT_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("DefaultTag", config.get("test.tlNT").tag);
 		Assert.assertEquals(LogLevel.INFO, config.get("test.tlNT").level);
@@ -172,7 +172,7 @@ public class ConfigInheritTest {
 	@Test
 	public void tlNT_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("DefaultTag", config.get("test.tlNT").tag);
 		Assert.assertEquals(LogLevel.INFO, config.get("test.tlNT").level);
@@ -185,7 +185,7 @@ public class ConfigInheritTest {
 	@Test
 	public void TLnT_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("TLnT", config.get("test.TLnT").tag);
 		Assert.assertEquals(LogLevel.WARN, config.get("test.TLnT").level);
@@ -196,7 +196,7 @@ public class ConfigInheritTest {
 	@Test
 	public void TLnT_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("TLnT", config.get("test.TLnT").tag);
 		Assert.assertEquals(LogLevel.WARN, config.get("test.TLnT").level);
@@ -209,7 +209,7 @@ public class ConfigInheritTest {
 	@Test
 	public void tLnT_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("DefaultTag", config.get("test.tLnT").tag);
 		Assert.assertEquals(LogLevel.WARN, config.get("test.tLnT").level);
@@ -220,7 +220,7 @@ public class ConfigInheritTest {
 	@Test
 	public void tLnT_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("DefaultTag", config.get("test.tLnT").tag);
 		Assert.assertEquals(LogLevel.WARN, config.get("test.tLnT").level);
@@ -233,7 +233,7 @@ public class ConfigInheritTest {
 	@Test
 	public void TlnT_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("TlnT", config.get("test.TlnT").tag);
 		Assert.assertEquals(LogLevel.INFO, config.get("test.TlnT").level);
@@ -244,7 +244,7 @@ public class ConfigInheritTest {
 	@Test
 	public void TlnT_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("TlnT", config.get("test.TlnT").tag);
 		Assert.assertEquals(LogLevel.INFO, config.get("test.TlnT").level);
@@ -257,7 +257,7 @@ public class ConfigInheritTest {
 	@Test
 	public void tlnT_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("DefaultTag", config.get("test.tlnT").tag);
 		Assert.assertEquals(LogLevel.INFO, config.get("test.tlnT").level);
@@ -268,7 +268,7 @@ public class ConfigInheritTest {
 	@Test
 	public void tlnT_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("DefaultTag", config.get("test.tlnT").tag);
 		Assert.assertEquals(LogLevel.INFO, config.get("test.tlnT").level);
@@ -281,7 +281,7 @@ public class ConfigInheritTest {
 	@Test
 	public void TLNt_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("TLNt", config.get("test.TLNt").tag);
 		Assert.assertEquals(LogLevel.WARN, config.get("test.TLNt").level);
@@ -292,7 +292,7 @@ public class ConfigInheritTest {
 	@Test
 	public void TLNt_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("TLNt", config.get("test.TLNt").tag);
 		Assert.assertEquals(LogLevel.WARN, config.get("test.TLNt").level);
@@ -305,7 +305,7 @@ public class ConfigInheritTest {
 	@Test
 	public void tLNt_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("DefaultTag", config.get("test.tLNt").tag);
 		Assert.assertEquals(LogLevel.WARN, config.get("test.tLNt").level);
@@ -316,7 +316,7 @@ public class ConfigInheritTest {
 	@Test
 	public void tLNt_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("DefaultTag", config.get("test.tLNt").tag);
 		Assert.assertEquals(LogLevel.WARN, config.get("test.tLNt").level);
@@ -329,7 +329,7 @@ public class ConfigInheritTest {
 	@Test
 	public void TlNt_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("TlNt", config.get("test.TlNt").tag);
 		Assert.assertEquals(LogLevel.INFO, config.get("test.TlNt").level);
@@ -340,7 +340,7 @@ public class ConfigInheritTest {
 	@Test
 	public void TlNt_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("TlNt", config.get("test.TlNt").tag);
 		Assert.assertEquals(LogLevel.INFO, config.get("test.TlNt").level);
@@ -353,7 +353,7 @@ public class ConfigInheritTest {
 	@Test
 	public void tlNt_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("DefaultTag", config.get("test.tlNt").tag);
 		Assert.assertEquals(LogLevel.INFO, config.get("test.tlNt").level);
@@ -364,7 +364,7 @@ public class ConfigInheritTest {
 	@Test
 	public void tlNt_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("DefaultTag", config.get("test.tlNt").tag);
 		Assert.assertEquals(LogLevel.INFO, config.get("test.tlNt").level);
@@ -377,7 +377,7 @@ public class ConfigInheritTest {
 	@Test
 	public void TLnt_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("TLnt", config.get("test.TLnt").tag);
 		Assert.assertEquals(LogLevel.WARN, config.get("test.TLnt").level);
@@ -388,7 +388,7 @@ public class ConfigInheritTest {
 	@Test
 	public void TLnt_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("TLnt", config.get("test.TLnt").tag);
 		Assert.assertEquals(LogLevel.WARN, config.get("test.TLnt").level);
@@ -401,7 +401,7 @@ public class ConfigInheritTest {
 	@Test
 	public void tLnt_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("DefaultTag", config.get("test.tLnt").tag);
 		Assert.assertEquals(LogLevel.WARN, config.get("test.tLnt").level);
@@ -412,7 +412,7 @@ public class ConfigInheritTest {
 	@Test
 	public void tLnt_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("DefaultTag", config.get("test.tLnt").tag);
 		Assert.assertEquals(LogLevel.WARN, config.get("test.tLnt").level);
@@ -425,7 +425,7 @@ public class ConfigInheritTest {
 	@Test
 	public void Tlnt_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("Tlnt", config.get("test.Tlnt").tag);
 		Assert.assertEquals(LogLevel.INFO, config.get("test.Tlnt").level);
@@ -436,7 +436,7 @@ public class ConfigInheritTest {
 	@Test
 	public void Tlnt_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("Tlnt", config.get("test.Tlnt").tag);
 		Assert.assertEquals(LogLevel.INFO, config.get("test.Tlnt").level);
@@ -449,7 +449,7 @@ public class ConfigInheritTest {
 	@Test
 	public void tlnt_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("DefaultTag", config.get("test.tlnt").tag);
 		Assert.assertEquals(LogLevel.INFO, config.get("test.tlnt").level);
@@ -460,7 +460,7 @@ public class ConfigInheritTest {
 	@Test
 	public void tlnt_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest3.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("DefaultTag", config.get("test.tlnt").tag);
 		Assert.assertEquals(LogLevel.INFO, config.get("test.tlnt").level);

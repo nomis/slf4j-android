@@ -22,7 +22,7 @@
  */
 package eu.lp0.slf4j.android;
 
-import static eu.lp0.slf4j.android.MockUtil.mockConfig;
+import static eu.lp0.slf4j.android.MockUtil.mockConfigDefault;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 import java.io.IOException;
@@ -56,7 +56,7 @@ public class ConfigTest {
 	@Test
 	public void tag_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("JavaApp", config.get(null).tag);
 		Assert.assertEquals("JavaApp", config.get("").tag);
@@ -87,7 +87,7 @@ public class ConfigTest {
 	@Test
 	public void tag_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("JavaApp", config.get(null).tag);
 		Assert.assertEquals("JavaApp", config.get("").tag);
@@ -118,7 +118,7 @@ public class ConfigTest {
 	@Test
 	public void level_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals(LogLevel.WARN, config.get(null).level);
 		Assert.assertEquals(LogLevel.WARN, config.get("").level);
@@ -149,7 +149,7 @@ public class ConfigTest {
 	@Test
 	public void level_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals(LogLevel.WARN, config.get(null).level);
 		Assert.assertEquals(LogLevel.WARN, config.get("").level);
@@ -180,7 +180,7 @@ public class ConfigTest {
 	@Test
 	public void showName_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals(LoggerConfig.ShowName.LONG, config.get(null).showName);
 		Assert.assertEquals(LoggerConfig.ShowName.LONG, config.get("").showName);
@@ -211,7 +211,7 @@ public class ConfigTest {
 	@Test
 	public void showName_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals(LoggerConfig.ShowName.LONG, config.get(null).showName);
 		Assert.assertEquals(LoggerConfig.ShowName.LONG, config.get("").showName);
@@ -242,7 +242,7 @@ public class ConfigTest {
 	@Test
 	public void showThread_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals(false, config.get(null).showThread);
 		Assert.assertEquals(false, config.get("").showThread);
@@ -273,7 +273,7 @@ public class ConfigTest {
 	@Test
 	public void showThread_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals(false, config.get(null).showThread);
 		Assert.assertEquals(false, config.get("").showThread);
@@ -304,7 +304,7 @@ public class ConfigTest {
 	@Test
 	public void noConfigDefaults_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("noConfig.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("noConfig.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("", config.get(null).tag);
 		Assert.assertEquals(LogLevel.NATIVE, config.get(null).level);
@@ -315,7 +315,7 @@ public class ConfigTest {
 	@Test
 	public void noConfigDefaults_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("noConfig.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("noConfig.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("", config.get(null).tag);
 		Assert.assertEquals(LogLevel.NATIVE, config.get(null).level);
@@ -326,7 +326,7 @@ public class ConfigTest {
 	@Test
 	public void invalidDefaults_NoLogging() {
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest2.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest2.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("", config.get(null).tag);
 		Assert.assertEquals(LogLevel.NATIVE, config.get(null).level);
@@ -337,7 +337,7 @@ public class ConfigTest {
 	@Test
 	public void invalidDefaults_WithLogging() {
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest2.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest2.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("", config.get(null).tag);
 		Assert.assertEquals(LogLevel.NATIVE, config.get(null).level);
@@ -352,7 +352,7 @@ public class ConfigTest {
 		Mockito.doThrow(IOException.class).when(ioErrorProperties).load(Mockito.any(Reader.class));
 
 		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("", config.get(null).tag);
 		Assert.assertEquals(LogLevel.NATIVE, config.get(null).level);
@@ -367,7 +367,7 @@ public class ConfigTest {
 		Mockito.doThrow(IOException.class).when(ioErrorProperties).load(Mockito.any(Reader.class));
 
 		MockUtil.mockLogLevel(LogLevel.VERBOSE);
-		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfig()));
+		LoggingConfig config = new LoggingConfig("configTest1.properties", new LogAdapter("N/A", mockConfigDefault()));
 
 		Assert.assertEquals("", config.get(null).tag);
 		Assert.assertEquals(LogLevel.NATIVE, config.get(null).level);

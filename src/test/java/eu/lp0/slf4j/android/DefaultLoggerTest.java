@@ -23,7 +23,7 @@
 package eu.lp0.slf4j.android;
 
 import static eu.lp0.slf4j.android.MockUtil.createTag;
-import static eu.lp0.slf4j.android.MockUtil.mockConfig;
+import static eu.lp0.slf4j.android.MockUtil.mockConfigDefault;
 import static eu.lp0.slf4j.android.MockUtil.mockLogLevelRestricted;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
@@ -68,13 +68,13 @@ public class DefaultLoggerTest {
 
 	@Test
 	public void testName() {
-		Assert.assertEquals("Logger Name!", new LogAdapter("Logger Name!", mockConfig()).getName());
+		Assert.assertEquals("Logger Name!", new LogAdapter("Logger Name!", mockConfigDefault()).getName());
 	}
 
 	@Test
 	public void testLevel_Native_SUPPRESS() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LogAdapter log = new LogAdapter("N/A", mockConfig());
+		LogAdapter log = new LogAdapter("N/A", mockConfigDefault());
 
 		Assert.assertFalse(log.isErrorEnabled());
 		Assert.assertFalse(log.isWarnEnabled());
@@ -92,7 +92,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testLevel_Native_ERROR() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		LogAdapter log = new LogAdapter("N/A", mockConfig());
+		LogAdapter log = new LogAdapter("N/A", mockConfigDefault());
 
 		Assert.assertTrue(log.isErrorEnabled());
 		Assert.assertFalse(log.isWarnEnabled());
@@ -110,7 +110,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testLevel_Native_WARN() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		LogAdapter log = new LogAdapter("N/A", mockConfig());
+		LogAdapter log = new LogAdapter("N/A", mockConfigDefault());
 
 		Assert.assertTrue(log.isErrorEnabled());
 		Assert.assertTrue(log.isWarnEnabled());
@@ -128,7 +128,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testLevel_Native_INFO() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		LogAdapter log = new LogAdapter("N/A", mockConfig());
+		LogAdapter log = new LogAdapter("N/A", mockConfigDefault());
 
 		Assert.assertTrue(log.isErrorEnabled());
 		Assert.assertTrue(log.isWarnEnabled());
@@ -146,7 +146,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testLevel_Native_DEBUG() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		LogAdapter log = new LogAdapter("N/A", mockConfig());
+		LogAdapter log = new LogAdapter("N/A", mockConfigDefault());
 
 		Assert.assertTrue(log.isErrorEnabled());
 		Assert.assertTrue(log.isWarnEnabled());
@@ -164,7 +164,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testLevel_Native_VERBOSE() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		LogAdapter log = new LogAdapter("N/A", mockConfig());
+		LogAdapter log = new LogAdapter("N/A", mockConfigDefault());
 
 		Assert.assertTrue(log.isErrorEnabled());
 		Assert.assertTrue(log.isWarnEnabled());
@@ -182,7 +182,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testLevel_Override_SUPPRESS() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		LogAdapter log = new LogAdapter("N/A", mockConfig(LogLevel.SUPPRESS));
+		LogAdapter log = new LogAdapter("N/A", mockConfigDefault(LogLevel.SUPPRESS));
 
 		Assert.assertFalse(log.isErrorEnabled());
 		Assert.assertFalse(log.isWarnEnabled());
@@ -200,7 +200,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testLevel_Override_ERROR() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		LogAdapter log = new LogAdapter("N/A", mockConfig(LogLevel.ERROR));
+		LogAdapter log = new LogAdapter("N/A", mockConfigDefault(LogLevel.ERROR));
 
 		Assert.assertTrue(log.isErrorEnabled());
 		Assert.assertFalse(log.isWarnEnabled());
@@ -218,7 +218,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testLevel_Override_WARN() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		LogAdapter log = new LogAdapter("N/A", mockConfig(LogLevel.WARN));
+		LogAdapter log = new LogAdapter("N/A", mockConfigDefault(LogLevel.WARN));
 
 		Assert.assertTrue(log.isErrorEnabled());
 		Assert.assertTrue(log.isWarnEnabled());
@@ -236,7 +236,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testLevel_Override_INFO() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LogAdapter log = new LogAdapter("N/A", mockConfig(LogLevel.INFO));
+		LogAdapter log = new LogAdapter("N/A", mockConfigDefault(LogLevel.INFO));
 
 		Assert.assertTrue(log.isErrorEnabled());
 		Assert.assertTrue(log.isWarnEnabled());
@@ -254,7 +254,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testLevel_Override_DEBUG() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LogAdapter log = new LogAdapter("N/A", mockConfig(LogLevel.DEBUG));
+		LogAdapter log = new LogAdapter("N/A", mockConfigDefault(LogLevel.DEBUG));
 
 		Assert.assertTrue(log.isErrorEnabled());
 		Assert.assertTrue(log.isWarnEnabled());
@@ -272,7 +272,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testLevel_Override_VERBOSE() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		LogAdapter log = new LogAdapter("N/A", mockConfig(LogLevel.VERBOSE));
+		LogAdapter log = new LogAdapter("N/A", mockConfigDefault(LogLevel.VERBOSE));
 
 		Assert.assertTrue(log.isErrorEnabled());
 		Assert.assertTrue(log.isWarnEnabled());
@@ -292,13 +292,13 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_errorEnabled() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		Assert.assertTrue(new LogAdapter("N/A", mockConfig()).isErrorEnabled());
+		Assert.assertTrue(new LogAdapter("N/A", mockConfigDefault()).isErrorEnabled());
 	}
 
 	@Test
 	public void testERROR_error_Msg() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error("Message 1");
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 1");
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 1");
@@ -307,7 +307,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_MsgArg() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error("Message 2 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 2 {}", "arg");
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 2 arg");
@@ -316,7 +316,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error("Message 3 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 3 {} {}", "arg1", "arg2");
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 3 arg1 arg2");
@@ -325,7 +325,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error("Message 4 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 4 arg1 arg2 arg3");
@@ -334,7 +334,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_MsgExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error("Message 5", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 5", throwable);
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 5", throwable);
@@ -343,7 +343,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error("Message 6", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 6", (Throwable)null);
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 6");
@@ -352,7 +352,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error("Message 7", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 7", (Object)throwable);
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 7", throwable);
@@ -361,7 +361,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error("Message 8", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 8", (Object)null);
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 8");
@@ -370,7 +370,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error("Message 9 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 9 {}", "arg1", throwable);
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 9 arg1", throwable);
@@ -379,7 +379,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error("Message 10 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 10 {}", "arg1", null);
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 10 arg1");
@@ -388,7 +388,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error("Message 11 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 11 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 11 arg1 arg2", throwable);
@@ -397,7 +397,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error("Message 12 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 12 {} {}", "arg1", "arg2", null);
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 12 arg1 arg2");
@@ -406,7 +406,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_Marker_Msg() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 13");
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 13");
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 13");
@@ -415,7 +415,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_Marker_MsgArg() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 14 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 14 {}", "arg");
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 14 arg");
@@ -424,7 +424,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_Marker_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 15 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 15 {} {}", "arg1", "arg2");
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 15 arg1 arg2");
@@ -433,7 +433,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_Marker_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 16 arg1 arg2 arg3");
@@ -442,7 +442,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_Marker_MsgExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 17", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 17", throwable);
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 17", throwable);
@@ -451,7 +451,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_Marker_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 18", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 18", (Throwable)null);
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 18");
@@ -460,7 +460,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_Marker_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 19", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 19", (Object)throwable);
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 19", throwable);
@@ -469,7 +469,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_Marker_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 20", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 20", (Object)null);
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 20");
@@ -478,7 +478,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_Marker_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 21 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 21 {}", "arg1", throwable);
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 21 arg1", throwable);
@@ -487,7 +487,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_Marker_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 22 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 22 {}", "arg1", null);
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 22 arg1");
@@ -496,7 +496,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_Marker_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 23 arg1 arg2", throwable);
@@ -505,7 +505,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_error_Marker_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 24 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
 		verifyStatic();
 		Log.e(createTag(0), "Message 24 arg1 arg2");
@@ -516,13 +516,13 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_errorEnabled() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		Assert.assertFalse(new LogAdapter("N/A", mockConfig()).isErrorEnabled());
+		Assert.assertFalse(new LogAdapter("N/A", mockConfigDefault()).isErrorEnabled());
 	}
 
 	@Test
 	public void testSUPPRESS_error_Msg() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error("Message 1");
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 1");
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 1");
@@ -531,7 +531,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_MsgArg() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error("Message 2 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 2 {}", "arg");
 
 		verifyStatic(never());
 		Log.e(eq(createTag(0)), anyString());
@@ -540,7 +540,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error("Message 3 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 3 {} {}", "arg1", "arg2");
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 3 arg1 arg2");
@@ -549,7 +549,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error("Message 4 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 4 arg1 arg2 arg3");
@@ -558,7 +558,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_MsgExc() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error("Message 5", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 5", throwable);
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 5", throwable);
@@ -567,7 +567,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error("Message 6", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 6", (Throwable)null);
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 6");
@@ -576,7 +576,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error("Message 7", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 7", (Object)throwable);
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 7", throwable);
@@ -585,7 +585,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error("Message 8", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 8", (Object)null);
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 8");
@@ -594,7 +594,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error("Message 9 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 9 {}", "arg1", throwable);
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 9 arg1", throwable);
@@ -603,7 +603,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error("Message 10 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 10 {}", "arg1", null);
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 10 arg1");
@@ -612,7 +612,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error("Message 11 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 11 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 11 arg1 arg2", throwable);
@@ -621,7 +621,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error("Message 12 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).error("Message 12 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 12 arg1 arg2");
@@ -630,7 +630,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_Marker_Msg() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 13");
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 13");
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 13");
@@ -639,7 +639,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_Marker_MsgArg() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 14 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 14 {}", "arg");
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 14 arg");
@@ -648,7 +648,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_Marker_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 15 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 15 {} {}", "arg1", "arg2");
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 15 arg1 arg2");
@@ -657,7 +657,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_Marker_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 16 arg1 arg2 arg3");
@@ -666,7 +666,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_Marker_MsgExc() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 17", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 17", throwable);
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 17", throwable);
@@ -675,7 +675,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_Marker_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 18", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 18", (Throwable)null);
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 18");
@@ -684,7 +684,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_Marker_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 19", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 19", (Object)throwable);
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 19", throwable);
@@ -693,7 +693,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_Marker_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 20", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 20", (Object)null);
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 20");
@@ -702,7 +702,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_Marker_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 21 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 21 {}", "arg1", throwable);
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 21 arg1", throwable);
@@ -711,7 +711,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_Marker_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 22 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 22 {}", "arg1", null);
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 22 arg1");
@@ -720,7 +720,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_Marker_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 23 arg1 arg2", throwable);
@@ -729,7 +729,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testSUPPRESS_error_Marker_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
-		new LogAdapter("N/A", mockConfig()).error(marker, "Message 24 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).error(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(never());
 		Log.e(createTag(0), "Message 24 arg1 arg2");
@@ -740,13 +740,13 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warnEnabled() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		Assert.assertTrue(new LogAdapter("N/A", mockConfig()).isWarnEnabled());
+		Assert.assertTrue(new LogAdapter("N/A", mockConfigDefault()).isWarnEnabled());
 	}
 
 	@Test
 	public void testWARN_warn_Msg() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn("Message 1");
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 1");
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 1");
@@ -755,7 +755,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_MsgArg() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn("Message 2 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 2 {}", "arg");
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 2 arg");
@@ -764,7 +764,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn("Message 3 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 3 {} {}", "arg1", "arg2");
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 3 arg1 arg2");
@@ -773,7 +773,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn("Message 4 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 4 arg1 arg2 arg3");
@@ -782,7 +782,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_MsgExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn("Message 5", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 5", throwable);
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 5", throwable);
@@ -791,7 +791,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn("Message 6", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 6", (Throwable)null);
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 6");
@@ -800,7 +800,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn("Message 7", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 7", (Object)throwable);
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 7", throwable);
@@ -809,7 +809,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn("Message 8", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 8", (Object)null);
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 8");
@@ -818,7 +818,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn("Message 9 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 9 {}", "arg1", throwable);
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 9 arg1", throwable);
@@ -827,7 +827,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn("Message 10 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 10 {}", "arg1", null);
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 10 arg1");
@@ -836,7 +836,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn("Message 11 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 11 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 11 arg1 arg2", throwable);
@@ -845,7 +845,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn("Message 12 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 12 {} {}", "arg1", "arg2", null);
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 12 arg1 arg2");
@@ -854,7 +854,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_Marker_Msg() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 13");
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 13");
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 13");
@@ -863,7 +863,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_Marker_MsgArg() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 14 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 14 {}", "arg");
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 14 arg");
@@ -872,7 +872,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_Marker_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 15 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 15 {} {}", "arg1", "arg2");
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 15 arg1 arg2");
@@ -881,7 +881,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_Marker_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 16 arg1 arg2 arg3");
@@ -890,7 +890,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_Marker_MsgExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 17", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 17", throwable);
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 17", throwable);
@@ -899,7 +899,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_Marker_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 18", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 18", (Throwable)null);
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 18");
@@ -908,7 +908,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_Marker_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 19", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 19", (Object)throwable);
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 19", throwable);
@@ -917,7 +917,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_Marker_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 20", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 20", (Object)null);
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 20");
@@ -926,7 +926,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_Marker_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 21 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 21 {}", "arg1", throwable);
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 21 arg1", throwable);
@@ -935,7 +935,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_Marker_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 22 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 22 {}", "arg1", null);
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 22 arg1");
@@ -944,7 +944,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_Marker_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 23 arg1 arg2", throwable);
@@ -953,7 +953,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_warn_Marker_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 24 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
 		verifyStatic();
 		Log.w(createTag(0), "Message 24 arg1 arg2");
@@ -964,13 +964,13 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warnEnabled() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		Assert.assertFalse(new LogAdapter("N/A", mockConfig()).isWarnEnabled());
+		Assert.assertFalse(new LogAdapter("N/A", mockConfigDefault()).isWarnEnabled());
 	}
 
 	@Test
 	public void testERROR_warn_Msg() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn("Message 1");
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 1");
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 1");
@@ -979,7 +979,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_MsgArg() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn("Message 2 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 2 {}", "arg");
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 2 arg");
@@ -988,7 +988,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn("Message 3 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 3 {} {}", "arg1", "arg2");
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 3 arg1 arg2");
@@ -997,7 +997,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn("Message 4 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 4 arg1 arg2 arg3");
@@ -1006,7 +1006,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_MsgExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn("Message 5", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 5", throwable);
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 5", throwable);
@@ -1015,7 +1015,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn("Message 6", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 6", (Throwable)null);
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 6");
@@ -1024,7 +1024,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn("Message 7", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 7", (Object)throwable);
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 7", throwable);
@@ -1033,7 +1033,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn("Message 8", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 8", (Object)null);
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 8");
@@ -1042,7 +1042,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn("Message 9 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 9 {}", "arg1", throwable);
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 9 arg1", throwable);
@@ -1051,7 +1051,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn("Message 10 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 10 {}", "arg1", null);
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 10 arg1");
@@ -1060,7 +1060,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn("Message 11 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 11 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 11 arg1 arg2", throwable);
@@ -1069,7 +1069,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn("Message 12 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).warn("Message 12 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 12 arg1 arg2");
@@ -1078,7 +1078,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_Marker_Msg() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 13");
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 13");
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 13");
@@ -1087,7 +1087,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_Marker_MsgArg() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 14 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 14 {}", "arg");
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 14 arg");
@@ -1096,7 +1096,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_Marker_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 15 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 15 {} {}", "arg1", "arg2");
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 15 arg1 arg2");
@@ -1105,7 +1105,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_Marker_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 16 arg1 arg2 arg3");
@@ -1114,7 +1114,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_Marker_MsgExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 17", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 17", throwable);
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 17", throwable);
@@ -1123,7 +1123,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_Marker_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 18", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 18", (Throwable)null);
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 18");
@@ -1132,7 +1132,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_Marker_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 19", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 19", (Object)throwable);
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 19", throwable);
@@ -1141,7 +1141,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_Marker_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 20", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 20", (Object)null);
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 20");
@@ -1150,7 +1150,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_Marker_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 21 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 21 {}", "arg1", throwable);
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 21 arg1", throwable);
@@ -1159,7 +1159,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_Marker_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 22 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 22 {}", "arg1", null);
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 22 arg1");
@@ -1168,7 +1168,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_Marker_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 23 arg1 arg2", throwable);
@@ -1177,7 +1177,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testERROR_warn_Marker_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.ERROR);
-		new LogAdapter("N/A", mockConfig()).warn(marker, "Message 24 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).warn(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(never());
 		Log.w(createTag(0), "Message 24 arg1 arg2");
@@ -1188,13 +1188,13 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_warnEnabled() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		Assert.assertTrue(new LogAdapter("N/A", mockConfig()).isInfoEnabled());
+		Assert.assertTrue(new LogAdapter("N/A", mockConfigDefault()).isInfoEnabled());
 	}
 
 	@Test
 	public void testINFO_info_Msg() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info("Message 1");
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 1");
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 1");
@@ -1203,7 +1203,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_MsgArg() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info("Message 2 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 2 {}", "arg");
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 2 arg");
@@ -1212,7 +1212,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info("Message 3 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 3 {} {}", "arg1", "arg2");
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 3 arg1 arg2");
@@ -1221,7 +1221,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info("Message 4 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 4 arg1 arg2 arg3");
@@ -1230,7 +1230,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_MsgExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info("Message 5", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 5", throwable);
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 5", throwable);
@@ -1239,7 +1239,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info("Message 6", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 6", (Throwable)null);
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 6");
@@ -1248,7 +1248,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info("Message 7", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 7", (Object)throwable);
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 7", throwable);
@@ -1257,7 +1257,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info("Message 8", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 8", (Object)null);
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 8");
@@ -1266,7 +1266,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info("Message 9 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 9 {}", "arg1", throwable);
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 9 arg1", throwable);
@@ -1275,7 +1275,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info("Message 10 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 10 {}", "arg1", null);
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 10 arg1");
@@ -1284,7 +1284,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info("Message 11 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 11 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 11 arg1 arg2", throwable);
@@ -1293,7 +1293,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info("Message 12 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 12 {} {}", "arg1", "arg2", null);
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 12 arg1 arg2");
@@ -1302,7 +1302,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_Marker_Msg() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 13");
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 13");
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 13");
@@ -1311,7 +1311,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_Marker_MsgArg() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 14 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 14 {}", "arg");
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 14 arg");
@@ -1320,7 +1320,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_Marker_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 15 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 15 {} {}", "arg1", "arg2");
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 15 arg1 arg2");
@@ -1329,7 +1329,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_Marker_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 16 arg1 arg2 arg3");
@@ -1338,7 +1338,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_Marker_MsgExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 17", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 17", throwable);
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 17", throwable);
@@ -1347,7 +1347,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_Marker_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 18", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 18", (Throwable)null);
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 18");
@@ -1356,7 +1356,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_Marker_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 19", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 19", (Object)throwable);
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 19", throwable);
@@ -1365,7 +1365,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_Marker_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 20", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 20", (Object)null);
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 20");
@@ -1374,7 +1374,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_Marker_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 21 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 21 {}", "arg1", throwable);
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 21 arg1", throwable);
@@ -1383,7 +1383,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_Marker_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 22 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 22 {}", "arg1", null);
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 22 arg1");
@@ -1392,7 +1392,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_Marker_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 23 arg1 arg2", throwable);
@@ -1401,7 +1401,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_info_Marker_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 24 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
 		verifyStatic();
 		Log.i(createTag(0), "Message 24 arg1 arg2");
@@ -1412,13 +1412,13 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_infoEnabled() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		Assert.assertFalse(new LogAdapter("N/A", mockConfig()).isInfoEnabled());
+		Assert.assertFalse(new LogAdapter("N/A", mockConfigDefault()).isInfoEnabled());
 	}
 
 	@Test
 	public void testWARN_info_Msg() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info("Message 1");
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 1");
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 1");
@@ -1427,7 +1427,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_MsgArg() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info("Message 2 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 2 {}", "arg");
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 2 arg");
@@ -1436,7 +1436,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info("Message 3 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 3 {} {}", "arg1", "arg2");
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 3 arg1 arg2");
@@ -1445,7 +1445,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info("Message 4 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 4 arg1 arg2 arg3");
@@ -1454,7 +1454,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_MsgExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info("Message 5", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 5", throwable);
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 5", throwable);
@@ -1463,7 +1463,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info("Message 6", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 6", (Throwable)null);
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 6");
@@ -1472,7 +1472,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info("Message 7", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 7", (Object)throwable);
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 7", throwable);
@@ -1481,7 +1481,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info("Message 8", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 8", (Object)null);
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 8");
@@ -1490,7 +1490,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info("Message 9 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 9 {}", "arg1", throwable);
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 9 arg1", throwable);
@@ -1499,7 +1499,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info("Message 10 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 10 {}", "arg1", null);
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 10 arg1");
@@ -1508,7 +1508,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info("Message 11 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 11 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 11 arg1 arg2", throwable);
@@ -1517,7 +1517,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info("Message 12 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).info("Message 12 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 12 arg1 arg2");
@@ -1526,7 +1526,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_Marker_Msg() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 13");
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 13");
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 13");
@@ -1535,7 +1535,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_Marker_MsgArg() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 14 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 14 {}", "arg");
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 14 arg");
@@ -1544,7 +1544,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_Marker_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 15 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 15 {} {}", "arg1", "arg2");
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 15 arg1 arg2");
@@ -1553,7 +1553,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_Marker_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 16 arg1 arg2 arg3");
@@ -1562,7 +1562,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_Marker_MsgExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 17", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 17", throwable);
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 17", throwable);
@@ -1571,7 +1571,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_Marker_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 18", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 18", (Throwable)null);
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 18");
@@ -1580,7 +1580,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_Marker_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 19", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 19", (Object)throwable);
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 19", throwable);
@@ -1589,7 +1589,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_Marker_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 20", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 20", (Object)null);
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 20");
@@ -1598,7 +1598,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_Marker_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 21 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 21 {}", "arg1", throwable);
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 21 arg1", throwable);
@@ -1607,7 +1607,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_Marker_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 22 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 22 {}", "arg1", null);
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 22 arg1");
@@ -1616,7 +1616,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_Marker_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 23 arg1 arg2", throwable);
@@ -1625,7 +1625,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testWARN_info_Marker_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.WARN);
-		new LogAdapter("N/A", mockConfig()).info(marker, "Message 24 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).info(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(never());
 		Log.i(createTag(0), "Message 24 arg1 arg2");
@@ -1636,13 +1636,13 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_warnEnabled() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		Assert.assertTrue(new LogAdapter("N/A", mockConfig()).isDebugEnabled());
+		Assert.assertTrue(new LogAdapter("N/A", mockConfigDefault()).isDebugEnabled());
 	}
 
 	@Test
 	public void testDEBUG_debug_Msg() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug("Message 1");
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 1");
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 1");
@@ -1651,7 +1651,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_MsgArg() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug("Message 2 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 2 {}", "arg");
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 2 arg");
@@ -1660,7 +1660,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug("Message 3 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 3 {} {}", "arg1", "arg2");
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 3 arg1 arg2");
@@ -1669,7 +1669,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug("Message 4 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 4 arg1 arg2 arg3");
@@ -1678,7 +1678,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_MsgExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug("Message 5", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 5", throwable);
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 5", throwable);
@@ -1687,7 +1687,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug("Message 6", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 6", (Throwable)null);
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 6");
@@ -1696,7 +1696,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug("Message 7", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 7", (Object)throwable);
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 7", throwable);
@@ -1705,7 +1705,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug("Message 8", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 8", (Object)null);
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 8");
@@ -1714,7 +1714,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug("Message 9 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 9 {}", "arg1", throwable);
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 9 arg1", throwable);
@@ -1723,7 +1723,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug("Message 10 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 10 {}", "arg1", null);
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 10 arg1");
@@ -1732,7 +1732,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug("Message 11 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 11 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 11 arg1 arg2", throwable);
@@ -1741,7 +1741,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug("Message 12 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 12 {} {}", "arg1", "arg2", null);
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 12 arg1 arg2");
@@ -1750,7 +1750,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_Marker_Msg() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 13");
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 13");
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 13");
@@ -1759,7 +1759,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_Marker_MsgArg() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 14 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 14 {}", "arg");
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 14 arg");
@@ -1768,7 +1768,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_Marker_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 15 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 15 {} {}", "arg1", "arg2");
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 15 arg1 arg2");
@@ -1777,7 +1777,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_Marker_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 16 arg1 arg2 arg3");
@@ -1786,7 +1786,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_Marker_MsgExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 17", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 17", throwable);
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 17", throwable);
@@ -1795,7 +1795,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_Marker_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 18", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 18", (Throwable)null);
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 18");
@@ -1804,7 +1804,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_Marker_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 19", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 19", (Object)throwable);
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 19", throwable);
@@ -1813,7 +1813,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_Marker_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 20", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 20", (Object)null);
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 20");
@@ -1822,7 +1822,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_Marker_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 21 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 21 {}", "arg1", throwable);
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 21 arg1", throwable);
@@ -1831,7 +1831,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_Marker_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 22 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 22 {}", "arg1", null);
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 22 arg1");
@@ -1840,7 +1840,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_Marker_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 23 arg1 arg2", throwable);
@@ -1849,7 +1849,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_debug_Marker_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 24 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
 		verifyStatic();
 		Log.d(createTag(0), "Message 24 arg1 arg2");
@@ -1860,13 +1860,13 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debugEnabled() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		Assert.assertFalse(new LogAdapter("N/A", mockConfig()).isDebugEnabled());
+		Assert.assertFalse(new LogAdapter("N/A", mockConfigDefault()).isDebugEnabled());
 	}
 
 	@Test
 	public void testINFO_debug_Msg() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug("Message 1");
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 1");
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 1");
@@ -1875,7 +1875,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_MsgArg() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug("Message 2 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 2 {}", "arg");
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 2 arg");
@@ -1884,7 +1884,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug("Message 3 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 3 {} {}", "arg1", "arg2");
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 3 arg1 arg2");
@@ -1893,7 +1893,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug("Message 4 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 4 arg1 arg2 arg3");
@@ -1902,7 +1902,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_MsgExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug("Message 5", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 5", throwable);
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 5", throwable);
@@ -1911,7 +1911,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug("Message 6", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 6", (Throwable)null);
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 6");
@@ -1920,7 +1920,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug("Message 7", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 7", (Object)throwable);
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 7", throwable);
@@ -1929,7 +1929,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug("Message 8", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 8", (Object)null);
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 8");
@@ -1938,7 +1938,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug("Message 9 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 9 {}", "arg1", throwable);
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 9 arg1", throwable);
@@ -1947,7 +1947,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug("Message 10 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 10 {}", "arg1", null);
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 10 arg1");
@@ -1956,7 +1956,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug("Message 11 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 11 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 11 arg1 arg2", throwable);
@@ -1965,7 +1965,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug("Message 12 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).debug("Message 12 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 12 arg1 arg2");
@@ -1974,7 +1974,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_Marker_Msg() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 13");
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 13");
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 13");
@@ -1983,7 +1983,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_Marker_MsgArg() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 14 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 14 {}", "arg");
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 14 arg");
@@ -1992,7 +1992,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_Marker_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 15 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 15 {} {}", "arg1", "arg2");
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 15 arg1 arg2");
@@ -2001,7 +2001,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_Marker_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 16 arg1 arg2 arg3");
@@ -2010,7 +2010,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_Marker_MsgExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 17", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 17", throwable);
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 17", throwable);
@@ -2019,7 +2019,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_Marker_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 18", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 18", (Throwable)null);
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 18");
@@ -2028,7 +2028,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_Marker_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 19", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 19", (Object)throwable);
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 19", throwable);
@@ -2037,7 +2037,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_Marker_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 20", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 20", (Object)null);
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 20");
@@ -2046,7 +2046,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_Marker_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 21 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 21 {}", "arg1", throwable);
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 21 arg1", throwable);
@@ -2055,7 +2055,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_Marker_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 22 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 22 {}", "arg1", null);
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 22 arg1");
@@ -2064,7 +2064,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_Marker_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 23 arg1 arg2", throwable);
@@ -2073,7 +2073,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testINFO_debug_Marker_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.INFO);
-		new LogAdapter("N/A", mockConfig()).debug(marker, "Message 24 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).debug(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(never());
 		Log.d(createTag(0), "Message 24 arg1 arg2");
@@ -2084,13 +2084,13 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_warnEnabled() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		Assert.assertTrue(new LogAdapter("N/A", mockConfig()).isTraceEnabled());
+		Assert.assertTrue(new LogAdapter("N/A", mockConfigDefault()).isTraceEnabled());
 	}
 
 	@Test
 	public void testTRACE_trace_Msg() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace("Message 1");
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 1");
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 1");
@@ -2099,7 +2099,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_MsgArg() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace("Message 2 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 2 {}", "arg");
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 2 arg");
@@ -2108,7 +2108,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace("Message 3 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 3 {} {}", "arg1", "arg2");
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 3 arg1 arg2");
@@ -2117,7 +2117,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace("Message 4 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 4 arg1 arg2 arg3");
@@ -2126,7 +2126,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_MsgExc() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace("Message 5", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 5", throwable);
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 5", throwable);
@@ -2135,7 +2135,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace("Message 6", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 6", (Throwable)null);
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 6");
@@ -2144,7 +2144,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace("Message 7", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 7", (Object)throwable);
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 7", throwable);
@@ -2153,7 +2153,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace("Message 8", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 8", (Object)null);
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 8");
@@ -2162,7 +2162,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace("Message 9 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 9 {}", "arg1", throwable);
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 9 arg1", throwable);
@@ -2171,7 +2171,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace("Message 10 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 10 {}", "arg1", null);
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 10 arg1");
@@ -2180,7 +2180,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace("Message 11 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 11 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 11 arg1 arg2", throwable);
@@ -2189,7 +2189,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace("Message 12 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 12 {} {}", "arg1", "arg2", null);
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 12 arg1 arg2");
@@ -2198,7 +2198,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_Marker_Msg() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 13");
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 13");
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 13");
@@ -2207,7 +2207,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_Marker_MsgArg() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 14 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 14 {}", "arg");
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 14 arg");
@@ -2216,7 +2216,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_Marker_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 15 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 15 {} {}", "arg1", "arg2");
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 15 arg1 arg2");
@@ -2225,7 +2225,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_Marker_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 16 arg1 arg2 arg3");
@@ -2234,7 +2234,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_Marker_MsgExc() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 17", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 17", throwable);
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 17", throwable);
@@ -2243,7 +2243,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_Marker_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 18", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 18", (Throwable)null);
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 18");
@@ -2252,7 +2252,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_Marker_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 19", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 19", (Object)throwable);
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 19", throwable);
@@ -2261,7 +2261,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_Marker_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 20", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 20", (Object)null);
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 20");
@@ -2270,7 +2270,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_Marker_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 21 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 21 {}", "arg1", throwable);
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 21 arg1", throwable);
@@ -2279,7 +2279,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_Marker_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 22 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 22 {}", "arg1", null);
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 22 arg1");
@@ -2288,7 +2288,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_Marker_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 23 arg1 arg2", throwable);
@@ -2297,7 +2297,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testTRACE_trace_Marker_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 24 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
 		verifyStatic();
 		Log.v(createTag(0), "Message 24 arg1 arg2");
@@ -2308,13 +2308,13 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_traceEnabled() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		Assert.assertFalse(new LogAdapter("N/A", mockConfig()).isTraceEnabled());
+		Assert.assertFalse(new LogAdapter("N/A", mockConfigDefault()).isTraceEnabled());
 	}
 
 	@Test
 	public void testDEBUG_trace_Msg() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace("Message 1");
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 1");
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 1");
@@ -2323,7 +2323,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_MsgArg() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace("Message 2 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 2 {}", "arg");
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 2 arg");
@@ -2332,7 +2332,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace("Message 3 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 3 {} {}", "arg1", "arg2");
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 3 arg1 arg2");
@@ -2341,7 +2341,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace("Message 4 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 4 arg1 arg2 arg3");
@@ -2350,7 +2350,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_MsgExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace("Message 5", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 5", throwable);
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 5", throwable);
@@ -2359,7 +2359,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace("Message 6", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 6", (Throwable)null);
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 6");
@@ -2368,7 +2368,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace("Message 7", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 7", (Object)throwable);
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 7", throwable);
@@ -2377,7 +2377,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace("Message 8", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 8", (Object)null);
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 8");
@@ -2386,7 +2386,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace("Message 9 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 9 {}", "arg1", throwable);
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 9 arg1", throwable);
@@ -2395,7 +2395,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace("Message 10 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 10 {}", "arg1", null);
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 10 arg1");
@@ -2404,7 +2404,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace("Message 11 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 11 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 11 arg1 arg2", throwable);
@@ -2413,7 +2413,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace("Message 12 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).trace("Message 12 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 12 arg1 arg2");
@@ -2422,7 +2422,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_Marker_Msg() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 13");
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 13");
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 13");
@@ -2431,7 +2431,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_Marker_MsgArg() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 14 {}", "arg");
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 14 {}", "arg");
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 14 arg");
@@ -2440,7 +2440,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_Marker_Msg2Args() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 15 {} {}", "arg1", "arg2");
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 15 {} {}", "arg1", "arg2");
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 15 arg1 arg2");
@@ -2449,7 +2449,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_Marker_MsgManyArgs() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 16 arg1 arg2 arg3");
@@ -2458,7 +2458,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_Marker_MsgExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 17", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 17", throwable);
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 17", throwable);
@@ -2467,7 +2467,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_Marker_MsgNullExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 18", (Throwable)null);
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 18", (Throwable)null);
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 18");
@@ -2476,7 +2476,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_Marker_MsgObjExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 19", (Object)throwable);
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 19", (Object)throwable);
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 19", throwable);
@@ -2485,7 +2485,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_Marker_MsgObjNull() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 20", (Object)null);
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 20", (Object)null);
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 20");
@@ -2494,7 +2494,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_Marker_Msg2ObjExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 21 {}", "arg1", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 21 {}", "arg1", throwable);
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 21 arg1", throwable);
@@ -2503,7 +2503,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_Marker_Msg2ObjNull() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 22 {}", "arg1", null);
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 22 {}", "arg1", null);
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 22 arg1");
@@ -2512,7 +2512,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_Marker_Msg3ObjExc() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 23 arg1 arg2", throwable);
@@ -2521,7 +2521,7 @@ public class DefaultLoggerTest {
 	@Test
 	public void testDEBUG_trace_Marker_Msg3ObjNull() {
 		mockLogLevelRestricted(LogLevel.DEBUG);
-		new LogAdapter("N/A", mockConfig()).trace(marker, "Message 24 {} {}", "arg1", "arg2", null);
+		new LogAdapter("N/A", mockConfigDefault()).trace(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(never());
 		Log.v(createTag(0), "Message 24 arg1 arg2");
