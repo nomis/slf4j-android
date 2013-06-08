@@ -70,6 +70,35 @@ public class MockUtil {
 	}
 
 	/**
+	 * Create a mock logger config for the current test with showThread enabled
+	 */
+	public static LoggerConfig mockConfigThread() {
+		StackTraceElement ste = new CallerStackTrace(1).get();
+		String tag = ste.getClassName() + "." + ste.getMethodName();
+
+		LoggerConfig config = new LoggerConfig();
+		config.tag = tag;
+		config.showThread = true;
+		config.merge(LoggerConfig.DEFAULT);
+		return config;
+	}
+
+	/**
+	 * Create a mock logger config for the current test with showThread enabled and overridden log level
+	 */
+	public static LoggerConfig mockConfigThread(LogLevel override) {
+		StackTraceElement ste = new CallerStackTrace(1).get();
+		String tag = ste.getClassName() + "." + ste.getMethodName();
+
+		LoggerConfig config = new LoggerConfig();
+		config.tag = tag;
+		config.level = override;
+		config.showThread = true;
+		config.merge(LoggerConfig.DEFAULT);
+		return config;
+	}
+
+	/**
 	 * Mock the log level for the current test
 	 */
 	public static void mockLogLevel(LogLevel level) {
