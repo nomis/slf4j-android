@@ -22,10 +22,27 @@
  */
 package eu.lp0.slf4j.android;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static eu.lp0.slf4j.android.MockUtil.createTag;
+import static eu.lp0.slf4j.android.MockUtil.mockLogLevel;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+import android.util.Log;
+
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(value = MockUtilTest.class, fullyQualifiedNames = "android.util.Log")
 public class MockUtilTest {
+	@Before
+	public void mockLog() {
+		mockStatic(Log.class);
+	}
+
 	@Test
 	public void testMethodName1() {
 		Assert.assertEquals("testMethodName1", MockUtil.currentMethodName());
@@ -54,5 +71,71 @@ public class MockUtilTest {
 	@Test
 	public void testTagName3() {
 		Assert.assertEquals("eu.lp0.slf4j.android.MockUtilTest___testTagName3", MockUtil.createTag(0));
+	}
+
+	@Test
+	public void testNativeLevelSuppress() {
+		mockLogLevel(LogLevel.SUPPRESS);
+
+		Assert.assertFalse(Log.isLoggable(createTag(0), Log.ERROR));
+		Assert.assertFalse(Log.isLoggable(createTag(0), Log.WARN));
+		Assert.assertFalse(Log.isLoggable(createTag(0), Log.INFO));
+		Assert.assertFalse(Log.isLoggable(createTag(0), Log.DEBUG));
+		Assert.assertFalse(Log.isLoggable(createTag(0), Log.VERBOSE));
+	}
+
+	@Test
+	public void testNativeLevelError() {
+		mockLogLevel(LogLevel.ERROR);
+
+		Assert.assertTrue(Log.isLoggable(createTag(0), Log.ERROR));
+		Assert.assertFalse(Log.isLoggable(createTag(0), Log.WARN));
+		Assert.assertFalse(Log.isLoggable(createTag(0), Log.INFO));
+		Assert.assertFalse(Log.isLoggable(createTag(0), Log.DEBUG));
+		Assert.assertFalse(Log.isLoggable(createTag(0), Log.VERBOSE));
+	}
+
+	@Test
+	public void testNativeLevelWarn() {
+		mockLogLevel(LogLevel.WARN);
+
+		Assert.assertTrue(Log.isLoggable(createTag(0), Log.ERROR));
+		Assert.assertTrue(Log.isLoggable(createTag(0), Log.WARN));
+		Assert.assertFalse(Log.isLoggable(createTag(0), Log.INFO));
+		Assert.assertFalse(Log.isLoggable(createTag(0), Log.DEBUG));
+		Assert.assertFalse(Log.isLoggable(createTag(0), Log.VERBOSE));
+	}
+
+	@Test
+	public void testNativeLevelInfo() {
+		mockLogLevel(LogLevel.INFO);
+
+		Assert.assertTrue(Log.isLoggable(createTag(0), Log.ERROR));
+		Assert.assertTrue(Log.isLoggable(createTag(0), Log.WARN));
+		Assert.assertTrue(Log.isLoggable(createTag(0), Log.INFO));
+		Assert.assertFalse(Log.isLoggable(createTag(0), Log.DEBUG));
+		Assert.assertFalse(Log.isLoggable(createTag(0), Log.VERBOSE));
+	}
+
+	@Test
+	public void testNativeLevelDebug() {
+		mockLogLevel(LogLevel.DEBUG);
+
+		Assert.assertTrue(Log.isLoggable(createTag(0), Log.ERROR));
+		Assert.assertTrue(Log.isLoggable(createTag(0), Log.WARN));
+		Assert.assertTrue(Log.isLoggable(createTag(0), Log.INFO));
+		Assert.assertTrue(Log.isLoggable(createTag(0), Log.DEBUG));
+		Assert.assertFalse(Log.isLoggable(createTag(0), Log.VERBOSE));
+	}
+
+	@Test
+	public void testNativeLevelVerbose() {
+		mockLogLevel(LogLevel.VERBOSE);
+
+		Assert.assertTrue(Log.isLoggable(createTag(0), Log.ERROR));
+		Assert.assertTrue(Log.isLoggable(createTag(0), Log.WARN));
+		Assert.assertTrue(Log.isLoggable(createTag(0), Log.INFO));
+		Assert.assertTrue(Log.isLoggable(createTag(0), Log.DEBUG));
+		Assert.assertTrue(Log.isLoggable(createTag(0), Log.VERBOSE));
 	}
 }
