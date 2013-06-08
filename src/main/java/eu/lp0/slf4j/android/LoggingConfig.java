@@ -37,12 +37,13 @@ import org.slf4j.Logger;
  * @author Simon Arlott
  */
 final class LoggingConfig {
+	public static final String DEFAULT_FILENAME = "config.properties";
 	private final CategoryMap map = new CategoryMap();
 
-	LoggingConfig(final Logger log) {
+	LoggingConfig(final String configFileName, final Logger log) {
 		final long start = log.isTraceEnabled() ? System.nanoTime() : 0;
 		final Properties props = new Properties();
-		final URL url = getClass().getResource("config.properties");
+		final URL url = getClass().getResource(configFileName);
 
 		if (url != null) {
 			log.debug("Loading properties file from {}", url);

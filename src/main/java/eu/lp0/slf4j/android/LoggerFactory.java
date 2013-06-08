@@ -48,7 +48,7 @@ public final class LoggerFactory implements ILoggerFactory {
 	}
 
 	private final ConcurrentMap<String, Logger> loggerMap = new ConcurrentHashMap<String, Logger>();
-	private final LoggingConfig loggingConfig = new LoggingConfig(LOG);
+	private final LoggingConfig loggingConfig = new LoggingConfig(LoggingConfig.DEFAULT_FILENAME, LOG);
 
 	@Override
 	public final Logger getLogger(final String name) {
@@ -86,8 +86,9 @@ public final class LoggerFactory implements ILoggerFactory {
 	 * Create a compatible logging tag for Android based on the logger name.
 	 */
 	static final String createTag(final String name) {
-		if (name.length() <= MAX_TAG_LEN)
+		if (name.length() <= MAX_TAG_LEN) {
 			return name;
+		}
 
 		final char[] tag = name.toCharArray();
 		final int arrayLen = tag.length;
@@ -118,8 +119,9 @@ public final class LoggerFactory implements ILoggerFactory {
 			mark--;
 
 			for (int j = 0; j < len; j++) {
-				if (tag[j] == '.' && (((j & 1) == 1 && j != mark) || (i >= MAX_TAG_LEN - 1)))
+				if (tag[j] == '.' && (((j & 1) == 1 && j != mark) || (i >= MAX_TAG_LEN - 1))) {
 					continue;
+				}
 
 				tag[i++] = tag[j];
 			}
