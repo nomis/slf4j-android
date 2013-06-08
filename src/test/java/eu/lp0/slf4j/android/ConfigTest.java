@@ -62,6 +62,9 @@ public class ConfigTest {
 		Assert.assertEquals("JavaApp", config.get("").tag);
 		Assert.assertEquals("JavaApp", config.get("java.net.Socket").tag);
 		Assert.assertEquals("JavaLang", config.get("java.lang.Void").tag);
+		Assert.assertEquals("OOM", config.get("java.lang.OutOfMemoryError").tag);
+		Assert.assertEquals("JavaLang", config.get("java.lang.reflect").tag);
+		Assert.assertEquals("Reflect", config.get("java.lang.reflect.Field").tag);
 		Assert.assertEquals("JavaUtil", config.get("java.util.List").tag);
 		Assert.assertEquals("JavaApp", config.get("java.oops.Test").tag);
 		Assert.assertEquals("JavaUtil", config.get("java.util.concurrent.locks.ReentrantReadWriteLock").tag);
@@ -70,6 +73,15 @@ public class ConfigTest {
 		Assert.assertEquals("Maven", config.get("org.apache.maven").tag);
 		Assert.assertEquals("Maven", config.get("org.apache.maven.Test1").tag);
 		Assert.assertEquals("Maven", config.get("org.apache.maven.Test2.Test3").tag);
+		Assert.assertEquals("JavaApp", config.get("java.net.test1").tag);
+		Assert.assertEquals("JavaApp", config.get("java.net.more").tag);
+		Assert.assertEquals("JavaApp", config.get("java.net.more.test2").tag);
+		Assert.assertEquals("JavaApp", config.get("java.test").tag);
+		Assert.assertEquals("JavaApp", config.get("java.test.class").tag);
+		Assert.assertEquals("JavaApp", config.get("java.igor").tag);
+		Assert.assertEquals("JavaApp", config.get("java.igor.igor").tag);
+		Assert.assertEquals("JavaApp", config.get("java.igor.test").tag);
+		Assert.assertEquals("JavaApp", config.get("java.igor.test.name").tag);
 	}
 
 	@Test
@@ -81,6 +93,9 @@ public class ConfigTest {
 		Assert.assertEquals("JavaApp", config.get("").tag);
 		Assert.assertEquals("JavaApp", config.get("java.net.Socket").tag);
 		Assert.assertEquals("JavaLang", config.get("java.lang.Void").tag);
+		Assert.assertEquals("OOM", config.get("java.lang.OutOfMemoryError").tag);
+		Assert.assertEquals("JavaLang", config.get("java.lang.reflect").tag);
+		Assert.assertEquals("Reflect", config.get("java.lang.reflect.Field").tag);
 		Assert.assertEquals("JavaUtil", config.get("java.util.List").tag);
 		Assert.assertEquals("JavaApp", config.get("java.oops.Test").tag);
 		Assert.assertEquals("JavaUtil", config.get("java.util.concurrent.locks.ReentrantReadWriteLock").tag);
@@ -89,6 +104,15 @@ public class ConfigTest {
 		Assert.assertEquals("Maven", config.get("org.apache.maven").tag);
 		Assert.assertEquals("Maven", config.get("org.apache.maven.Test1").tag);
 		Assert.assertEquals("Maven", config.get("org.apache.maven.Test2.Test3").tag);
+		Assert.assertEquals("JavaApp", config.get("java.net.test1").tag);
+		Assert.assertEquals("JavaApp", config.get("java.net.more").tag);
+		Assert.assertEquals("JavaApp", config.get("java.net.more.test2").tag);
+		Assert.assertEquals("JavaApp", config.get("java.test").tag);
+		Assert.assertEquals("JavaApp", config.get("java.test.class").tag);
+		Assert.assertEquals("JavaApp", config.get("java.igor").tag);
+		Assert.assertEquals("JavaApp", config.get("java.igor.igor").tag);
+		Assert.assertEquals("JavaApp", config.get("java.igor.test").tag);
+		Assert.assertEquals("JavaApp", config.get("java.igor.test.name").tag);
 	}
 
 	@Test
@@ -100,6 +124,9 @@ public class ConfigTest {
 		Assert.assertEquals(LogLevel.WARN, config.get("").level);
 		Assert.assertEquals(LogLevel.DEBUG, config.get("java.net.Socket").level);
 		Assert.assertEquals(LogLevel.WARN, config.get("java.lang.Void").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.lang.OutOfMemoryError").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.lang.reflect").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.lang.reflect.Field").level);
 		Assert.assertEquals(LogLevel.WARN, config.get("java.util.List").level);
 		Assert.assertEquals(LogLevel.WARN, config.get("java.oops.Test").level);
 		Assert.assertEquals(LogLevel.WARN, config.get("java.util.concurrent.locks.ReentrantReadWriteLock").level);
@@ -108,6 +135,15 @@ public class ConfigTest {
 		Assert.assertEquals(LogLevel.VERBOSE, config.get("org.apache.maven").level);
 		Assert.assertEquals(LogLevel.VERBOSE, config.get("org.apache.maven.Test1").level);
 		Assert.assertEquals(LogLevel.VERBOSE, config.get("org.apache.maven.Test2.Test3").level);
+		Assert.assertEquals(LogLevel.INFO, config.get("java.net.test1").level);
+		Assert.assertEquals(LogLevel.INFO, config.get("java.net.test1.more").level);
+		Assert.assertEquals(LogLevel.ERROR, config.get("java.net.more.test2").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.test").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.test.class").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.igor").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.igor.igor").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.igor.test").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.igor.test.name").level);
 	}
 
 	@Test
@@ -119,6 +155,9 @@ public class ConfigTest {
 		Assert.assertEquals(LogLevel.WARN, config.get("").level);
 		Assert.assertEquals(LogLevel.DEBUG, config.get("java.net.Socket").level);
 		Assert.assertEquals(LogLevel.WARN, config.get("java.lang.Void").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.lang.OutOfMemoryError").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.lang.reflect").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.lang.reflect.Field").level);
 		Assert.assertEquals(LogLevel.WARN, config.get("java.util.List").level);
 		Assert.assertEquals(LogLevel.WARN, config.get("java.oops.Test").level);
 		Assert.assertEquals(LogLevel.WARN, config.get("java.util.concurrent.locks.ReentrantReadWriteLock").level);
@@ -127,6 +166,15 @@ public class ConfigTest {
 		Assert.assertEquals(LogLevel.VERBOSE, config.get("org.apache.maven").level);
 		Assert.assertEquals(LogLevel.VERBOSE, config.get("org.apache.maven.Test1").level);
 		Assert.assertEquals(LogLevel.VERBOSE, config.get("org.apache.maven.Test2.Test3").level);
+		Assert.assertEquals(LogLevel.INFO, config.get("java.net.test1").level);
+		Assert.assertEquals(LogLevel.INFO, config.get("java.net.test1.more").level);
+		Assert.assertEquals(LogLevel.ERROR, config.get("java.net.more.test2").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.test").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.test.class").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.igor").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.igor.igor").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.igor.test").level);
+		Assert.assertEquals(LogLevel.WARN, config.get("java.igor.test.name").level);
 	}
 
 	@Test
@@ -138,6 +186,9 @@ public class ConfigTest {
 		Assert.assertEquals(LoggerConfig.ShowName.LONG, config.get("").showName);
 		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.net.Socket").showName);
 		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.lang.Void").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.lang.OutOfMemoryError").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.lang.reflect").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.lang.reflect.Field").showName);
 		Assert.assertEquals(LoggerConfig.ShowName.FALSE, config.get("java.util.List").showName);
 		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.oops.Test").showName);
 		Assert.assertEquals(LoggerConfig.ShowName.FALSE, config.get("java.util.concurrent.locks.ReentrantReadWriteLock").showName);
@@ -146,6 +197,15 @@ public class ConfigTest {
 		Assert.assertEquals(LoggerConfig.ShowName.CALLER, config.get("org.apache.maven").showName);
 		Assert.assertEquals(LoggerConfig.ShowName.CALLER, config.get("org.apache.maven.Test1").showName);
 		Assert.assertEquals(LoggerConfig.ShowName.CALLER, config.get("org.apache.maven.Test2.Test3").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.net.test1").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.net.more").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.net.more.test2").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.test").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.COMPACT, config.get("java.test.class").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.igor").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.igor.igor").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.igor.test").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.igor.test.name").showName);
 	}
 
 	@Test
@@ -157,6 +217,9 @@ public class ConfigTest {
 		Assert.assertEquals(LoggerConfig.ShowName.LONG, config.get("").showName);
 		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.net.Socket").showName);
 		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.lang.Void").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.lang.OutOfMemoryError").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.lang.reflect").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.lang.reflect.Field").showName);
 		Assert.assertEquals(LoggerConfig.ShowName.FALSE, config.get("java.util.List").showName);
 		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.oops.Test").showName);
 		Assert.assertEquals(LoggerConfig.ShowName.FALSE, config.get("java.util.concurrent.locks.ReentrantReadWriteLock").showName);
@@ -165,6 +228,15 @@ public class ConfigTest {
 		Assert.assertEquals(LoggerConfig.ShowName.CALLER, config.get("org.apache.maven").showName);
 		Assert.assertEquals(LoggerConfig.ShowName.CALLER, config.get("org.apache.maven.Test1").showName);
 		Assert.assertEquals(LoggerConfig.ShowName.CALLER, config.get("org.apache.maven.Test2.Test3").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.net.test1").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.net.more").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.net.more.test2").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.test").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.COMPACT, config.get("java.test.class").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.igor").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.igor.igor").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.igor.test").showName);
+		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.igor.test.name").showName);
 	}
 
 	@Test
@@ -176,6 +248,9 @@ public class ConfigTest {
 		Assert.assertEquals(false, config.get("").showThread);
 		Assert.assertEquals(false, config.get("java.net.Socket").showThread);
 		Assert.assertEquals(false, config.get("java.lang.Void").showThread);
+		Assert.assertEquals(false, config.get("java.lang.OutOfMemoryError").showThread);
+		Assert.assertEquals(false, config.get("java.lang.reflect").showThread);
+		Assert.assertEquals(false, config.get("java.lang.reflect.Field").showThread);
 		Assert.assertEquals(false, config.get("java.util.List").showThread);
 		Assert.assertEquals(false, config.get("java.oops.Test").showThread);
 		Assert.assertEquals(true, config.get("java.util.concurrent.locks.ReentrantReadWriteLock").showThread);
@@ -184,6 +259,15 @@ public class ConfigTest {
 		Assert.assertEquals(true, config.get("org.apache.maven").showThread);
 		Assert.assertEquals(true, config.get("org.apache.maven.Test1").showThread);
 		Assert.assertEquals(true, config.get("org.apache.maven.Test2.Test3").showThread);
+		Assert.assertEquals(false, config.get("java.net.test1").showThread);
+		Assert.assertEquals(false, config.get("java.net.more").showThread);
+		Assert.assertEquals(false, config.get("java.net.more.test2").showThread);
+		Assert.assertEquals(false, config.get("java.test").showThread);
+		Assert.assertEquals(false, config.get("java.test.class").showThread);
+		Assert.assertEquals(true, config.get("java.igor").showThread);
+		Assert.assertEquals(false, config.get("java.igor.igor").showThread);
+		Assert.assertEquals(true, config.get("java.igor.test").showThread);
+		Assert.assertEquals(false, config.get("java.igor.test.name").showThread);
 	}
 
 	@Test
@@ -195,6 +279,9 @@ public class ConfigTest {
 		Assert.assertEquals(false, config.get("").showThread);
 		Assert.assertEquals(false, config.get("java.net.Socket").showThread);
 		Assert.assertEquals(false, config.get("java.lang.Void").showThread);
+		Assert.assertEquals(false, config.get("java.lang.OutOfMemoryError").showThread);
+		Assert.assertEquals(false, config.get("java.lang.reflect").showThread);
+		Assert.assertEquals(false, config.get("java.lang.reflect.Field").showThread);
 		Assert.assertEquals(false, config.get("java.util.List").showThread);
 		Assert.assertEquals(false, config.get("java.oops.Test").showThread);
 		Assert.assertEquals(true, config.get("java.util.concurrent.locks.ReentrantReadWriteLock").showThread);
@@ -203,6 +290,15 @@ public class ConfigTest {
 		Assert.assertEquals(true, config.get("org.apache.maven").showThread);
 		Assert.assertEquals(true, config.get("org.apache.maven.Test1").showThread);
 		Assert.assertEquals(true, config.get("org.apache.maven.Test2.Test3").showThread);
+		Assert.assertEquals(false, config.get("java.net.test1").showThread);
+		Assert.assertEquals(false, config.get("java.net.more").showThread);
+		Assert.assertEquals(false, config.get("java.net.more.test2").showThread);
+		Assert.assertEquals(false, config.get("java.test").showThread);
+		Assert.assertEquals(false, config.get("java.test.class").showThread);
+		Assert.assertEquals(true, config.get("java.igor").showThread);
+		Assert.assertEquals(false, config.get("java.igor.igor").showThread);
+		Assert.assertEquals(true, config.get("java.igor.test").showThread);
+		Assert.assertEquals(false, config.get("java.igor.test.name").showThread);
 	}
 
 	@Test
