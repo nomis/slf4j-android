@@ -36,6 +36,12 @@ public class CallerStackTraceTest {
 	}
 
 	@Test
+	public void string() {
+		CallerStackTrace cst = new CallerStackTrace(0); /* Line 40 */
+		Assert.assertEquals("eu.lp0.slf4j.android.CallerStackTraceTest.string(CallerStackTraceTest.java:40)", cst.toString());
+	}
+
+	@Test
 	public void test0() {
 		CallerStackTrace cst = new CallerStackTrace(0);
 		Assert.assertEquals(getClass().getName(), cst.get().getClassName());

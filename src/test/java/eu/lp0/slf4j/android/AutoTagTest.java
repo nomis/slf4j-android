@@ -23,81 +23,90 @@
 package eu.lp0.slf4j.android;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import eu.lp0.slf4j.android.LoggerFactory;
+import android.util.Log;
 
 @RunWith(PowerMockRunner.class)
-@SuppressStaticInitializationFor({ "eu.lp0.slf4j.android.LoggerFactory" })
+@PrepareForTest(fullyQualifiedNames = { "android.util.Log", "eu.lp0.slf4j.android.LoggerFactory" })
 public class AutoTagTest {
+	@BeforeClass
+	public static void mockLog() {
+		PowerMockito.mockStatic(Log.class);
+	}
+
 	@Test
 	public void name1() {
 		Assert.assertEquals("o.e.p.MyClass", LoggerFactory.createTag("org.example.project.MyClass"));
 	}
-	
+
 	@Test
 	public void name2() {
 		Assert.assertEquals("o.e.p.s.MyClass", LoggerFactory.createTag("org.example.project.subproject.MyClass"));
 	}
-	
+
 	@Test
 	public void name3() {
 		Assert.assertEquals("oe.MyQuiteLongNamedClas", LoggerFactory.createTag("org.example.MyQuiteLongNamedClassOfTooMuchCharacters"));
 	}
-	
+
 	@Test
 	public void name4() {
 		Assert.assertEquals("o.e.p.s.MyClass", LoggerFactory.createTag("o.e.project.subproject.MyClass"));
 	}
-	
+
 	@Test
 	public void name5() {
 		Assert.assertEquals("MyQuiteLongNamedClassNo", LoggerFactory.createTag("MyQuiteLongNamedClassNotInAPackage"));
 	}
-	
+
 	@Test
 	public void empty() {
 		Assert.assertEquals("", LoggerFactory.createTag(""));
 	}
-	
+
 	@Test
 	public void dot1() {
 		Assert.assertEquals(".", LoggerFactory.createTag("."));
 	}
-	
+
 	@Test
 	public void dot2() {
 		Assert.assertEquals("..", LoggerFactory.createTag(".."));
 	}
-	
+
 	@Test
 	public void dot3() {
 		Assert.assertEquals("...", LoggerFactory.createTag("..."));
 	}
-	
+
 	@Test
 	public void dot23() {
 		Assert.assertEquals(".......................", LoggerFactory.createTag("......................."));
 	}
-	
+
 	@Test
 	public void dot24() {
 		Assert.assertEquals(".", LoggerFactory.createTag("........................"));
 	}
-	
+
 	@Test
 	public void tooLong1() {
-		Assert.assertEquals("tqbfjotldlidsamamnhbm.J", LoggerFactory.createTag("the.quick.brown.fox.jumps.over.the.lazy.dog.lorem.ipsum.dolor.sit.amet.more.and.more.names.here.blah.moo.Java"));
+		Assert.assertEquals("tqbfjotldlidsamamnhbm.J",
+				LoggerFactory.createTag("the.quick.brown.fox.jumps.over.the.lazy.dog.lorem.ipsum.dolor.sit.amet.more.and.more.names.here.blah.moo.Java"));
 	}
-	
+
 	@Test
 	public void tooLong2() {
-		Assert.assertEquals("tqbfjotldlidsamamnhbmjT", LoggerFactory.createTag("the.quick.brown.fox.jumps.over.the.lazy.dog.lorem.ipsum.dolor.sit.amet.more.and.more.names.here.blah.moo.java.Test"));
+		Assert.assertEquals("tqbfjotldlidsamamnhbmjT",
+				LoggerFactory.createTag("the.quick.brown.fox.jumps.over.the.lazy.dog.lorem.ipsum.dolor.sit.amet.more.and.more.names.here.blah.moo.java.Test"));
 	}
-	
+
 	@Test
 	public void unusal1() {
 		Assert.assertEquals(".j.l.t.c.moo", LoggerFactory.createTag(".java.lang.test.class.moo"));
@@ -107,12 +116,12 @@ public class AutoTagTest {
 	public void unusal2() {
 		Assert.assertEquals(".j.l.t.c.moo", LoggerFactory.createTag("..java..lang..test..class..moo"));
 	}
-	
+
 	@Test
 	public void unusal3() {
 		Assert.assertEquals(".j.l.t.c.moo", LoggerFactory.createTag("...java...lang...test...class...moo"));
 	}
-	
+
 	@Test
 	public void unusal4() {
 		Assert.assertEquals(".j.l.t.c.", LoggerFactory.createTag("...java...lang...test...class..."));
