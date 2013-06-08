@@ -22,8 +22,11 @@
  */
 package eu.lp0.slf4j.android;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.btmatthews.hamcrest.regex.PatternMatcher;
 
 public class CallerStackTraceTest {
 	@Test
@@ -37,8 +40,9 @@ public class CallerStackTraceTest {
 
 	@Test
 	public void string() {
-		CallerStackTrace cst = new CallerStackTrace(0); /* Line 40 */
-		Assert.assertEquals("eu.lp0.slf4j.android.CallerStackTraceTest.string(CallerStackTraceTest.java:40)", cst.toString());
+		CallerStackTrace cst = new CallerStackTrace(0);
+		MatcherAssert.assertThat(cst.toString(),
+				PatternMatcher.matches("eu\\.lp0\\.slf4j\\.android\\.CallerStackTraceTest\\.string\\(CallerStackTraceTest\\.java:[0-9]+\\)"));
 	}
 
 	@Test
