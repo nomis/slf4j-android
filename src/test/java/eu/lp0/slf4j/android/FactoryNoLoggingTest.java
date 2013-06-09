@@ -129,7 +129,7 @@ public class FactoryNoLoggingTest {
 	public void getLoggerFromMultipleThreads() throws Exception {
 		mockLogLevel("j.l.n.h.test3", LogLevel.DEBUG);
 
-		// Ensure logger factory is initialised
+		// Ensure logger factory is initialised (workaround for http://bugzilla.slf4j.org/show_bug.cgi?id=176)
 		LoggerFactory.getILoggerFactory();
 
 		Callable<Logger> getLogger = new Callable<Logger>() {
