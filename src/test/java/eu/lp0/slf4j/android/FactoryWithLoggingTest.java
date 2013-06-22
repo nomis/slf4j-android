@@ -47,6 +47,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.util.Log;
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(value = FactoryWithLoggingTest.class, fullyQualifiedNames = { "android.util.Log", "eu.lp0.slf4j.android.LoggerFactory" })
@@ -164,6 +165,7 @@ public class FactoryWithLoggingTest {
 	}
 
 	@Test(timeout = 10000)
+	@SuppressWarnings({ "SIC_INNER_SHOULD_BE_STATIC_ANON" })
 	public void getLoggerFromMultipleThreads() throws Exception {
 		mockLogLevel("j.l.n.h.test3", LogLevel.DEBUG);
 
