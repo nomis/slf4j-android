@@ -72,7 +72,7 @@ final class LoggingConfig {
 				}
 
 				if (value.length() > LoggerFactory.MAX_TAG_LEN) {
-					if (key.isEmpty()) {
+					if (key.length() == 0) {
 						log.warn("Ignoring invalid default tag {}", value);
 					} else {
 						log.warn("Ignoring invalid tag {} for {}", value, key);
@@ -90,9 +90,9 @@ final class LoggingConfig {
 				}
 
 				try {
-					map.put(key, new LoggerConfig(LogLevel.valueOf(value.toUpperCase(Locale.ROOT))));
+					map.put(key, new LoggerConfig(LogLevel.valueOf(value.toUpperCase(Locale.ENGLISH))));
 				} catch (IllegalArgumentException e) {
-					if (key.isEmpty()) {
+					if (key.length() == 0) {
 						log.warn("Ignoring invalid default log level {}", value);
 					} else {
 						log.warn("Ignoring invalid log level {} for {}", value, key);
@@ -108,9 +108,9 @@ final class LoggingConfig {
 				}
 
 				try {
-					map.put(key, new LoggerConfig(LoggerConfig.ShowName.valueOf(value.toUpperCase(Locale.ROOT))));
+					map.put(key, new LoggerConfig(LoggerConfig.ShowName.valueOf(value.toUpperCase(Locale.ENGLISH))));
 				} catch (IllegalArgumentException e) {
-					if (key.isEmpty()) {
+					if (key.length() == 0) {
 						log.warn("Ignoring invalid default show name setting {}", value);
 					} else {
 						log.warn("Ignoring invalid show name setting {} for {}", value, key);
