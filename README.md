@@ -3,6 +3,10 @@ SLF4J binding for the Android logger
 * Does not support SLF4J markers, these will be ignored.
 * Compatible with API version 1.
 
+### Maven Central
+
+* Available as eu.lp0.slf4j:slf4j-android.
+
 ### Configuration
 
 * Loads properties from `/eu/lp0/slf4j/android/config.properties`.
