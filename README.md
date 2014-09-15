@@ -3,10 +3,6 @@ SLF4J binding for the Android logger
 * Does not support SLF4J markers, these will be ignored.
 * Compatible with API version 1.
 
-### Maven Central
-
-* Available as eu.lp0.slf4j:slf4j-android.
-
 ### Configuration
 
 * Loads properties from `/eu/lp0/slf4j/android/config.properties`.
@@ -22,3 +18,37 @@ SLF4J binding for the Android logger
 * With no tag configured, logger names are automatically compacted to fit the Android 23 character tag limit. 
 * The default configuration does not show the logger name or the current thread.
 * The default log level is NATIVE (use the Android log level for the tag).
+
+#### Example Configuration File
+    tag=ExampleApplication
+    showThread=true
+    showName=short
+
+### Maven Central
+
+* Available as eu.lp0.slf4j:slf4j-android.
+* The configuration file when using the standard project layout should be located at `src/main/resources/eu/lp0/slf4j/android/config.properties`.
+* Note: There is a bug in [android-maven-plugin](https://code.google.com/p/maven-android-plugin/issues/detail?id=365) that makes the runtime scope unusable.
+
+#### Maven Usage Example
+pom.xml:
+
+    <dependency>
+       <groupId>org.slf4j</groupId>
+       <artifactId>slf4j-api</artifactId>
+       <version>1.7.7</version>
+    </dependency>
+
+    <dependency>
+       <groupId>eu.lp0.slf4j</groupId>
+       <artifactId>slf4j-android</artifactId>
+       <version>1.7.7-1</version>
+    </dependency>
+
+#### Gradle Example
+build.gradle:
+
+    dependencies {
+        compile 'org.slf4j:slf4j-api:1.7.7'
+        compile 'eu.lp0.slf4j:slf4j-android:1.7.7-1'
+    }
