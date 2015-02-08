@@ -1,2 +1,7 @@
 language: java
 install: true
+notifications:
+  irc:
+    channels:
+    - "irc.imaginarynet.uk#ci"
+    skip_join: true
