@@ -20,9 +20,12 @@ SLF4J binding for the Android logger
 * The default log level is NATIVE (use the Android log level for the tag).
 
 #### Example Configuration File
-    tag=ExampleApplication
-    showThread=true
-    showName=short
+
+``` properties
+tag=ExampleApplication
+showThread=true
+showName=short
+```
 
 ### Maven Central
 
