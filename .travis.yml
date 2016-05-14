@@ -5,3 +5,9 @@ notifications:
     channels:
     - "irc.imaginarynet.uk#ci"
     skip_join: true
+before_install:
+  - echo "MAVEN_OPTS='-DforkCount=2 -DthreadCount=2'" >> ~/.mavenrc
+jdk:
+  - oraclejdk8
+  - oraclejdk7
+  - openjdk6
