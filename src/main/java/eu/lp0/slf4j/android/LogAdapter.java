@@ -1,5 +1,5 @@
 /**
- * Copyright 2013  Simon Arlott
+ * Copyright 2013,2016  Simon Arlott
  *
  * Permission is hereby granted, free  of charge, to any person obtaining
  * a  copy  of this  software  and  associated  documentation files  (the
@@ -165,7 +165,11 @@ final class LogAdapter implements Logger {
 		return name;
 	}
 
-	private final String rewriteMsg(final String msg, final int frames) {
+	private final String rewriteMsg(String msg, final int frames) {
+		if (msg == null) {
+			msg = "null";
+		}
+
 		if (complexRewriteMsg) {
 			final StringBuilder sb = new StringBuilder(msg.length() + 64);
 

@@ -1,5 +1,5 @@
 /**
- * Copyright 2013  Simon Arlott
+ * Copyright 2013,2016  Simon Arlott
  *
  * Permission is hereby granted, free  of charge, to any person obtaining
  * a  copy  of this  software  and  associated  documentation files  (the
@@ -25,11 +25,6 @@ package eu.lp0.slf4j.android;
 import static eu.lp0.slf4j.android.MockUtil.createTag;
 import static eu.lp0.slf4j.android.MockUtil.mockConfigShort;
 import static eu.lp0.slf4j.android.MockUtil.mockLogLevelRestricted;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.never;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
@@ -38,7 +33,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.slf4j.Marker;
@@ -54,14 +48,10 @@ public class ShortLoggerTest {
 	@Mock
 	private Marker marker;
 
-	@SuppressWarnings("unchecked")
 	@Before
 	public void mockLog() {
 		mockStatic(Log.class);
-
-		// Not used
-		Mockito.when(Log.getStackTraceString(any(Throwable.class))).thenThrow(AssertionError.class);
-		Mockito.when(Log.println(anyInt(), anyString(), anyString())).thenThrow(AssertionError.class);
+		MockUtil.mockNativeBehaviour();
 	}
 
 	/* Name, Levels */
@@ -524,8 +514,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error("Message 1");
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 1");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -533,8 +522,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error("Message 2 {}", "arg");
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), anyString());
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -542,8 +530,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 3 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -551,8 +538,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 4 arg1 arg2 arg3");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -560,8 +546,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error("Message 5", throwable);
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 5", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -569,8 +554,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error("Message 6", (Throwable)null);
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 6");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -578,8 +562,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error("Message 7", (Object)throwable);
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 7", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -587,8 +570,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error("Message 8", (Object)null);
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 8");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -596,8 +578,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error("Message 9 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 9 arg1", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -605,8 +586,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error("Message 10 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 10 arg1");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -614,8 +594,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 11 arg1 arg2", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -623,8 +602,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 12 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -632,8 +610,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error(marker, "Message 13");
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 13");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -641,8 +618,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error(marker, "Message 14 {}", "arg");
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 14 arg");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -650,8 +626,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 15 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -659,8 +634,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 16 arg1 arg2 arg3");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -668,8 +642,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error(marker, "Message 17", throwable);
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 17", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -677,8 +650,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error(marker, "Message 18", (Throwable)null);
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 18");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -686,8 +658,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error(marker, "Message 19", (Object)throwable);
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 19", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -695,8 +666,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error(marker, "Message 20", (Object)null);
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 20");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -704,8 +674,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 21 arg1", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -713,8 +682,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 22 arg1");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -722,8 +690,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 23 arg1 arg2", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -731,8 +698,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigShort()).error(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.e(createTag(0), "here: Message 24 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	/* Warn Enabled */
@@ -972,8 +938,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn("Message 1");
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 1");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -981,8 +946,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn("Message 2 {}", "arg");
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 2 arg");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -990,8 +954,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 3 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -999,8 +962,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 4 arg1 arg2 arg3");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1008,8 +970,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn("Message 5", throwable);
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 5", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1017,8 +978,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn("Message 6", (Throwable)null);
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 6");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1026,8 +986,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn("Message 7", (Object)throwable);
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 7", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1035,8 +994,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn("Message 8", (Object)null);
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 8");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1044,8 +1002,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn("Message 9 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 9 arg1", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1053,8 +1010,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn("Message 10 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 10 arg1");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1062,8 +1018,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 11 arg1 arg2", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1071,8 +1026,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 12 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1080,8 +1034,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn(marker, "Message 13");
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 13");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1089,8 +1042,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn(marker, "Message 14 {}", "arg");
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 14 arg");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1098,8 +1050,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 15 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1107,8 +1058,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 16 arg1 arg2 arg3");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1116,8 +1066,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn(marker, "Message 17", throwable);
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 17", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1125,8 +1074,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn(marker, "Message 18", (Throwable)null);
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 18");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1134,8 +1082,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn(marker, "Message 19", (Object)throwable);
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 19", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1143,8 +1090,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn(marker, "Message 20", (Object)null);
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 20");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1152,8 +1098,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 21 arg1", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1161,8 +1106,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 22 arg1");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1170,8 +1114,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 23 arg1 arg2", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1179,8 +1122,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigShort()).warn(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.w(createTag(0), "here: Message 24 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	/* Info Enabled */
@@ -1420,8 +1362,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info("Message 1");
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 1");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1429,8 +1370,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info("Message 2 {}", "arg");
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 2 arg");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1438,8 +1378,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 3 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1447,8 +1386,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 4 arg1 arg2 arg3");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1456,8 +1394,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info("Message 5", throwable);
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 5", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1465,8 +1402,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info("Message 6", (Throwable)null);
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 6");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1474,8 +1410,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info("Message 7", (Object)throwable);
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 7", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1483,8 +1418,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info("Message 8", (Object)null);
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 8");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1492,8 +1426,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info("Message 9 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 9 arg1", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1501,8 +1434,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info("Message 10 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 10 arg1");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1510,8 +1442,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 11 arg1 arg2", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1519,8 +1450,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 12 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1528,8 +1458,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info(marker, "Message 13");
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 13");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1537,8 +1466,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info(marker, "Message 14 {}", "arg");
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 14 arg");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1546,8 +1474,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 15 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1555,8 +1482,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 16 arg1 arg2 arg3");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1564,8 +1490,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info(marker, "Message 17", throwable);
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 17", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1573,8 +1498,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info(marker, "Message 18", (Throwable)null);
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 18");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1582,8 +1506,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info(marker, "Message 19", (Object)throwable);
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 19", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1591,8 +1514,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info(marker, "Message 20", (Object)null);
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 20");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1600,8 +1522,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 21 arg1", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1609,8 +1530,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 22 arg1");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1618,8 +1538,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 23 arg1 arg2", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1627,8 +1546,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigShort()).info(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.i(createTag(0), "here: Message 24 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	/* Debug Enabled */
@@ -1868,8 +1786,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug("Message 1");
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 1");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1877,8 +1794,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug("Message 2 {}", "arg");
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 2 arg");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1886,8 +1802,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 3 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1895,8 +1810,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 4 arg1 arg2 arg3");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1904,8 +1818,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug("Message 5", throwable);
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 5", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1913,8 +1826,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug("Message 6", (Throwable)null);
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 6");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1922,8 +1834,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug("Message 7", (Object)throwable);
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 7", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1931,8 +1842,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug("Message 8", (Object)null);
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 8");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1940,8 +1850,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug("Message 9 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 9 arg1", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1949,8 +1858,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug("Message 10 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 10 arg1");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1958,8 +1866,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 11 arg1 arg2", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1967,8 +1874,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 12 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1976,8 +1882,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug(marker, "Message 13");
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 13");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1985,8 +1890,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug(marker, "Message 14 {}", "arg");
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 14 arg");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1994,8 +1898,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 15 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2003,8 +1906,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 16 arg1 arg2 arg3");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2012,8 +1914,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug(marker, "Message 17", throwable);
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 17", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2021,8 +1922,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug(marker, "Message 18", (Throwable)null);
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 18");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2030,8 +1930,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug(marker, "Message 19", (Object)throwable);
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 19", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2039,8 +1938,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug(marker, "Message 20", (Object)null);
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 20");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2048,8 +1946,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 21 arg1", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2057,8 +1954,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 22 arg1");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2066,8 +1962,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 23 arg1 arg2", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2075,8 +1970,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigShort()).debug(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.d(createTag(0), "here: Message 24 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	/* Trace Enabled */
@@ -2316,8 +2210,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace("Message 1");
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 1");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2325,8 +2218,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace("Message 2 {}", "arg");
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 2 arg");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2334,8 +2226,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 3 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2343,8 +2234,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 4 arg1 arg2 arg3");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2352,8 +2242,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace("Message 5", throwable);
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 5", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2361,8 +2250,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace("Message 6", (Throwable)null);
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 6");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2370,8 +2258,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace("Message 7", (Object)throwable);
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 7", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2379,8 +2266,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace("Message 8", (Object)null);
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 8");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2388,8 +2274,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace("Message 9 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 9 arg1", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2397,8 +2282,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace("Message 10 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 10 arg1");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2406,8 +2290,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 11 arg1 arg2", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2415,8 +2298,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 12 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2424,8 +2306,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace(marker, "Message 13");
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 13");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2433,8 +2314,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace(marker, "Message 14 {}", "arg");
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 14 arg");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2442,8 +2322,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 15 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2451,8 +2330,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 16 arg1 arg2 arg3");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2460,8 +2338,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace(marker, "Message 17", throwable);
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 17", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2469,8 +2346,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace(marker, "Message 18", (Throwable)null);
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 18");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2478,8 +2354,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace(marker, "Message 19", (Object)throwable);
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 19", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2487,8 +2362,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace(marker, "Message 20", (Object)null);
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 20");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2496,8 +2370,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 21 arg1", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2505,8 +2378,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 22 arg1");
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2514,8 +2386,7 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 23 arg1 arg2", throwable);
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2523,7 +2394,6 @@ public class ShortLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigShort()).trace(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.v(createTag(0), "here: Message 24 arg1 arg2");
+		MockUtil.verifyNoLog();
 	}
 }

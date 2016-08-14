@@ -1,5 +1,5 @@
 /**
- * Copyright 2013  Simon Arlott
+ * Copyright 2013,2016  Simon Arlott
  *
  * Permission is hereby granted, free  of charge, to any person obtaining
  * a  copy  of this  software  and  associated  documentation files  (the
@@ -26,12 +26,8 @@ import static eu.lp0.slf4j.android.MockUtil.createTag;
 import static eu.lp0.slf4j.android.MockUtil.currentMethodName;
 import static eu.lp0.slf4j.android.MockUtil.mockConfigCaller;
 import static eu.lp0.slf4j.android.MockUtil.mockLogLevelRestricted;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.matches;
-import static org.mockito.Mockito.never;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
@@ -40,7 +36,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.slf4j.Marker;
@@ -56,14 +51,10 @@ public class CallerLoggerTest {
 	@Mock
 	private Marker marker;
 
-	@SuppressWarnings("unchecked")
 	@Before
 	public void mockLog() {
 		mockStatic(Log.class);
-
-		// Not used
-		Mockito.when(Log.getStackTraceString(any(Throwable.class))).thenThrow(AssertionError.class);
-		Mockito.when(Log.println(anyInt(), anyString(), anyString())).thenThrow(AssertionError.class);
+		MockUtil.mockNativeBehaviour();
 	}
 
 	/* Name, Levels */
@@ -305,6 +296,16 @@ public class CallerLoggerTest {
 		verifyStatic();
 		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
 				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 1"));
+	}
+
+	@Test
+	public void testERROR_error_MsgNull() {
+		mockLogLevelRestricted(LogLevel.ERROR);
+		new LogAdapter("logger.name.here", mockConfigCaller()).error(null);
+
+		verifyStatic();
+		Log.e(eq(createTag(0)),
+				matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): null"));
 	}
 
 	@Test
@@ -550,9 +551,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 1");
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 1"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -560,8 +559,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 2 {}", "arg");
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), anyString());
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -569,9 +567,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -579,9 +575,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -589,9 +583,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 5", throwable);
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 5"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -599,9 +591,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 6", (Throwable)null);
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 6"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -609,9 +599,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 7", (Object)throwable);
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 7"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -619,9 +607,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 8", (Object)null);
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 8"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -629,9 +615,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 9 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -639,9 +623,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 10 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -649,9 +631,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -659,9 +639,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -669,9 +647,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 13");
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 13"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -679,9 +655,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 14 {}", "arg");
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -689,9 +663,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -699,9 +671,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -709,9 +679,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 17", throwable);
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 17"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -719,9 +687,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 18", (Throwable)null);
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 18"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -729,9 +695,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 19", (Object)throwable);
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 19"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -739,9 +703,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 20", (Object)null);
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 20"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -749,9 +711,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -759,9 +719,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -769,9 +727,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -779,9 +735,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.SUPPRESS);
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.e(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	/* Warn Enabled */
@@ -1045,9 +999,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 1");
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 1"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1055,9 +1007,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 2 {}", "arg");
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1065,9 +1015,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1075,9 +1023,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1085,9 +1031,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 5", throwable);
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 5"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1095,9 +1039,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 6", (Throwable)null);
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 6"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1105,9 +1047,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 7", (Object)throwable);
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 7"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1115,9 +1055,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 8", (Object)null);
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 8"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1125,9 +1063,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 9 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1135,9 +1071,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 10 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1145,9 +1079,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1155,9 +1087,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1165,9 +1095,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 13");
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 13"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1175,9 +1103,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 14 {}", "arg");
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1185,9 +1111,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1195,9 +1119,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1205,9 +1127,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 17", throwable);
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 17"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1215,9 +1135,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 18", (Throwable)null);
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 18"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1225,9 +1143,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 19", (Object)throwable);
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 19"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1235,9 +1151,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 20", (Object)null);
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 20"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1245,9 +1159,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1255,9 +1167,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1265,9 +1175,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1275,9 +1183,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.w(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	/* Info Enabled */
@@ -1541,9 +1447,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 1");
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 1"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1551,9 +1455,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 2 {}", "arg");
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1561,9 +1463,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1571,9 +1471,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1581,9 +1479,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 5", throwable);
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 5"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1591,9 +1487,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 6", (Throwable)null);
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 6"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1601,9 +1495,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 7", (Object)throwable);
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 7"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1611,9 +1503,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 8", (Object)null);
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 8"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1621,9 +1511,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 9 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1631,9 +1519,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 10 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1641,9 +1527,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1651,9 +1535,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1661,9 +1543,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 13");
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 13"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1671,9 +1551,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 14 {}", "arg");
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1681,9 +1559,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1691,9 +1567,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1701,9 +1575,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 17", throwable);
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 17"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1711,9 +1583,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 18", (Throwable)null);
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 18"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1721,9 +1591,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 19", (Object)throwable);
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 19"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1731,9 +1599,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 20", (Object)null);
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 20"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1741,9 +1607,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1751,9 +1615,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1761,9 +1623,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -1771,9 +1631,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.i(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	/* Debug Enabled */
@@ -2037,9 +1895,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 1");
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 1"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2047,9 +1903,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 2 {}", "arg");
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2057,9 +1911,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2067,9 +1919,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2077,9 +1927,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 5", throwable);
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 5"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2087,9 +1935,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 6", (Throwable)null);
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 6"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2097,9 +1943,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 7", (Object)throwable);
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 7"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2107,9 +1951,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 8", (Object)null);
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 8"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2117,9 +1959,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 9 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2127,9 +1967,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 10 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2137,9 +1975,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2147,9 +1983,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2157,9 +1991,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 13");
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 13"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2167,9 +1999,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 14 {}", "arg");
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2177,9 +2007,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2187,9 +2015,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2197,9 +2023,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 17", throwable);
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 17"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2207,9 +2031,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 18", (Throwable)null);
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 18"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2217,9 +2039,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 19", (Object)throwable);
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 19"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2227,9 +2047,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 20", (Object)null);
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 20"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2237,9 +2055,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2247,9 +2063,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2257,9 +2071,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2267,9 +2079,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.d(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	/* Trace Enabled */
@@ -2533,9 +2343,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 1");
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 1"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2543,9 +2351,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 2 {}", "arg");
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2553,9 +2359,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2563,9 +2367,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2573,9 +2375,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 5", throwable);
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 5"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2583,9 +2383,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 6", (Throwable)null);
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 6"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2593,9 +2391,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 7", (Object)throwable);
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 7"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2603,9 +2399,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 8", (Object)null);
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 8"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2613,9 +2407,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 9 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2623,9 +2415,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 10 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2633,9 +2423,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2643,9 +2431,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2653,9 +2439,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 13");
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 13"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2663,9 +2447,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 14 {}", "arg");
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2673,9 +2455,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2683,9 +2463,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2693,9 +2471,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 17", throwable);
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 17"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2703,9 +2479,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 18", (Throwable)null);
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 18"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2713,9 +2487,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 19", (Object)throwable);
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 19"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2723,9 +2495,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 20", (Object)null);
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 20"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2733,9 +2503,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2743,9 +2511,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2753,9 +2519,7 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"), eq(throwable));
+		MockUtil.verifyNoLog();
 	}
 
 	@Test
@@ -2763,8 +2527,6 @@ public class CallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic(never());
-		Log.v(eq(createTag(0)), matches("eu\\.lp0\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
+		MockUtil.verifyNoLog();
 	}
 }

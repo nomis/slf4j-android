@@ -1,5 +1,5 @@
 /**
- * Copyright 2013  Simon Arlott
+ * Copyright 2013,2016  Simon Arlott
  *
  * Permission is hereby granted, free  of charge, to any person obtaining
  * a  copy  of this  software  and  associated  documentation files  (the
@@ -26,6 +26,9 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isNull;
+import static org.mockito.Mockito.never;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 import org.junit.Assert;
@@ -423,5 +426,57 @@ public class MockUtil {
 			Assert.fail();
 			break;
 		}
+	}
+
+	/**
+	 * Replicate some native behaviour
+	 */
+	@SuppressWarnings("unchecked")
+	public static void mockNativeBehaviour() {
+		// Not used
+		Mockito.when(Log.getStackTraceString(any(Throwable.class))).thenThrow(AssertionError.class);
+		Mockito.when(Log.println(anyInt(), anyString(), anyString())).thenThrow(AssertionError.class);
+
+		// Throws NPEs
+		Mockito.when(Log.e(anyString(), isNull(String.class))).thenThrow(NullPointerException.class);
+		Mockito.when(Log.e(anyString(), isNull(String.class), any(Throwable.class))).thenThrow(NullPointerException.class);
+		Mockito.when(Log.w(anyString(), isNull(String.class))).thenThrow(NullPointerException.class);
+		Mockito.when(Log.w(anyString(), isNull(String.class), any(Throwable.class))).thenThrow(NullPointerException.class);
+		Mockito.when(Log.i(anyString(), isNull(String.class))).thenThrow(NullPointerException.class);
+		Mockito.when(Log.i(anyString(), isNull(String.class), any(Throwable.class))).thenThrow(NullPointerException.class);
+		Mockito.when(Log.d(anyString(), isNull(String.class))).thenThrow(NullPointerException.class);
+		Mockito.when(Log.d(anyString(), isNull(String.class), any(Throwable.class))).thenThrow(NullPointerException.class);
+		Mockito.when(Log.v(anyString(), isNull(String.class))).thenThrow(NullPointerException.class);
+		Mockito.when(Log.v(anyString(), isNull(String.class), any(Throwable.class))).thenThrow(NullPointerException.class);
+	}
+
+	/**
+	 * Check that no messages were logged
+	 */
+	public static void verifyNoLog() {
+		verifyStatic(never());
+		Log.e(anyString(), anyString());
+		verifyStatic(never());
+		Log.e(anyString(), anyString(), Mockito.any(Throwable.class));
+
+		verifyStatic(never());
+		Log.w(anyString(), anyString());
+		verifyStatic(never());
+		Log.w(anyString(), anyString(), Mockito.any(Throwable.class));
+
+		verifyStatic(never());
+		Log.i(anyString(), anyString());
+		verifyStatic(never());
+		Log.i(anyString(), anyString(), Mockito.any(Throwable.class));
+
+		verifyStatic(never());
+		Log.d(anyString(), anyString());
+		verifyStatic(never());
+		Log.d(anyString(), anyString(), Mockito.any(Throwable.class));
+
+		verifyStatic(never());
+		Log.v(anyString(), anyString());
+		verifyStatic(never());
+		Log.v(anyString(), anyString(), Mockito.any(Throwable.class));
 	}
 }
