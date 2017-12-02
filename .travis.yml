@@ -1,11 +1,5 @@
 language: java
 install: true
-notifications:
-  irc:
-    channels:
-    - "irc.imaginarynet.uk#ci"
-    skip_join: true
-    use_notice: true
 before_install:
   - echo "MAVEN_OPTS='-DforkCount=2 -DthreadCount=2'" >> ~/.mavenrc
 jdk:
