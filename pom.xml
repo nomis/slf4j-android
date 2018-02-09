@@ -20,7 +20,7 @@
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:git:git://github.com/nomis/slf4j-android.git</connection>
+		<connection>scm:git:https://github.com/nomis/slf4j-android.git</connection>
 		<url>https://github.com/nomis/slf4j-android/</url>
 		<developerConnection>scm:git:ssh://git@github.com/nomis/slf4j-android.git</developerConnection>
 	</scm>
