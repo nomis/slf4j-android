@@ -30,8 +30,17 @@ import com.btmatthews.hamcrest.regex.PatternMatcher;
 
 public class CallerStackTraceTest {
 	@Test
-	public void unknown() {
+	public void unknownNegative() {
 		CallerStackTrace cst = new CallerStackTrace(-1);
+		Assert.assertEquals("<unknown class>", cst.get().getClassName());
+		Assert.assertEquals("<unknown method>", cst.get().getMethodName());
+		Assert.assertNull(cst.get().getFileName());
+		Assert.assertEquals(-1, cst.get().getLineNumber());
+	}
+
+	@Test
+	public void unknownPositive() {
+		CallerStackTrace cst = new CallerStackTrace(Integer.MAX_VALUE);
 		Assert.assertEquals("<unknown class>", cst.get().getClassName());
 		Assert.assertEquals("<unknown method>", cst.get().getMethodName());
 		Assert.assertNull(cst.get().getFileName());
