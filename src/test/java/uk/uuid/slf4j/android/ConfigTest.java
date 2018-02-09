@@ -22,7 +22,6 @@
  */
 package uk.uuid.slf4j.android;
 
-import static uk.uuid.slf4j.android.MockUtil.mockConfigDefault;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.atLeastOnce;
@@ -30,6 +29,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
+import static uk.uuid.slf4j.android.MockUtil.mockConfigDefault;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -524,6 +524,94 @@ public class ConfigTest {
 
 		// And an error with an exception
 		verifyStatic();
+		Log.e(anyString(), anyString(), any(Throwable.class));
+		verifyStatic(never());
+		Log.w(anyString(), anyString(), any(Throwable.class));
+		verifyStatic(never());
+		Log.i(anyString(), anyString(), any(Throwable.class));
+		verifyStatic(never());
+		Log.d(anyString(), anyString(), any(Throwable.class));
+		verifyStatic(never());
+		Log.v(anyString(), anyString(), any(Throwable.class));
+	}
+
+	@Test
+	/**
+	 * Config file in old location only.
+	 */
+	public void oldConfig_NoLogging() {
+		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
+		LoggingConfig config = new LoggingConfig("oldConfigTest1.properties", new LogAdapter("N/A", mockConfigDefault()));
+
+		Assert.assertEquals("OldConfig", config.get(null).tag);
+	}
+
+	@Test
+	/**
+	 * Config file in old location only.
+	 */
+	public void oldConfig_WithLogging() {
+		MockUtil.mockLogLevel(LogLevel.VERBOSE);
+		LoggingConfig config = new LoggingConfig("oldConfigTest1.properties", new LogAdapter("N/A", mockConfigDefault()));
+
+		Assert.assertEquals("OldConfig", config.get(null).tag);
+
+		// Some debug logging is expected
+		verifyStatic(never());
+		Log.e(anyString(), anyString());
+		verifyStatic(never());
+		Log.w(anyString(), anyString());
+		verifyStatic(never());
+		Log.i(anyString(), anyString());
+		verifyStatic(atLeastOnce());
+		Log.d(anyString(), anyString());
+
+		// But nothing with exceptions
+		verifyStatic(never());
+		Log.e(anyString(), anyString(), any(Throwable.class));
+		verifyStatic(never());
+		Log.w(anyString(), anyString(), any(Throwable.class));
+		verifyStatic(never());
+		Log.i(anyString(), anyString(), any(Throwable.class));
+		verifyStatic(never());
+		Log.d(anyString(), anyString(), any(Throwable.class));
+		verifyStatic(never());
+		Log.v(anyString(), anyString(), any(Throwable.class));
+	}
+
+	@Test
+	/**
+	 * Config file in both new and old locations.
+	 */
+	public void newConfig_NoLogging() {
+		MockUtil.mockLogLevelRestricted(LogLevel.SUPPRESS);
+		LoggingConfig config = new LoggingConfig("oldConfigTest2.properties", new LogAdapter("N/A", mockConfigDefault()));
+
+		Assert.assertEquals("NewConfig", config.get(null).tag);
+	}
+
+	@Test
+	/**
+	 * Config file in both new and old locations.
+	 */
+	public void newConfig_WithLogging() {
+		MockUtil.mockLogLevel(LogLevel.VERBOSE);
+		LoggingConfig config = new LoggingConfig("oldConfigTest2.properties", new LogAdapter("N/A", mockConfigDefault()));
+
+		Assert.assertEquals("NewConfig", config.get(null).tag);
+
+		// Some debug logging is expected
+		verifyStatic(never());
+		Log.e(anyString(), anyString());
+		verifyStatic(never());
+		Log.w(anyString(), anyString());
+		verifyStatic(never());
+		Log.i(anyString(), anyString());
+		verifyStatic(atLeastOnce());
+		Log.d(anyString(), anyString());
+
+		// But nothing with exceptions
+		verifyStatic(never());
 		Log.e(anyString(), anyString(), any(Throwable.class));
 		verifyStatic(never());
 		Log.w(anyString(), anyString(), any(Throwable.class));
