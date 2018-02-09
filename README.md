@@ -29,7 +29,7 @@ showName=short
 
 ### Maven Central
 
-* Available as uk.uuid.slf4j:slf4j-android.
+* Available as `uk.uuid.slf4j:slf4j-android`.
 * The configuration file when using the standard project layout should be located at `src/main/resources/uk/uuid/slf4j/android/config.properties`.
 * Note: There is a bug in [android-maven-plugin](https://code.google.com/p/maven-android-plugin/issues/detail?id=365) that makes the runtime scope unusable.
 
