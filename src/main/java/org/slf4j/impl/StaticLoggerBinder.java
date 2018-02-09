@@ -56,7 +56,7 @@ public class StaticLoggerBinder implements LoggerFactoryBinder {
 	 */
 	public static final String REQUESTED_API_VERSION = "1.6.99".intern(); /* avoid constant folding by the compiler */
 
-	private static final String loggerFactoryClassStr = eu.lp0.slf4j.android.LoggerFactory.class.getName();
+	private static final String loggerFactoryClassStr = uk.uuid.slf4j.android.LoggerFactory.class.getName();
 
 	/**
 	 * The ILoggerFactory instance returned by the {@link #getLoggerFactory} method should always be the same object
@@ -64,7 +64,7 @@ public class StaticLoggerBinder implements LoggerFactoryBinder {
 	private final ILoggerFactory loggerFactory;
 
 	private StaticLoggerBinder() {
-		loggerFactory = new eu.lp0.slf4j.android.LoggerFactory();
+		loggerFactory = new uk.uuid.slf4j.android.LoggerFactory();
 	}
 
 	@Override

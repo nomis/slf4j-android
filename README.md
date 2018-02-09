@@ -5,7 +5,7 @@ SLF4J binding for the Android logger
 
 ### Configuration
 
-* Loads properties from `/eu/lp0/slf4j/android/config.properties`.
+* Loads properties from `/uk/uuid/slf4j/android/config.properties`.
 * Configuration can be applied per logger prefix or set the default by omitting the logger prefix.
     * Set the tag for the specified logger prefix:
       `tag.logger-prefix=TagName`
@@ -29,8 +29,8 @@ showName=short
 
 ### Maven Central
 
-* Available as eu.lp0.slf4j:slf4j-android.
-* The configuration file when using the standard project layout should be located at `src/main/resources/eu/lp0/slf4j/android/config.properties`.
+* Available as uk.uuid.slf4j:slf4j-android.
+* The configuration file when using the standard project layout should be located at `src/main/resources/uk/uuid/slf4j/android/config.properties`.
 * Note: There is a bug in [android-maven-plugin](https://code.google.com/p/maven-android-plugin/issues/detail?id=365) that makes the runtime scope unusable.
 
 #### Maven Usage Example
@@ -44,7 +44,7 @@ pom.xml:
 </dependency>
 
 <dependency>
-   <groupId>eu.lp0.slf4j</groupId>
+   <groupId>uk.uuid.slf4j</groupId>
    <artifactId>slf4j-android</artifactId>
    <version>1.7.25-0</version>
 </dependency>
@@ -56,6 +56,6 @@ build.gradle:
 ``` groovy
 dependencies {
    compile 'org.slf4j:slf4j-api:1.7.25'
-   compile 'eu.lp0.slf4j:slf4j-android:1.7.25-0'
+   compile 'uk.uuid.slf4j:slf4j-android:1.7.25-0'
 }
 ```
