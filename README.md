@@ -40,13 +40,13 @@ pom.xml:
 <dependency>
    <groupId>org.slf4j</groupId>
    <artifactId>slf4j-api</artifactId>
-   <version>1.7.25</version>
+   <version>1.7.26</version>
 </dependency>
 
 <dependency>
    <groupId>uk.uuid.slf4j</groupId>
    <artifactId>slf4j-android</artifactId>
-   <version>1.7.25-1</version>
+   <version>1.7.26-0</version>
 </dependency>
 ```
 
@@ -55,7 +55,7 @@ build.gradle:
 
 ``` groovy
 dependencies {
-   compile 'org.slf4j:slf4j-api:1.7.25'
-   compile 'uk.uuid.slf4j:slf4j-android:1.7.25-1'
+   compile 'org.slf4j:slf4j-api:1.7.26'
+   compile 'uk.uuid.slf4j:slf4j-android:1.7.26-0'
 }
 ```
