@@ -121,25 +121,25 @@ public class ConfigTest {
 		Assert.assertEquals("JavaApp", config.get("java.igor.test.name").tag);
 
 		// Some debug logging is expected
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString());
-		verifyStatic(atLeastOnce());
+		verifyStatic(Log.class, atLeastOnce());
 		Log.d(anyString(), anyString());
 
 		// But nothing with exceptions
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.d(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.v(anyString(), anyString(), any(Throwable.class));
 	}
 
@@ -205,25 +205,25 @@ public class ConfigTest {
 		Assert.assertEquals(LogLevel.WARN, config.get("java.igor.test.name").level);
 
 		// Some debug logging is expected
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString());
-		verifyStatic(atLeastOnce());
+		verifyStatic(Log.class, atLeastOnce());
 		Log.d(anyString(), anyString());
 
 		// But nothing with exceptions
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.d(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.v(anyString(), anyString(), any(Throwable.class));
 	}
 
@@ -289,25 +289,25 @@ public class ConfigTest {
 		Assert.assertEquals(LoggerConfig.ShowName.SHORT, config.get("java.igor.test.name").showName);
 
 		// Some debug logging is expected
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString());
-		verifyStatic(atLeastOnce());
+		verifyStatic(Log.class, atLeastOnce());
 		Log.d(anyString(), anyString());
 
 		// But nothing with exceptions
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.d(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.v(anyString(), anyString(), any(Throwable.class));
 	}
 
@@ -373,25 +373,25 @@ public class ConfigTest {
 		Assert.assertEquals(false, config.get("java.igor.test.name").showThread);
 
 		// Some debug logging is expected
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString());
-		verifyStatic(atLeastOnce());
+		verifyStatic(Log.class, atLeastOnce());
 		Log.d(anyString(), anyString());
 
 		// But nothing with exceptions
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.d(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.v(anyString(), anyString(), any(Throwable.class));
 	}
 
@@ -417,25 +417,25 @@ public class ConfigTest {
 		Assert.assertEquals(false, config.get(null).showThread);
 
 		// Some debug logging is expected
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString());
-		verifyStatic(atLeastOnce());
+		verifyStatic(Log.class, atLeastOnce());
 		Log.d(anyString(), anyString());
 
 		// But nothing with exceptions
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.d(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.v(anyString(), anyString(), any(Throwable.class));
 	}
 
@@ -461,25 +461,25 @@ public class ConfigTest {
 		Assert.assertEquals(false, config.get(null).showThread);
 
 		// Some debug logging is expected, and warnings for the invalid values
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString());
-		verifyStatic(times(6)); /* There are 3 values that can have invalid values and they are tested twice */
+		verifyStatic(Log.class, times(6)); /* There are 3 values that can have invalid values and they are tested twice */
 		Log.w(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString());
-		verifyStatic(atLeastOnce());
+		verifyStatic(Log.class, atLeastOnce());
 		Log.d(anyString(), anyString());
 
 		// But nothing with exceptions
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.d(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.v(anyString(), anyString(), any(Throwable.class));
 	}
 
@@ -513,25 +513,25 @@ public class ConfigTest {
 		Assert.assertEquals(false, config.get(null).showThread);
 
 		// Some debug logging is expected
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString());
-		verifyStatic(atLeastOnce());
+		verifyStatic(Log.class, atLeastOnce());
 		Log.d(anyString(), anyString());
 
 		// And an error with an exception
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.d(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.v(anyString(), anyString(), any(Throwable.class));
 	}
 
@@ -557,25 +557,25 @@ public class ConfigTest {
 		Assert.assertEquals("OldConfig", config.get(null).tag);
 
 		// Some debug logging is expected
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString());
-		verifyStatic(atLeastOnce());
+		verifyStatic(Log.class, atLeastOnce());
 		Log.d(anyString(), anyString());
 
 		// But nothing with exceptions
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.d(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.v(anyString(), anyString(), any(Throwable.class));
 	}
 
@@ -601,25 +601,25 @@ public class ConfigTest {
 		Assert.assertEquals("NewConfig", config.get(null).tag);
 
 		// Some debug logging is expected
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString());
-		verifyStatic(atLeastOnce());
+		verifyStatic(Log.class, atLeastOnce());
 		Log.d(anyString(), anyString());
 
 		// But nothing with exceptions
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.d(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.v(anyString(), anyString(), any(Throwable.class));
 	}
 }

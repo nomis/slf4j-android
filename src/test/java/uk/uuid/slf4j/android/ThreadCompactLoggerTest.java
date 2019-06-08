@@ -291,7 +291,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error("Message 1");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 1");
 	}
 
@@ -300,7 +300,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error(null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: null");
 	}
 
@@ -309,7 +309,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error("Message 2 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 2 arg");
 	}
 
@@ -318,7 +318,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 3 arg1 arg2");
 	}
 
@@ -327,7 +327,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 4 arg1 arg2 arg3");
 	}
 
@@ -336,7 +336,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error("Message 5", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 5", throwable);
 	}
 
@@ -345,7 +345,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error("Message 6", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 6");
 	}
 
@@ -354,7 +354,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error("Message 7", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 7", throwable);
 	}
 
@@ -363,7 +363,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error("Message 8", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 8");
 	}
 
@@ -372,7 +372,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error("Message 9 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 9 arg1", throwable);
 	}
 
@@ -381,7 +381,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error("Message 10 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 10 arg1");
 	}
 
@@ -390,7 +390,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 11 arg1 arg2", throwable);
 	}
 
@@ -399,7 +399,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 12 arg1 arg2");
 	}
 
@@ -408,7 +408,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error(marker, "Message 13");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 13");
 	}
 
@@ -417,7 +417,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error(marker, null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: null");
 	}
 
@@ -426,7 +426,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error(marker, "Message 14 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 14 arg");
 	}
 
@@ -435,7 +435,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 15 arg1 arg2");
 	}
 
@@ -444,7 +444,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 16 arg1 arg2 arg3");
 	}
 
@@ -453,7 +453,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error(marker, "Message 17", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 17", throwable);
 	}
 
@@ -462,7 +462,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error(marker, "Message 18", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 18");
 	}
 
@@ -471,7 +471,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error(marker, "Message 19", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 19", throwable);
 	}
 
@@ -480,7 +480,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error(marker, "Message 20", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 20");
 	}
 
@@ -489,7 +489,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 21 arg1", throwable);
 	}
 
@@ -498,7 +498,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 22 arg1");
 	}
 
@@ -507,7 +507,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 23 arg1 arg2", throwable);
 	}
 
@@ -516,7 +516,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).error(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 24 arg1 arg2");
 	}
 
@@ -749,7 +749,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn("Message 1");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 1");
 	}
 
@@ -758,7 +758,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn(null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: null");
 	}
 
@@ -767,7 +767,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn("Message 2 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 2 arg");
 	}
 
@@ -776,7 +776,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 3 arg1 arg2");
 	}
 
@@ -785,7 +785,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 4 arg1 arg2 arg3");
 	}
 
@@ -794,7 +794,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn("Message 5", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 5", throwable);
 	}
 
@@ -803,7 +803,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn("Message 6", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 6");
 	}
 
@@ -812,7 +812,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn("Message 7", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 7", throwable);
 	}
 
@@ -821,7 +821,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn("Message 8", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 8");
 	}
 
@@ -830,7 +830,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn("Message 9 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 9 arg1", throwable);
 	}
 
@@ -839,7 +839,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn("Message 10 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 10 arg1");
 	}
 
@@ -848,7 +848,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 11 arg1 arg2", throwable);
 	}
 
@@ -857,7 +857,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 12 arg1 arg2");
 	}
 
@@ -866,7 +866,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn(marker, "Message 13");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 13");
 	}
 
@@ -875,7 +875,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn(marker, null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: null");
 	}
 
@@ -884,7 +884,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn(marker, "Message 14 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 14 arg");
 	}
 
@@ -893,7 +893,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 15 arg1 arg2");
 	}
 
@@ -902,7 +902,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 16 arg1 arg2 arg3");
 	}
 
@@ -911,7 +911,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn(marker, "Message 17", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 17", throwable);
 	}
 
@@ -920,7 +920,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn(marker, "Message 18", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 18");
 	}
 
@@ -929,7 +929,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn(marker, "Message 19", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 19", throwable);
 	}
 
@@ -938,7 +938,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn(marker, "Message 20", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 20");
 	}
 
@@ -947,7 +947,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 21 arg1", throwable);
 	}
 
@@ -956,7 +956,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 22 arg1");
 	}
 
@@ -965,7 +965,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 23 arg1 arg2", throwable);
 	}
 
@@ -974,7 +974,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).warn(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 24 arg1 arg2");
 	}
 
@@ -1207,7 +1207,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info("Message 1");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 1");
 	}
 
@@ -1216,7 +1216,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info(null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: null");
 	}
 
@@ -1225,7 +1225,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info("Message 2 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 2 arg");
 	}
 
@@ -1234,7 +1234,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 3 arg1 arg2");
 	}
 
@@ -1243,7 +1243,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 4 arg1 arg2 arg3");
 	}
 
@@ -1252,7 +1252,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info("Message 5", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 5", throwable);
 	}
 
@@ -1261,7 +1261,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info("Message 6", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 6");
 	}
 
@@ -1270,7 +1270,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info("Message 7", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 7", throwable);
 	}
 
@@ -1279,7 +1279,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info("Message 8", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 8");
 	}
 
@@ -1288,7 +1288,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info("Message 9 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 9 arg1", throwable);
 	}
 
@@ -1297,7 +1297,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info("Message 10 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 10 arg1");
 	}
 
@@ -1306,7 +1306,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 11 arg1 arg2", throwable);
 	}
 
@@ -1315,7 +1315,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 12 arg1 arg2");
 	}
 
@@ -1324,7 +1324,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info(marker, "Message 13");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 13");
 	}
 
@@ -1333,7 +1333,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info(marker, null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: null");
 	}
 
@@ -1342,7 +1342,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info(marker, "Message 14 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 14 arg");
 	}
 
@@ -1351,7 +1351,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 15 arg1 arg2");
 	}
 
@@ -1360,7 +1360,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 16 arg1 arg2 arg3");
 	}
 
@@ -1369,7 +1369,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info(marker, "Message 17", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 17", throwable);
 	}
 
@@ -1378,7 +1378,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info(marker, "Message 18", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 18");
 	}
 
@@ -1387,7 +1387,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info(marker, "Message 19", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 19", throwable);
 	}
 
@@ -1396,7 +1396,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info(marker, "Message 20", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 20");
 	}
 
@@ -1405,7 +1405,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 21 arg1", throwable);
 	}
 
@@ -1414,7 +1414,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 22 arg1");
 	}
 
@@ -1423,7 +1423,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 23 arg1 arg2", throwable);
 	}
 
@@ -1432,7 +1432,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).info(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 24 arg1 arg2");
 	}
 
@@ -1665,7 +1665,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug("Message 1");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 1");
 	}
 
@@ -1674,7 +1674,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug(null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: null");
 	}
 
@@ -1683,7 +1683,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug("Message 2 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 2 arg");
 	}
 
@@ -1692,7 +1692,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 3 arg1 arg2");
 	}
 
@@ -1701,7 +1701,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 4 arg1 arg2 arg3");
 	}
 
@@ -1710,7 +1710,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug("Message 5", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 5", throwable);
 	}
 
@@ -1719,7 +1719,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug("Message 6", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 6");
 	}
 
@@ -1728,7 +1728,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug("Message 7", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 7", throwable);
 	}
 
@@ -1737,7 +1737,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug("Message 8", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 8");
 	}
 
@@ -1746,7 +1746,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug("Message 9 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 9 arg1", throwable);
 	}
 
@@ -1755,7 +1755,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug("Message 10 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 10 arg1");
 	}
 
@@ -1764,7 +1764,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 11 arg1 arg2", throwable);
 	}
 
@@ -1773,7 +1773,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 12 arg1 arg2");
 	}
 
@@ -1782,7 +1782,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug(marker, "Message 13");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 13");
 	}
 
@@ -1791,7 +1791,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug(marker, null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: null");
 	}
 
@@ -1800,7 +1800,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug(marker, "Message 14 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 14 arg");
 	}
 
@@ -1809,7 +1809,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 15 arg1 arg2");
 	}
 
@@ -1818,7 +1818,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 16 arg1 arg2 arg3");
 	}
 
@@ -1827,7 +1827,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug(marker, "Message 17", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 17", throwable);
 	}
 
@@ -1836,7 +1836,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug(marker, "Message 18", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 18");
 	}
 
@@ -1845,7 +1845,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug(marker, "Message 19", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 19", throwable);
 	}
 
@@ -1854,7 +1854,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug(marker, "Message 20", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 20");
 	}
 
@@ -1863,7 +1863,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 21 arg1", throwable);
 	}
 
@@ -1872,7 +1872,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 22 arg1");
 	}
 
@@ -1881,7 +1881,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 23 arg1 arg2", throwable);
 	}
 
@@ -1890,7 +1890,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).debug(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 24 arg1 arg2");
 	}
 
@@ -2123,7 +2123,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace("Message 1");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 1");
 	}
 
@@ -2132,7 +2132,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace(null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: null");
 	}
 
@@ -2141,7 +2141,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace("Message 2 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 2 arg");
 	}
 
@@ -2150,7 +2150,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 3 arg1 arg2");
 	}
 
@@ -2159,7 +2159,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 4 arg1 arg2 arg3");
 	}
 
@@ -2168,7 +2168,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace("Message 5", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 5", throwable);
 	}
 
@@ -2177,7 +2177,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace("Message 6", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 6");
 	}
 
@@ -2186,7 +2186,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace("Message 7", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 7", throwable);
 	}
 
@@ -2195,7 +2195,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace("Message 8", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 8");
 	}
 
@@ -2204,7 +2204,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace("Message 9 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 9 arg1", throwable);
 	}
 
@@ -2213,7 +2213,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace("Message 10 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 10 arg1");
 	}
 
@@ -2222,7 +2222,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 11 arg1 arg2", throwable);
 	}
 
@@ -2231,7 +2231,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 12 arg1 arg2");
 	}
 
@@ -2240,7 +2240,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace(marker, "Message 13");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 13");
 	}
 
@@ -2249,7 +2249,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace(marker, null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: null");
 	}
 
@@ -2258,7 +2258,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace(marker, "Message 14 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 14 arg");
 	}
 
@@ -2267,7 +2267,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 15 arg1 arg2");
 	}
 
@@ -2276,7 +2276,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 16 arg1 arg2 arg3");
 	}
 
@@ -2285,7 +2285,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace(marker, "Message 17", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 17", throwable);
 	}
 
@@ -2294,7 +2294,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace(marker, "Message 18", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 18");
 	}
 
@@ -2303,7 +2303,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace(marker, "Message 19", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 19", throwable);
 	}
 
@@ -2312,7 +2312,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace(marker, "Message 20", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 20");
 	}
 
@@ -2321,7 +2321,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 21 arg1", throwable);
 	}
 
@@ -2330,7 +2330,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 22 arg1");
 	}
 
@@ -2339,7 +2339,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 23 arg1 arg2", throwable);
 	}
 
@@ -2348,7 +2348,7 @@ public class ThreadCompactLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCompact()).trace(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(createTag(0), "[ThreadCompactLoggerTestThread] l.n.here: Message 24 arg1 arg2");
 	}
 

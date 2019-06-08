@@ -454,29 +454,29 @@ public class MockUtil {
 	 * Check that no messages were logged
 	 */
 	public static void verifyNoLog() {
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString(), Mockito.any(Throwable.class));
 
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString(), Mockito.any(Throwable.class));
 
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString(), Mockito.any(Throwable.class));
 
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.d(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.d(anyString(), anyString(), Mockito.any(Throwable.class));
 
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.v(anyString(), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.v(anyString(), anyString(), Mockito.any(Throwable.class));
 	}
 }

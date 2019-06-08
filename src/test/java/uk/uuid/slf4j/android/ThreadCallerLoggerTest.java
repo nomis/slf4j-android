@@ -294,7 +294,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error("Message 1");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 1"));
 	}
@@ -304,7 +304,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error(null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): null"));
 	}
@@ -314,7 +314,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error("Message 2 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
 	}
@@ -324,7 +324,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
 	}
@@ -334,7 +334,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
 	}
@@ -344,7 +344,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error("Message 5", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 5"), eq(throwable));
 	}
@@ -354,7 +354,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error("Message 6", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 6"));
 	}
@@ -364,7 +364,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error("Message 7", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 7"), eq(throwable));
 	}
@@ -374,7 +374,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error("Message 8", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 8"));
 	}
@@ -384,7 +384,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error("Message 9 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"), eq(throwable));
 	}
@@ -394,7 +394,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error("Message 10 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
 	}
@@ -404,7 +404,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"), eq(throwable));
 	}
@@ -414,7 +414,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
 	}
@@ -424,7 +424,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error(marker, "Message 13");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 13"));
 	}
@@ -434,7 +434,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error(marker, null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): null"));
 	}
@@ -444,7 +444,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error(marker, "Message 14 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
 	}
@@ -454,7 +454,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
 	}
@@ -464,7 +464,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
 	}
@@ -474,7 +474,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error(marker, "Message 17", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 17"), eq(throwable));
 	}
@@ -484,7 +484,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error(marker, "Message 18", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 18"));
 	}
@@ -494,7 +494,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error(marker, "Message 19", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 19"), eq(throwable));
 	}
@@ -504,7 +504,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error(marker, "Message 20", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 20"));
 	}
@@ -514,7 +514,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"), eq(throwable));
 	}
@@ -524,7 +524,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
 	}
@@ -534,7 +534,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"), eq(throwable));
 	}
@@ -544,7 +544,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).error(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
 	}
@@ -778,7 +778,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn("Message 1");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 1"));
 	}
@@ -788,7 +788,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn(null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): null"));
 	}
@@ -798,7 +798,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn("Message 2 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
 	}
@@ -808,7 +808,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
 	}
@@ -818,7 +818,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
 	}
@@ -828,7 +828,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn("Message 5", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 5"), eq(throwable));
 	}
@@ -838,7 +838,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn("Message 6", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 6"));
 	}
@@ -848,7 +848,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn("Message 7", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 7"), eq(throwable));
 	}
@@ -858,7 +858,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn("Message 8", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 8"));
 	}
@@ -868,7 +868,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn("Message 9 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"), eq(throwable));
 	}
@@ -878,7 +878,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn("Message 10 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
 	}
@@ -888,7 +888,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"), eq(throwable));
 	}
@@ -898,7 +898,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
 	}
@@ -908,7 +908,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn(marker, "Message 13");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 13"));
 	}
@@ -918,7 +918,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn(marker, null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): null"));
 	}
@@ -928,7 +928,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn(marker, "Message 14 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
 	}
@@ -938,7 +938,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
 	}
@@ -948,7 +948,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
 	}
@@ -958,7 +958,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn(marker, "Message 17", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 17"), eq(throwable));
 	}
@@ -968,7 +968,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn(marker, "Message 18", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 18"));
 	}
@@ -978,7 +978,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn(marker, "Message 19", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 19"), eq(throwable));
 	}
@@ -988,7 +988,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn(marker, "Message 20", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 20"));
 	}
@@ -998,7 +998,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"), eq(throwable));
 	}
@@ -1008,7 +1008,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
 	}
@@ -1018,7 +1018,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"), eq(throwable));
 	}
@@ -1028,7 +1028,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.WARN);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).warn(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.w(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
 	}
@@ -1262,7 +1262,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info("Message 1");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 1"));
 	}
@@ -1272,7 +1272,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info(null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): null"));
 	}
@@ -1282,7 +1282,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info("Message 2 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
 	}
@@ -1292,7 +1292,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
 	}
@@ -1302,7 +1302,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
 	}
@@ -1312,7 +1312,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info("Message 5", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 5"), eq(throwable));
 	}
@@ -1322,7 +1322,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info("Message 6", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 6"));
 	}
@@ -1332,7 +1332,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info("Message 7", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 7"), eq(throwable));
 	}
@@ -1342,7 +1342,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info("Message 8", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 8"));
 	}
@@ -1352,7 +1352,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info("Message 9 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"), eq(throwable));
 	}
@@ -1362,7 +1362,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info("Message 10 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
 	}
@@ -1372,7 +1372,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"), eq(throwable));
 	}
@@ -1382,7 +1382,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
 	}
@@ -1392,7 +1392,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info(marker, "Message 13");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 13"));
 	}
@@ -1402,7 +1402,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info(marker, null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): null"));
 	}
@@ -1412,7 +1412,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info(marker, "Message 14 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
 	}
@@ -1422,7 +1422,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
 	}
@@ -1432,7 +1432,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
 	}
@@ -1442,7 +1442,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info(marker, "Message 17", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 17"), eq(throwable));
 	}
@@ -1452,7 +1452,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info(marker, "Message 18", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 18"));
 	}
@@ -1462,7 +1462,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info(marker, "Message 19", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 19"), eq(throwable));
 	}
@@ -1472,7 +1472,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info(marker, "Message 20", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 20"));
 	}
@@ -1482,7 +1482,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"), eq(throwable));
 	}
@@ -1492,7 +1492,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
 	}
@@ -1502,7 +1502,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"), eq(throwable));
 	}
@@ -1512,7 +1512,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.INFO);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).info(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.i(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
 	}
@@ -1746,7 +1746,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug("Message 1");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 1"));
 	}
@@ -1756,7 +1756,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug(null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): null"));
 	}
@@ -1766,7 +1766,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug("Message 2 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
 	}
@@ -1776,7 +1776,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
 	}
@@ -1786,7 +1786,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
 	}
@@ -1796,7 +1796,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug("Message 5", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 5"), eq(throwable));
 	}
@@ -1806,7 +1806,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug("Message 6", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 6"));
 	}
@@ -1816,7 +1816,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug("Message 7", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 7"), eq(throwable));
 	}
@@ -1826,7 +1826,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug("Message 8", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 8"));
 	}
@@ -1836,7 +1836,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug("Message 9 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"), eq(throwable));
 	}
@@ -1846,7 +1846,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug("Message 10 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
 	}
@@ -1856,7 +1856,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"), eq(throwable));
 	}
@@ -1866,7 +1866,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
 	}
@@ -1876,7 +1876,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug(marker, "Message 13");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 13"));
 	}
@@ -1886,7 +1886,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug(marker, null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): null"));
 	}
@@ -1896,7 +1896,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug(marker, "Message 14 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
 	}
@@ -1906,7 +1906,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
 	}
@@ -1916,7 +1916,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
 	}
@@ -1926,7 +1926,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug(marker, "Message 17", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 17"), eq(throwable));
 	}
@@ -1936,7 +1936,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug(marker, "Message 18", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 18"));
 	}
@@ -1946,7 +1946,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug(marker, "Message 19", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 19"), eq(throwable));
 	}
@@ -1956,7 +1956,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug(marker, "Message 20", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 20"));
 	}
@@ -1966,7 +1966,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"), eq(throwable));
 	}
@@ -1976,7 +1976,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
 	}
@@ -1986,7 +1986,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"), eq(throwable));
 	}
@@ -1996,7 +1996,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.DEBUG);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).debug(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.d(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
 	}
@@ -2230,7 +2230,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace("Message 1");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 1"));
 	}
@@ -2240,7 +2240,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace(null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): null"));
 	}
@@ -2250,7 +2250,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace("Message 2 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
 	}
@@ -2260,7 +2260,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace("Message 3 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
 	}
@@ -2270,7 +2270,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
 	}
@@ -2280,7 +2280,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace("Message 5", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 5"), eq(throwable));
 	}
@@ -2290,7 +2290,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace("Message 6", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 6"));
 	}
@@ -2300,7 +2300,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace("Message 7", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 7"), eq(throwable));
 	}
@@ -2310,7 +2310,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace("Message 8", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 8"));
 	}
@@ -2320,7 +2320,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace("Message 9 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"), eq(throwable));
 	}
@@ -2330,7 +2330,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace("Message 10 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
 	}
@@ -2340,7 +2340,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace("Message 11 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"), eq(throwable));
 	}
@@ -2350,7 +2350,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace("Message 12 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
 	}
@@ -2360,7 +2360,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace(marker, "Message 13");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 13"));
 	}
@@ -2370,7 +2370,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace(marker, null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): null"));
 	}
@@ -2380,7 +2380,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace(marker, "Message 14 {}", "arg");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
 	}
@@ -2390,7 +2390,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace(marker, "Message 15 {} {}", "arg1", "arg2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
 	}
@@ -2400,7 +2400,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
 	}
@@ -2410,7 +2410,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace(marker, "Message 17", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 17"), eq(throwable));
 	}
@@ -2420,7 +2420,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace(marker, "Message 18", (Throwable)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 18"));
 	}
@@ -2430,7 +2430,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace(marker, "Message 19", (Object)throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 19"), eq(throwable));
 	}
@@ -2440,7 +2440,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace(marker, "Message 20", (Object)null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 20"));
 	}
@@ -2450,7 +2450,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace(marker, "Message 21 {}", "arg1", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"), eq(throwable));
 	}
@@ -2460,7 +2460,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace(marker, "Message 22 {}", "arg1", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
 	}
@@ -2470,7 +2470,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"), eq(throwable));
 	}
@@ -2480,7 +2480,7 @@ public class ThreadCallerLoggerTest {
 		mockLogLevelRestricted(LogLevel.VERBOSE);
 		new LogAdapter("logger.name.here", mockConfigThreadCaller()).trace(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.v(eq(createTag(0)), matches("\\[ThreadCallerLoggerTestThread\\] uk\\.uuid\\.slf4j\\.android\\.ThreadCallerLoggerTest\\." + currentMethodName()
 				+ "\\(ThreadCallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
 	}

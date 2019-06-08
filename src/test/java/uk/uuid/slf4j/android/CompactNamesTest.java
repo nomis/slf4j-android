@@ -49,7 +49,7 @@ public class CompactNamesTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here", mockConfigCompact()).error("Message 1");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "l.n.here: Message 1");
 	}
 
@@ -58,7 +58,7 @@ public class CompactNamesTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger..name.here", mockConfigCompact()).error("Message 2");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "l.n.here: Message 2");
 	}
 
@@ -67,7 +67,7 @@ public class CompactNamesTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name..here", mockConfigCompact()).error("Message 3");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "l.n.here: Message 3");
 	}
 
@@ -76,7 +76,7 @@ public class CompactNamesTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger..name..here", mockConfigCompact()).error("Message 4");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "l.n.here: Message 4");
 	}
 
@@ -85,7 +85,7 @@ public class CompactNamesTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter(".logger.name.here", mockConfigCompact()).error("Message 5");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), ".l.n.here: Message 5");
 	}
 
@@ -94,7 +94,7 @@ public class CompactNamesTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("..logger.name.here", mockConfigCompact()).error("Message 6");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), ".l.n.here: Message 6");
 	}
 
@@ -103,7 +103,7 @@ public class CompactNamesTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("...logger.name.here", mockConfigCompact()).error("Message 7");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), ".l.n.here: Message 7");
 	}
 
@@ -112,7 +112,7 @@ public class CompactNamesTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here.", mockConfigCompact()).error("Message 8");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "l.n.h.: Message 8");
 	}
 
@@ -121,7 +121,7 @@ public class CompactNamesTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here..", mockConfigCompact()).error("Message 9");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "l.n.h.: Message 9");
 	}
 
@@ -130,7 +130,7 @@ public class CompactNamesTest {
 		mockLogLevelRestricted(LogLevel.ERROR);
 		new LogAdapter("logger.name.here...", mockConfigCompact()).error("Message 10");
 
-		verifyStatic();
+		verifyStatic(Log.class);
 		Log.e(createTag(0), "l.n.h.: Message 10");
 	}
 }

@@ -123,35 +123,35 @@ public class FactoryWithLoggingTest {
 		Assert.assertFalse(log6.isTraceEnabled());
 
 		// Only debug logging is expected
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(eq("slf4j-android"), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(eq("slf4j-android"), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(eq("slf4j-android"), anyString());
 
 		// But nothing on other tags
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(not(eq("slf4j-android")), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(not(eq("slf4j-android")), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(not(eq("slf4j-android")), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.d(not(eq("slf4j-android")), anyString());
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.v(not(eq("slf4j-android")), anyString());
 
 		// or with exceptions
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.e(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.w(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.i(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.d(anyString(), anyString(), any(Throwable.class));
-		verifyStatic(never());
+		verifyStatic(Log.class, never());
 		Log.v(anyString(), anyString(), any(Throwable.class));
 
 		// The loggers should be the same each time
@@ -213,35 +213,35 @@ public class FactoryWithLoggingTest {
 			Assert.assertFalse(log2.isTraceEnabled());
 
 			// Only debug logging is expected
-			verifyStatic(never());
+			verifyStatic(Log.class, never());
 			Log.e(eq("slf4j-android"), anyString());
-			verifyStatic(never());
+			verifyStatic(Log.class, never());
 			Log.w(eq("slf4j-android"), anyString());
-			verifyStatic(never());
+			verifyStatic(Log.class, never());
 			Log.i(eq("slf4j-android"), anyString());
 
 			// But nothing on other tags
-			verifyStatic(never());
+			verifyStatic(Log.class, never());
 			Log.e(not(eq("slf4j-android")), anyString());
-			verifyStatic(never());
+			verifyStatic(Log.class, never());
 			Log.w(not(eq("slf4j-android")), anyString());
-			verifyStatic(never());
+			verifyStatic(Log.class, never());
 			Log.i(not(eq("slf4j-android")), anyString());
-			verifyStatic(never());
+			verifyStatic(Log.class, never());
 			Log.d(not(eq("slf4j-android")), anyString());
-			verifyStatic(never());
+			verifyStatic(Log.class, never());
 			Log.v(not(eq("slf4j-android")), anyString());
 
 			// or with exceptions
-			verifyStatic(never());
+			verifyStatic(Log.class, never());
 			Log.e(anyString(), anyString(), any(Throwable.class));
-			verifyStatic(never());
+			verifyStatic(Log.class, never());
 			Log.w(anyString(), anyString(), any(Throwable.class));
-			verifyStatic(never());
+			verifyStatic(Log.class, never());
 			Log.i(anyString(), anyString(), any(Throwable.class));
-			verifyStatic(never());
+			verifyStatic(Log.class, never());
 			Log.d(anyString(), anyString(), any(Throwable.class));
-			verifyStatic(never());
+			verifyStatic(Log.class, never());
 			Log.v(anyString(), anyString(), any(Throwable.class));
 
 			// The loggers should be the same each time
