@@ -3,6 +3,12 @@ install: true
 before_install:
   - echo "MAVEN_OPTS='-DforkCount=2 -DthreadCount=2'" >> ~/.mavenrc
 jdk:
+  - oraclejdk11
+  - openjdk10
+  - oraclejdk9
   - oraclejdk8
-  - oraclejdk7
-  - openjdk6
+
+notifications:
+  email:
+    recipients:
+      - secure: "VDz6mBdOsN4OLnNzsfZQH/211GXHhEMHvAfeUA/WKd+Mrcy5/IJa+j0NNePOWfOyykWYBBtB5WN/UFbFKCGvAFUEe4y5wQsr7bGLQ3fzYhUkJjOzdSNQghIh9Jid/fFIa0Bdvoq2JdvquN6EW7YHL7Oo0UToR/+p1cvosCE3IwA="
