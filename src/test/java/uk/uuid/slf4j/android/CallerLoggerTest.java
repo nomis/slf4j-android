@@ -1,5 +1,5 @@
 /**
- * Copyright 2013,2016  Simon Arlott
+ * Copyright 2013,2016,2019  Simon Arlott
  *
  * Permission is hereby granted, free  of charge, to any person obtaining
  * a  copy  of this  software  and  associated  documentation files  (the
@@ -22,14 +22,14 @@
  */
 package uk.uuid.slf4j.android;
 
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.matches;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 import static uk.uuid.slf4j.android.MockUtil.createTag;
 import static uk.uuid.slf4j.android.MockUtil.currentMethodName;
 import static uk.uuid.slf4j.android.MockUtil.mockConfigCaller;
 import static uk.uuid.slf4j.android.MockUtil.mockLogLevelRestricted;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.matches;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -294,8 +294,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 1");
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 1"));
+		Log.e(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 1"));
 	}
 
 	@Test
@@ -314,8 +314,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 2 {}", "arg");
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
+		Log.e(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
 	}
 
 	@Test
@@ -324,8 +324,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 3 {} {}", "arg1", "arg2");
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
+		Log.e(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
 	}
 
 	@Test
@@ -334,8 +334,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
+		Log.e(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
 	}
 
 	@Test
@@ -344,8 +344,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 5", throwable);
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 5"), eq(throwable));
+		Log.e(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 5"),
+				eq(throwable));
 	}
 
 	@Test
@@ -354,8 +355,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 6", (Throwable)null);
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 6"));
+		Log.e(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 6"));
 	}
 
 	@Test
@@ -364,8 +365,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 7", (Object)throwable);
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 7"), eq(throwable));
+		Log.e(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 7"),
+				eq(throwable));
 	}
 
 	@Test
@@ -374,8 +376,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 8", (Object)null);
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 8"));
+		Log.e(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 8"));
 	}
 
 	@Test
@@ -384,8 +386,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 9 {}", "arg1", throwable);
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"), eq(throwable));
+		Log.e(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"),
+				eq(throwable));
 	}
 
 	@Test
@@ -394,8 +397,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 10 {}", "arg1", null);
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
+		Log.e(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
 	}
 
 	@Test
@@ -404,8 +407,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 11 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"), eq(throwable));
+		Log.e(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"),
+				eq(throwable));
 	}
 
 	@Test
@@ -414,8 +418,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error("Message 12 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
+		Log.e(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
 	}
 
 	@Test
@@ -424,8 +428,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 13");
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 13"));
+		Log.e(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 13"));
 	}
 
 	@Test
@@ -434,8 +438,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 14 {}", "arg");
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
+		Log.e(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
 	}
 
 	@Test
@@ -444,8 +448,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 15 {} {}", "arg1", "arg2");
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
+		Log.e(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
 	}
 
 	@Test
@@ -454,8 +458,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
+		Log.e(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
 	}
 
 	@Test
@@ -464,8 +468,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 17", throwable);
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 17"), eq(throwable));
+		Log.e(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 17"),
+				eq(throwable));
 	}
 
 	@Test
@@ -474,8 +479,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 18", (Throwable)null);
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 18"));
+		Log.e(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 18"));
 	}
 
 	@Test
@@ -484,8 +489,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 19", (Object)throwable);
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 19"), eq(throwable));
+		Log.e(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 19"),
+				eq(throwable));
 	}
 
 	@Test
@@ -494,8 +500,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 20", (Object)null);
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 20"));
+		Log.e(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 20"));
 	}
 
 	@Test
@@ -504,8 +510,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 21 {}", "arg1", throwable);
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"), eq(throwable));
+		Log.e(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"),
+				eq(throwable));
 	}
 
 	@Test
@@ -514,8 +521,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 22 {}", "arg1", null);
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
+		Log.e(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
 	}
 
 	@Test
@@ -524,8 +531,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"), eq(throwable));
+		Log.e(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"),
+				eq(throwable));
 	}
 
 	@Test
@@ -534,8 +542,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).error(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(Log.class);
-		Log.e(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
+		Log.e(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
 	}
 
 	/* Error Disabled */
@@ -752,8 +760,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 1");
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 1"));
+		Log.w(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 1"));
 	}
 
 	@Test
@@ -762,8 +770,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 2 {}", "arg");
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
+		Log.w(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
 	}
 
 	@Test
@@ -772,8 +780,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 3 {} {}", "arg1", "arg2");
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
+		Log.w(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
 	}
 
 	@Test
@@ -782,8 +790,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
+		Log.w(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
 	}
 
 	@Test
@@ -792,8 +800,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 5", throwable);
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 5"), eq(throwable));
+		Log.w(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 5"),
+				eq(throwable));
 	}
 
 	@Test
@@ -802,8 +811,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 6", (Throwable)null);
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 6"));
+		Log.w(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 6"));
 	}
 
 	@Test
@@ -812,8 +821,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 7", (Object)throwable);
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 7"), eq(throwable));
+		Log.w(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 7"),
+				eq(throwable));
 	}
 
 	@Test
@@ -822,8 +832,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 8", (Object)null);
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 8"));
+		Log.w(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 8"));
 	}
 
 	@Test
@@ -832,8 +842,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 9 {}", "arg1", throwable);
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"), eq(throwable));
+		Log.w(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"),
+				eq(throwable));
 	}
 
 	@Test
@@ -842,8 +853,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 10 {}", "arg1", null);
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
+		Log.w(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
 	}
 
 	@Test
@@ -852,8 +863,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 11 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"), eq(throwable));
+		Log.w(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"),
+				eq(throwable));
 	}
 
 	@Test
@@ -862,8 +874,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn("Message 12 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
+		Log.w(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
 	}
 
 	@Test
@@ -872,8 +884,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 13");
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 13"));
+		Log.w(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 13"));
 	}
 
 	@Test
@@ -882,8 +894,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 14 {}", "arg");
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
+		Log.w(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
 	}
 
 	@Test
@@ -892,8 +904,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 15 {} {}", "arg1", "arg2");
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
+		Log.w(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
 	}
 
 	@Test
@@ -902,8 +914,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
+		Log.w(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
 	}
 
 	@Test
@@ -912,8 +924,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 17", throwable);
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 17"), eq(throwable));
+		Log.w(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 17"),
+				eq(throwable));
 	}
 
 	@Test
@@ -922,8 +935,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 18", (Throwable)null);
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 18"));
+		Log.w(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 18"));
 	}
 
 	@Test
@@ -932,8 +945,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 19", (Object)throwable);
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 19"), eq(throwable));
+		Log.w(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 19"),
+				eq(throwable));
 	}
 
 	@Test
@@ -942,8 +956,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 20", (Object)null);
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 20"));
+		Log.w(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 20"));
 	}
 
 	@Test
@@ -952,8 +966,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 21 {}", "arg1", throwable);
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"), eq(throwable));
+		Log.w(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"),
+				eq(throwable));
 	}
 
 	@Test
@@ -962,8 +977,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 22 {}", "arg1", null);
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
+		Log.w(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
 	}
 
 	@Test
@@ -972,8 +987,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"), eq(throwable));
+		Log.w(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"),
+				eq(throwable));
 	}
 
 	@Test
@@ -982,8 +998,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).warn(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(Log.class);
-		Log.w(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
+		Log.w(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
 	}
 
 	/* Warn Disabled */
@@ -1200,8 +1216,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 1");
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 1"));
+		Log.i(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 1"));
 	}
 
 	@Test
@@ -1210,8 +1226,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 2 {}", "arg");
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
+		Log.i(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
 	}
 
 	@Test
@@ -1220,8 +1236,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 3 {} {}", "arg1", "arg2");
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
+		Log.i(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
 	}
 
 	@Test
@@ -1230,8 +1246,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
+		Log.i(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
 	}
 
 	@Test
@@ -1240,8 +1256,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 5", throwable);
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 5"), eq(throwable));
+		Log.i(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 5"),
+				eq(throwable));
 	}
 
 	@Test
@@ -1250,8 +1267,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 6", (Throwable)null);
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 6"));
+		Log.i(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 6"));
 	}
 
 	@Test
@@ -1260,8 +1277,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 7", (Object)throwable);
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 7"), eq(throwable));
+		Log.i(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 7"),
+				eq(throwable));
 	}
 
 	@Test
@@ -1270,8 +1288,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 8", (Object)null);
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 8"));
+		Log.i(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 8"));
 	}
 
 	@Test
@@ -1280,8 +1298,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 9 {}", "arg1", throwable);
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"), eq(throwable));
+		Log.i(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"),
+				eq(throwable));
 	}
 
 	@Test
@@ -1290,8 +1309,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 10 {}", "arg1", null);
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
+		Log.i(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
 	}
 
 	@Test
@@ -1300,8 +1319,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 11 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"), eq(throwable));
+		Log.i(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"),
+				eq(throwable));
 	}
 
 	@Test
@@ -1310,8 +1330,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info("Message 12 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
+		Log.i(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
 	}
 
 	@Test
@@ -1320,8 +1340,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 13");
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 13"));
+		Log.i(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 13"));
 	}
 
 	@Test
@@ -1330,8 +1350,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 14 {}", "arg");
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
+		Log.i(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
 	}
 
 	@Test
@@ -1340,8 +1360,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 15 {} {}", "arg1", "arg2");
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
+		Log.i(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
 	}
 
 	@Test
@@ -1350,8 +1370,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
+		Log.i(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
 	}
 
 	@Test
@@ -1360,8 +1380,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 17", throwable);
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 17"), eq(throwable));
+		Log.i(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 17"),
+				eq(throwable));
 	}
 
 	@Test
@@ -1370,8 +1391,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 18", (Throwable)null);
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 18"));
+		Log.i(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 18"));
 	}
 
 	@Test
@@ -1380,8 +1401,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 19", (Object)throwable);
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 19"), eq(throwable));
+		Log.i(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 19"),
+				eq(throwable));
 	}
 
 	@Test
@@ -1390,8 +1412,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 20", (Object)null);
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 20"));
+		Log.i(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 20"));
 	}
 
 	@Test
@@ -1400,8 +1422,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 21 {}", "arg1", throwable);
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"), eq(throwable));
+		Log.i(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"),
+				eq(throwable));
 	}
 
 	@Test
@@ -1410,8 +1433,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 22 {}", "arg1", null);
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
+		Log.i(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
 	}
 
 	@Test
@@ -1420,8 +1443,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"), eq(throwable));
+		Log.i(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"),
+				eq(throwable));
 	}
 
 	@Test
@@ -1430,8 +1454,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).info(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(Log.class);
-		Log.i(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
+		Log.i(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
 	}
 
 	/* Info Disabled */
@@ -1648,8 +1672,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 1");
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 1"));
+		Log.d(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 1"));
 	}
 
 	@Test
@@ -1658,8 +1682,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 2 {}", "arg");
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
+		Log.d(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
 	}
 
 	@Test
@@ -1668,8 +1692,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 3 {} {}", "arg1", "arg2");
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
+		Log.d(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
 	}
 
 	@Test
@@ -1678,8 +1702,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
+		Log.d(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
 	}
 
 	@Test
@@ -1688,8 +1712,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 5", throwable);
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 5"), eq(throwable));
+		Log.d(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 5"),
+				eq(throwable));
 	}
 
 	@Test
@@ -1698,8 +1723,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 6", (Throwable)null);
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 6"));
+		Log.d(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 6"));
 	}
 
 	@Test
@@ -1708,8 +1733,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 7", (Object)throwable);
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 7"), eq(throwable));
+		Log.d(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 7"),
+				eq(throwable));
 	}
 
 	@Test
@@ -1718,8 +1744,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 8", (Object)null);
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 8"));
+		Log.d(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 8"));
 	}
 
 	@Test
@@ -1728,8 +1754,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 9 {}", "arg1", throwable);
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"), eq(throwable));
+		Log.d(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"),
+				eq(throwable));
 	}
 
 	@Test
@@ -1738,8 +1765,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 10 {}", "arg1", null);
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
+		Log.d(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
 	}
 
 	@Test
@@ -1748,8 +1775,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 11 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"), eq(throwable));
+		Log.d(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"),
+				eq(throwable));
 	}
 
 	@Test
@@ -1758,8 +1786,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug("Message 12 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
+		Log.d(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
 	}
 
 	@Test
@@ -1768,8 +1796,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 13");
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 13"));
+		Log.d(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 13"));
 	}
 
 	@Test
@@ -1778,8 +1806,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 14 {}", "arg");
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
+		Log.d(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
 	}
 
 	@Test
@@ -1788,8 +1816,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 15 {} {}", "arg1", "arg2");
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
+		Log.d(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
 	}
 
 	@Test
@@ -1798,8 +1826,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
+		Log.d(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
 	}
 
 	@Test
@@ -1808,8 +1836,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 17", throwable);
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 17"), eq(throwable));
+		Log.d(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 17"),
+				eq(throwable));
 	}
 
 	@Test
@@ -1818,8 +1847,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 18", (Throwable)null);
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 18"));
+		Log.d(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 18"));
 	}
 
 	@Test
@@ -1828,8 +1857,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 19", (Object)throwable);
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 19"), eq(throwable));
+		Log.d(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 19"),
+				eq(throwable));
 	}
 
 	@Test
@@ -1838,8 +1868,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 20", (Object)null);
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 20"));
+		Log.d(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 20"));
 	}
 
 	@Test
@@ -1848,8 +1878,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 21 {}", "arg1", throwable);
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"), eq(throwable));
+		Log.d(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"),
+				eq(throwable));
 	}
 
 	@Test
@@ -1858,8 +1889,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 22 {}", "arg1", null);
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
+		Log.d(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
 	}
 
 	@Test
@@ -1868,8 +1899,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"), eq(throwable));
+		Log.d(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"),
+				eq(throwable));
 	}
 
 	@Test
@@ -1878,8 +1910,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).debug(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(Log.class);
-		Log.d(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
+		Log.d(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
 	}
 
 	/* Debug Disabled */
@@ -2096,8 +2128,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 1");
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 1"));
+		Log.v(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 1"));
 	}
 
 	@Test
@@ -2106,8 +2138,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 2 {}", "arg");
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
+		Log.v(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 2 arg"));
 	}
 
 	@Test
@@ -2116,8 +2148,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 3 {} {}", "arg1", "arg2");
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
+		Log.v(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 3 arg1 arg2"));
 	}
 
 	@Test
@@ -2126,8 +2158,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 4 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
+		Log.v(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 4 arg1 arg2 arg3"));
 	}
 
 	@Test
@@ -2136,8 +2168,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 5", throwable);
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 5"), eq(throwable));
+		Log.v(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 5"),
+				eq(throwable));
 	}
 
 	@Test
@@ -2146,8 +2179,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 6", (Throwable)null);
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 6"));
+		Log.v(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 6"));
 	}
 
 	@Test
@@ -2156,8 +2189,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 7", (Object)throwable);
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 7"), eq(throwable));
+		Log.v(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 7"),
+				eq(throwable));
 	}
 
 	@Test
@@ -2166,8 +2200,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 8", (Object)null);
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 8"));
+		Log.v(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 8"));
 	}
 
 	@Test
@@ -2176,8 +2210,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 9 {}", "arg1", throwable);
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"), eq(throwable));
+		Log.v(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 9 arg1"),
+				eq(throwable));
 	}
 
 	@Test
@@ -2186,8 +2221,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 10 {}", "arg1", null);
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
+		Log.v(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 10 arg1"));
 	}
 
 	@Test
@@ -2196,8 +2231,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 11 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"), eq(throwable));
+		Log.v(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 11 arg1 arg2"),
+				eq(throwable));
 	}
 
 	@Test
@@ -2206,8 +2242,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace("Message 12 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
+		Log.v(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 12 arg1 arg2"));
 	}
 
 	@Test
@@ -2216,8 +2252,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 13");
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 13"));
+		Log.v(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 13"));
 	}
 
 	@Test
@@ -2226,8 +2262,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 14 {}", "arg");
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
+		Log.v(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 14 arg"));
 	}
 
 	@Test
@@ -2236,8 +2272,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 15 {} {}", "arg1", "arg2");
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
+		Log.v(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 15 arg1 arg2"));
 	}
 
 	@Test
@@ -2246,8 +2282,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 16 {} {} {}", "arg1", "arg2", "arg3");
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
+		Log.v(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 16 arg1 arg2 arg3"));
 	}
 
 	@Test
@@ -2256,8 +2292,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 17", throwable);
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 17"), eq(throwable));
+		Log.v(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 17"),
+				eq(throwable));
 	}
 
 	@Test
@@ -2266,8 +2303,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 18", (Throwable)null);
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 18"));
+		Log.v(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 18"));
 	}
 
 	@Test
@@ -2276,8 +2313,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 19", (Object)throwable);
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 19"), eq(throwable));
+		Log.v(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 19"),
+				eq(throwable));
 	}
 
 	@Test
@@ -2286,8 +2324,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 20", (Object)null);
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 20"));
+		Log.v(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 20"));
 	}
 
 	@Test
@@ -2296,8 +2334,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 21 {}", "arg1", throwable);
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"), eq(throwable));
+		Log.v(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 21 arg1"),
+				eq(throwable));
 	}
 
 	@Test
@@ -2306,8 +2345,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 22 {}", "arg1", null);
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
+		Log.v(eq(createTag(0)),
+				matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 22 arg1"));
 	}
 
 	@Test
@@ -2316,8 +2355,9 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 23 {} {}", "arg1", "arg2", throwable);
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"), eq(throwable));
+		Log.v(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 23 arg1 arg2"),
+				eq(throwable));
 	}
 
 	@Test
@@ -2326,8 +2366,8 @@ public class CallerLoggerTest {
 		new LogAdapter("logger.name.here", mockConfigCaller()).trace(marker, "Message 24 {} {}", "arg1", "arg2", null);
 
 		verifyStatic(Log.class);
-		Log.v(eq(createTag(0)), matches("uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName()
-				+ "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
+		Log.v(eq(createTag(0)), matches(
+				"uk\\.uuid\\.slf4j\\.android\\.CallerLoggerTest\\." + currentMethodName() + "\\(CallerLoggerTest\\.java:[0-9]+\\): Message 24 arg1 arg2"));
 	}
 
 	/* Trace Disabled */

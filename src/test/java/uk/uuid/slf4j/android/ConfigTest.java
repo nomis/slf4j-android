@@ -1,5 +1,5 @@
 /**
- * Copyright 2013,2018  Simon Arlott
+ * Copyright 2013,2018-2019  Simon Arlott
  *
  * Permission is hereby granted, free  of charge, to any person obtaining
  * a  copy  of this  software  and  associated  documentation files  (the
@@ -22,8 +22,8 @@
  */
 package uk.uuid.slf4j.android;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;

@@ -1,5 +1,5 @@
 /**
- * Copyright 2013  Simon Arlott
+ * Copyright 2013,2019  Simon Arlott
  *
  * Permission is hereby granted, free  of charge, to any person obtaining
  * a  copy  of this  software  and  associated  documentation files  (the
@@ -22,14 +22,14 @@
  */
 package uk.uuid.slf4j.android;
 
-import static uk.uuid.slf4j.android.MockUtil.mockLogLevel;
 import static org.mockito.AdditionalMatchers.not;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
+import static uk.uuid.slf4j.android.MockUtil.mockLogLevel;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
