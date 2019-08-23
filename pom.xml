@@ -187,7 +187,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.6</version><!-- do not use 2.7, it includes an slf4j binding -->
+				<version>2.7</version><!-- do not use 2.7, it includes an slf4j binding -->
 			</plugin>
 		</plugins>
 	</reporting>
