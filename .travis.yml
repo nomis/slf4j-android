@@ -39,6 +39,9 @@ install: true
 before_install:
   - echo "MAVEN_OPTS='-DforkCount=2 -DthreadCount=2'" >> ~/.mavenrc
 
+script:
+  - mvn verify -B
+
 notifications:
   email:
     recipients:
