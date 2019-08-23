@@ -29,11 +29,6 @@ matrix:
       dist: trusty
       jdk: openjdk8
 
-    - name: Java 7
-      os: linux
-      dist: precise
-      jdk: openjdk7
-
 install: true
 
 before_install:
