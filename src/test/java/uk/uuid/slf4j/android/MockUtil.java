@@ -335,7 +335,6 @@ public class MockUtil {
 	/**
 	 * Restrict logging calls to the specified level by throwing an exception for everything else
 	 */
-	@SuppressWarnings("unchecked")
 	public static void restrictLogCalls(LogLevel level) {
 		switch (level) {
 		case SUPPRESS:
@@ -431,23 +430,22 @@ public class MockUtil {
 	/**
 	 * Replicate some native behaviour
 	 */
-	@SuppressWarnings("unchecked")
 	public static void mockNativeBehaviour() {
 		// Not used
 		Mockito.when(Log.getStackTraceString(any(Throwable.class))).thenThrow(AssertionError.class);
 		Mockito.when(Log.println(anyInt(), anyString(), anyString())).thenThrow(AssertionError.class);
 
 		// Throws NPEs
-		Mockito.when(Log.e(anyString(), isNull(String.class))).thenThrow(NullPointerException.class);
-		Mockito.when(Log.e(anyString(), isNull(String.class), any(Throwable.class))).thenThrow(NullPointerException.class);
-		Mockito.when(Log.w(anyString(), isNull(String.class))).thenThrow(NullPointerException.class);
-		Mockito.when(Log.w(anyString(), isNull(String.class), any(Throwable.class))).thenThrow(NullPointerException.class);
-		Mockito.when(Log.i(anyString(), isNull(String.class))).thenThrow(NullPointerException.class);
-		Mockito.when(Log.i(anyString(), isNull(String.class), any(Throwable.class))).thenThrow(NullPointerException.class);
-		Mockito.when(Log.d(anyString(), isNull(String.class))).thenThrow(NullPointerException.class);
-		Mockito.when(Log.d(anyString(), isNull(String.class), any(Throwable.class))).thenThrow(NullPointerException.class);
-		Mockito.when(Log.v(anyString(), isNull(String.class))).thenThrow(NullPointerException.class);
-		Mockito.when(Log.v(anyString(), isNull(String.class), any(Throwable.class))).thenThrow(NullPointerException.class);
+		Mockito.when(Log.e(anyString(), (String)isNull())).thenThrow(NullPointerException.class);
+		Mockito.when(Log.e(anyString(), (String)isNull(), any(Throwable.class))).thenThrow(NullPointerException.class);
+		Mockito.when(Log.w(anyString(), (String)isNull())).thenThrow(NullPointerException.class);
+		Mockito.when(Log.w(anyString(), (String)isNull(), any(Throwable.class))).thenThrow(NullPointerException.class);
+		Mockito.when(Log.i(anyString(), (String)isNull())).thenThrow(NullPointerException.class);
+		Mockito.when(Log.i(anyString(), (String)isNull(), any(Throwable.class))).thenThrow(NullPointerException.class);
+		Mockito.when(Log.d(anyString(), (String)isNull())).thenThrow(NullPointerException.class);
+		Mockito.when(Log.d(anyString(), (String)isNull(), any(Throwable.class))).thenThrow(NullPointerException.class);
+		Mockito.when(Log.v(anyString(), (String)isNull())).thenThrow(NullPointerException.class);
+		Mockito.when(Log.v(anyString(), (String)isNull(), any(Throwable.class))).thenThrow(NullPointerException.class);
 	}
 
 	/**
