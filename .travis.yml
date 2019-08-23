@@ -1,12 +1,43 @@
 language: java
+
+sudo: false
+
+matrix:
+  include:
+    - name: Java 12
+      os: linux
+      dist: bionic
+      jdk: openjdk12
+
+    - name: Java 11
+      os: linux
+      dist: bionic
+      jdk: openjdk11
+
+    - name: Java 10
+      os: linux
+      dist: bionic
+      jdk: openjdk10
+
+    - name: Java 9
+      os: linux
+      dist: trusty
+      jdk: openjdk9
+
+    - name: Java 8
+      os: linux
+      dist: trusty
+      jdk: openjdk8
+
+    - name: Java 7
+      os: linux
+      dist: precise
+      jdk: openjdk7
+
 install: true
+
 before_install:
   - echo "MAVEN_OPTS='-DforkCount=2 -DthreadCount=2'" >> ~/.mavenrc
-jdk:
-  - oraclejdk11
-  - openjdk10
-  - oraclejdk9
-  - oraclejdk8
 
 notifications:
   email:
