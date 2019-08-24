@@ -14,10 +14,11 @@ SLF4J binding for the Android logger
     * Show the logger name in short, compact, long format, or show caller stack frame:
       `showName.logger-prefix=false|short|compact|long|caller`
     * Show the current thread:
-      `showThread.*=true|false`
+      `showThread.logger-prefix=true|false`
 * With no tag configured, logger names are automatically compacted to fit the Android 23 character tag limit. 
 * The default configuration does not show the logger name or the current thread.
 * The default log level is NATIVE (use the Android log level for the tag).
+    * The Android log level for each tag is cached at the time the logger is constructed.
 
 #### Example Configuration File
 
