@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>uk.uuid.slf4j</groupId>
 	<artifactId>slf4j-android</artifactId>
-	<version>1.7.28-1-SNAPSHOT</version>
+	<version>1.7.29-0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>slf4j-android</name>
 	<description>SLF4J binding for the Android logger</description>
@@ -16,7 +16,7 @@
 	<licenses>
 		<license>
 			<name>The MIT License</name>
-			<url>http://opensource.org/licenses/mit-license.php</url>
+			<url>https://opensource.org/licenses/mit-license.php</url>
 		</license>
 	</licenses>
 	<scm>
@@ -42,7 +42,7 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.28</version>
+			<version>1.7.29</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.android</groupId>
@@ -228,7 +228,7 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<!-- animal-sniffer is unable to process icu4j-2.6.1 because of an invalid class file: http://bugs.icu-project.org/trac/ticket/3209 -->
+				<!-- animal-sniffer is unable to process icu4j-2.6.1 because of an invalid class file: https://unicode-org.atlassian.net/browse/ICU-6505 -->
 				<groupId>com.ibm.icu</groupId>
 				<artifactId>icu4j</artifactId>
 				<version>[2.8,)</version>
