@@ -56,7 +56,7 @@ build.gradle:
 
 ``` groovy
 dependencies {
-   compile 'org.slf4j:slf4j-api:1.7.28'
-   compile 'uk.uuid.slf4j:slf4j-android:1.7.28-0'
+   implementation 'org.slf4j:slf4j-api:1.7.28'
+   implementation 'uk.uuid.slf4j:slf4j-android:1.7.28-0'
 }
 ```
