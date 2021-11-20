@@ -1,0 +1,10 @@
+library(
+	identifier: "uuid@main",
+	retriever: modernSCM([
+		$class: "GitSCMSource",
+		remote: "https://github.com/nomis/jenkins-uuid.git",
+		credentialsId: "09218456-3c5d-493e-be04-d951b1d560c9",
+	])
+) _
+
+mavenPipeline()

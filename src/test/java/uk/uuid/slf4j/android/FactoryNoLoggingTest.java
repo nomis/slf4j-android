@@ -1,5 +1,5 @@
 /**
- * Copyright 2013  Simon Arlott
+ * Copyright 2013,2021  Simon Arlott
  *
  * Permission is hereby granted, free  of charge, to any person obtaining
  * a  copy  of this  software  and  associated  documentation files  (the
@@ -126,7 +126,7 @@ public class FactoryNoLoggingTest {
 		Assert.assertNotSame(log1, log4);
 	}
 
-	@Test
+	@Test(timeout = 10000)
 	@SuppressFBWarnings({ "SIC_INNER_SHOULD_BE_STATIC_ANON" })
 	public void getLoggerFromMultipleThreads() throws Exception {
 		mockLogLevel("j.l.n.h.test3", LogLevel.DEBUG);
