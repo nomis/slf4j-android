@@ -53,11 +53,20 @@ public class StaticMDCBinder {
 
 	/**
 	 * Currently this method always returns an instance of {@link NOPMDCAdapter}.
+	 *
+	 * @return instance of NOPMDCAdapter
+	 * @since 1.7.14
 	 */
 	public MDCAdapter getMDCA() {
 		return new NOPMDCAdapter();
 	}
 
+	/**
+	 * Currently this method always returns the class name of {@link NOPMDCAdapter}.
+	 *
+	 * @return the NOPMDCAdapter class name
+	 * @since 1.7.14
+	 */
 	public String getMDCAdapterClassStr() {
 		return NOPMDCAdapter.class.getName();
 	}
