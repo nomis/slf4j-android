@@ -213,6 +213,7 @@
 				<version>4.4.2.2</version>
 				<configuration>
 					<effort>Max</effort>
+					<fork>false</fork>
 					<includeTests>true</includeTests>
 					<threshold>Low</threshold>
 				</configuration>
