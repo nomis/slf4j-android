@@ -1,5 +1,5 @@
 /**
- * Copyright 2013,2016,2019  Simon Arlott
+ * Copyright 2013,2016,2019,2021  Simon Arlott
  *
  * Permission is hereby granted, free  of charge, to any person obtaining
  * a  copy  of this  software  and  associated  documentation files  (the
@@ -40,7 +40,7 @@ import org.slf4j.Marker;
 import android.util.Log;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(value = LongLoggerTest.class, fullyQualifiedNames = { "android.util.Log", "uk.uuid.slf4j.android.LoggerFactory" })
+@PrepareForTest(value = LongLoggerTest.class, fullyQualifiedNames = { "android.util.Log" })
 public class LongLoggerTest {
 	@Mock
 	private Throwable throwable;

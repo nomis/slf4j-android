@@ -1,5 +1,5 @@
 /**
- * Copyright 2013  Simon Arlott
+ * Copyright 2013,2021  Simon Arlott
  *
  * Permission is hereby granted, free  of charge, to any person obtaining
  * a  copy  of this  software  and  associated  documentation files  (the
@@ -33,7 +33,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import android.util.Log;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(fullyQualifiedNames = { "android.util.Log", "uk.uuid.slf4j.android.LoggerFactory" })
+@PrepareForTest(fullyQualifiedNames = { "android.util.Log" })
 public class AutoTagTest {
 	@BeforeClass
 	public static void mockLog() {
