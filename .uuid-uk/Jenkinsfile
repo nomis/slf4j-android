@@ -1,18 +1,3 @@
-def LIBRARY_BRANCH = "main"
-library(
-	identifier: "uuid@${LIBRARY_BRANCH}",
-	changelog: false,
-	retriever: modernSCM([
-		$class: "GitSCMSource",
-		remote: "https://github.com/nomis/jenkins-uuid.git",
-		credentialsId: "09218456-3c5d-493e-be04-d951b1d560c9",
-		traits: [
-			[$class: "CloneOptionTrait", extension: [shallow: true, depth: 1, noTags: true]],
-			[$class: "RefSpecsSCMSourceTrait", templates: [
-				[value: "+refs/heads/${LIBRARY_BRANCH}:refs/remotes/origin/${LIBRARY_BRANCH}"],
-			]],
-		],
-	])
-) _
+@Library("uuid") _
 
 mavenPipeline()
