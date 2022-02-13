@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>uk.uuid.slf4j</groupId>
 	<artifactId>slf4j-android</artifactId>
-	<version>1.7.35-1-SNAPSHOT</version>
+	<version>1.7.36-0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>slf4j-android</name>
 	<description>SLF4J binding for the Android logger</description>
@@ -42,7 +42,7 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.35</version>
+			<version>1.7.36</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.android</groupId>
