@@ -1,5 +1,5 @@
 /**
- * Copyright 2013  Simon Arlott
+ * Copyright 2013,2022  Simon Arlott
  *
  * Permission is hereby granted, free  of charge, to any person obtaining
  * a  copy  of this  software  and  associated  documentation files  (the
@@ -29,6 +29,9 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.powermock.reflect.Whitebox;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+@SuppressFBWarnings({ "THROWS_METHOD_THROWS_CLAUSE_THROWABLE" })
 public class CyclicBarrierNewInstanceAnswer<T> extends CyclicBarrier implements Answer<T> {
 	private Constructor<T> ctor;
 

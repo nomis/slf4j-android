@@ -1,5 +1,5 @@
 /**
- * Copyright 2013,2021  Simon Arlott
+ * Copyright 2013,2021-2022  Simon Arlott
  *
  * Permission is hereby granted, free  of charge, to any person obtaining
  * a  copy  of this  software  and  associated  documentation files  (the
@@ -45,6 +45,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(value = { LogAdapter.class, FactoryNoLoggingTest.class }, fullyQualifiedNames = { "android.util.Log", "uk.uuid.slf4j.android.LoggerFactory" })
+@SuppressFBWarnings({ "THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION" })
 public class FactoryNoLoggingTest {
 	@BeforeClass
 	public static void mockLogStatic() {
