@@ -1,5 +1,5 @@
 /**
- * Copyright 2013,2018-2019,2021  Simon Arlott
+ * Copyright 2013,2018-2019,2021-2022  Simon Arlott
  *
  * Permission is hereby granted, free  of charge, to any person obtaining
  * a  copy  of this  software  and  associated  documentation files  (the
@@ -47,9 +47,11 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import android.util.Log;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(value = { ConfigTest.class, LoggingConfig.class }, fullyQualifiedNames = { "android.util.Log" })
+@SuppressFBWarnings({ "THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION" })
 public class ConfigTest {
 	@Mock()
 	private Properties ioErrorProperties;
