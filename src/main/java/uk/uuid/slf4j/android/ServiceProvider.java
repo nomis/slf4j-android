@@ -1,6 +1,5 @@
 /**
- * Copyright (c) 2004-2011 QOS.ch
- * All rights reserved.
+ * Copyright 2023  Simon Arlott
  *
  * Permission is hereby granted, free  of charge, to any person obtaining
  * a  copy  of this  software  and  associated  documentation files  (the
@@ -21,53 +20,50 @@
  * OF CONTRACT, TORT OR OTHERWISE,  ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.slf4j.impl;
+package uk.uuid.slf4j.android;
 
+import org.slf4j.ILoggerFactory;
+import org.slf4j.IMarkerFactory;
+import org.slf4j.helpers.BasicMarkerFactory;
 import org.slf4j.helpers.NOPMDCAdapter;
 import org.slf4j.spi.MDCAdapter;
+import org.slf4j.spi.SLF4JServiceProvider;
 
-/**
- * This implementation is bound to {@link NOPMDCAdapter}.
- *
- * @author Ceki G&uuml;lc&uuml;
- * @author Thorsten M&ouml;ler
- */
-public class StaticMDCBinder {
+public final class ServiceProvider implements SLF4JServiceProvider {
 	/**
-	 * The unique instance of this class.
+	 * Declare the version of the SLF4J API this implementation is compiled against.
+	 * The value of this field is modified with each major release.
 	 */
-	public static final StaticMDCBinder SINGLETON = new StaticMDCBinder();
+	public static final String REQUESTED_API_VERSION = "2.0.99".intern(); /* avoid constant folding by the compiler */
 
-	private StaticMDCBinder() {
+	private ILoggerFactory loggerFactory;
+	private IMarkerFactory markerFactory;
+	private MDCAdapter mdcAdapter;
+
+	@Override
+	public ILoggerFactory getLoggerFactory() {
+		return loggerFactory;
 	}
 
-	/**
-	 * Return the singleton of this class.
-	 * 
-	 * @return the StaticMDCBinder singleton
-	 * @since 1.7.14
-	 */
-	public static final StaticMDCBinder getSingleton() {
-		return SINGLETON;
+	@Override
+	public IMarkerFactory getMarkerFactory() {
+		return markerFactory;
 	}
 
-	/**
-	 * Currently this method always returns an instance of {@link NOPMDCAdapter}.
-	 *
-	 * @return instance of NOPMDCAdapter
-	 * @since 1.7.14
-	 */
-	public MDCAdapter getMDCA() {
-		return new NOPMDCAdapter();
+	@Override
+	public MDCAdapter getMDCAdapter() {
+		return mdcAdapter;
 	}
 
-	/**
-	 * Currently this method always returns the class name of {@link NOPMDCAdapter}.
-	 *
-	 * @return the NOPMDCAdapter class name
-	 * @since 1.7.14
-	 */
-	public String getMDCAdapterClassStr() {
-		return NOPMDCAdapter.class.getName();
+	@Override
+	public String getRequestedApiVersion() {
+		return REQUESTED_API_VERSION;
+	}
+
+	@Override
+	public void initialize() {
+		loggerFactory = new LoggerFactory();
+		markerFactory = new BasicMarkerFactory();
+		mdcAdapter = new NOPMDCAdapter();
 	}
 }

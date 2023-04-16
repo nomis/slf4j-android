@@ -15,7 +15,7 @@ SLF4J binding for the Android logger
       `showName.logger-prefix=false|short|compact|long|caller`
     * Show the current thread:
       `showThread.logger-prefix=true|false`
-* With no tag configured, logger names are automatically compacted to fit the Android 23 character tag limit. 
+* With no tag configured, logger names are automatically compacted to fit the Android 23 character tag limit.
 * The default configuration does not show the logger name or the current thread.
 * The default log level is NATIVE (use the Android log level for the tag).
     * The Android log level for each tag is cached at the time the logger is constructed.
@@ -41,13 +41,13 @@ pom.xml:
 <dependency>
    <groupId>org.slf4j</groupId>
    <artifactId>slf4j-api</artifactId>
-   <version>1.7.30</version>
+   <version>2.0.7</version>
 </dependency>
 
 <dependency>
    <groupId>uk.uuid.slf4j</groupId>
    <artifactId>slf4j-android</artifactId>
-   <version>1.7.30-0</version>
+   <version>2.0.7-0</version>
 </dependency>
 ```
 
@@ -56,7 +56,7 @@ build.gradle:
 
 ``` groovy
 dependencies {
-   compile 'org.slf4j:slf4j-api:1.7.30'
-   compile 'uk.uuid.slf4j:slf4j-android:1.7.30-0'
+   compile 'org.slf4j:slf4j-api:2.0.7'
+   compile 'uk.uuid.slf4j:slf4j-android:2.0.7-0'
 }
 ```

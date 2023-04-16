@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+	<!-- The service provider is intended to expose its internal representation to provide the logging service. -->
+	<Match>
+		<Class name="uk.uuid.slf4j.android.ServiceProvider" />
+		<Or>
+			<Method name="getLoggerFactory" />
+			<Method name="getMarkerFactory" />
+			<Method name="getMDCAdapter" />
+		</Or>
+		<Bug pattern="EI_EXPOSE_REP" />
+	</Match>
+</FindBugsFilter>
