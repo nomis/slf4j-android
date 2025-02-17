@@ -157,7 +157,6 @@
 			<plugin>
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs-maven-plugin</artifactId>
-				<version>4.8.6.6</version>
 				<configuration>
 					<excludeFilterFile>spotbugs-security-exclude.xml</excludeFilterFile>
 					<effort>Max</effort>
@@ -225,7 +224,7 @@
 			<plugin>
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs-maven-plugin</artifactId>
-				<version>4.8.6.6</version>
+				<version>4.9.1.0</version>
 				<configuration>
 					<excludeFilterFile>spotbugs-security-exclude.xml</excludeFilterFile>
 					<effort>Max</effort>
@@ -270,6 +269,23 @@
 			</properties>
 		</profile>
 		<profile>
+			<id>release-8</id>
+			<activation>
+				<jdk>(,9)</jdk>
+			</activation>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>com.github.spotbugs</groupId>
+							<artifactId>spotbugs-maven-plugin</artifactId>
+							<version>4.8.6.6</version>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
+		<profile>
 			<id>release-9</id>
 			<activation>
 				<jdk>[9,)</jdk>
@@ -301,6 +317,11 @@
 									</configuration>
 								</execution>
 							</executions>
+						</plugin>
+						<plugin>
+							<groupId>com.github.spotbugs</groupId>
+							<artifactId>spotbugs-maven-plugin</artifactId>
+							<version>4.9.1.0</version>
 						</plugin>
 					</plugins>
 				</pluginManagement>
