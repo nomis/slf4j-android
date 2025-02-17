@@ -1,5 +1,5 @@
 /**
- * Copyright 2023  Simon Arlott
+ * Copyright 2023,2025  Simon Arlott
  *
  * Permission is hereby granted, free  of charge, to any person obtaining
  * a  copy  of this  software  and  associated  documentation files  (the
@@ -29,6 +29,11 @@ import org.slf4j.helpers.NOPMDCAdapter;
 import org.slf4j.spi.MDCAdapter;
 import org.slf4j.spi.SLF4JServiceProvider;
 
+/**
+ * Entry point of the SLF4J binding for the Android logger implementation.
+ *
+ * @author Simon Arlott
+ */
 public final class ServiceProvider implements SLF4JServiceProvider {
 	/**
 	 * Declare the version of the SLF4J API this implementation is compiled against.
