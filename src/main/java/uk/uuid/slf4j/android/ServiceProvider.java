@@ -42,8 +42,13 @@ public final class ServiceProvider implements SLF4JServiceProvider {
 	public static final String REQUESTED_API_VERSION = "2.0.99".intern(); /* avoid constant folding by the compiler */
 
 	private ILoggerFactory loggerFactory;
-	private IMarkerFactory markerFactory;
-	private MDCAdapter mdcAdapter;
+	private final IMarkerFactory markerFactory;
+	private final MDCAdapter mdcAdapter;
+
+	public ServiceProvider() {
+		markerFactory = new BasicMarkerFactory();
+		mdcAdapter = new NOPMDCAdapter();
+	}
 
 	@Override
 	public ILoggerFactory getLoggerFactory() {
@@ -68,7 +73,5 @@ public final class ServiceProvider implements SLF4JServiceProvider {
 	@Override
 	public void initialize() {
 		loggerFactory = new LoggerFactory();
-		markerFactory = new BasicMarkerFactory();
-		mdcAdapter = new NOPMDCAdapter();
 	}
 }
