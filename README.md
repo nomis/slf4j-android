@@ -41,22 +41,22 @@ pom.xml:
 <dependency>
    <groupId>org.slf4j</groupId>
    <artifactId>slf4j-api</artifactId>
-   <version>2.0.7</version>
+   <version>2.0.17</version>
 </dependency>
 
 <dependency>
    <groupId>uk.uuid.slf4j</groupId>
    <artifactId>slf4j-android</artifactId>
-   <version>2.0.7-0</version>
+   <version>2.0.17-0</version>
 </dependency>
 ```
 
-#### Gradle Example
+#### Gradle Usage Example
 build.gradle:
 
 ``` groovy
 dependencies {
-   compile 'org.slf4j:slf4j-api:2.0.7'
-   compile 'uk.uuid.slf4j:slf4j-android:2.0.7-0'
+   implementation 'org.slf4j:slf4j-api:2.0.17'
+   implementation 'uk.uuid.slf4j:slf4j-android:2.0.17-0'
 }
 ```
