@@ -38,6 +38,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<spotbugs.version>4.9.2.0</spotbugs.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -157,6 +158,7 @@
 			<plugin>
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs-maven-plugin</artifactId>
+				<version>${spotbugs.version}</version>
 				<configuration>
 					<excludeFilterFile>spotbugs-security-exclude.xml</excludeFilterFile>
 					<effort>Max</effort>
@@ -224,7 +226,7 @@
 			<plugin>
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs-maven-plugin</artifactId>
-				<version>4.9.1.0</version>
+				<version>${spotbugs.version}</version>
 				<configuration>
 					<excludeFilterFile>spotbugs-security-exclude.xml</excludeFilterFile>
 					<effort>Max</effort>
@@ -259,34 +261,18 @@
 	</dependencyManagement>
 	<profiles>
 		<profile>
-			<id>target-6</id>
+			<id>release-lt-9</id>
 			<activation>
 				<jdk>(,9)</jdk>
 			</activation>
 			<properties>
 				<maven.compiler.source>6</maven.compiler.source>
 				<maven.compiler.target>6</maven.compiler.target>
+				<spotbugs.version>4.8.6.6</spotbugs.version>
 			</properties>
 		</profile>
 		<profile>
-			<id>release-8</id>
-			<activation>
-				<jdk>(,9)</jdk>
-			</activation>
-			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>com.github.spotbugs</groupId>
-							<artifactId>spotbugs-maven-plugin</artifactId>
-							<version>4.8.6.6</version>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
-		</profile>
-		<profile>
-			<id>release-9</id>
+			<id>release-ge-9</id>
 			<activation>
 				<jdk>[9,)</jdk>
 			</activation>
@@ -317,11 +303,6 @@
 									</configuration>
 								</execution>
 							</executions>
-						</plugin>
-						<plugin>
-							<groupId>com.github.spotbugs</groupId>
-							<artifactId>spotbugs-maven-plugin</artifactId>
-							<version>4.9.1.0</version>
 						</plugin>
 					</plugins>
 				</pluginManagement>

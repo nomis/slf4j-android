@@ -31,7 +31,6 @@ import org.powermock.reflect.Whitebox;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-@SuppressFBWarnings({ "THROWS_METHOD_THROWS_CLAUSE_THROWABLE" })
 public class CyclicBarrierNewInstanceAnswer<T> extends CyclicBarrier implements Answer<T> {
 	private Constructor<T> ctor;
 

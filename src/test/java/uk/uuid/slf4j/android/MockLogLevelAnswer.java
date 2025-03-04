@@ -29,7 +29,6 @@ import org.mockito.stubbing.Answer;
 import android.util.Log;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-@SuppressFBWarnings({ "THROWS_METHOD_THROWS_CLAUSE_THROWABLE" })
 public class MockLogLevelAnswer implements Answer<Boolean> {
 	private LogLevel level;
 

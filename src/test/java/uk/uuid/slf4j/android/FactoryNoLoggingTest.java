@@ -45,7 +45,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(value = { LogAdapter.class, FactoryNoLoggingTest.class }, fullyQualifiedNames = { "android.util.Log", "uk.uuid.slf4j.android.LoggerFactory" })
-@SuppressFBWarnings({ "THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION" })
 public class FactoryNoLoggingTest {
 	@BeforeClass
 	public static void mockLogStatic() {

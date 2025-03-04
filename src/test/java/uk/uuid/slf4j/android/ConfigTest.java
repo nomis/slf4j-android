@@ -51,7 +51,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(value = { ConfigTest.class, LoggingConfig.class }, fullyQualifiedNames = { "android.util.Log" })
-@SuppressFBWarnings({ "THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION" })
 public class ConfigTest {
 	@Mock()
 	private Properties ioErrorProperties;
