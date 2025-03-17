@@ -38,7 +38,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<spotbugs.version>4.9.2.0</spotbugs.version>
+		<spotbugs.version>4.9.3.0</spotbugs.version>
 	</properties>
 	<dependencies>
 		<dependency>
