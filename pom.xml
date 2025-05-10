@@ -8,12 +8,6 @@
 	<name>slf4j-android</name>
 	<description>SLF4J binding for the Android logger</description>
 	<url>https://github.com/nomis/slf4j-android/wiki</url>
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>9</version>
-		<relativePath />
-	</parent>
 	<licenses>
 		<license>
 			<name>The MIT License</name>
@@ -135,6 +129,14 @@
 				</executions>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>3.1.1</version>
+				<configuration>
+					<releaseProfiles>sonatype-central</releaseProfiles>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>animal-sniffer-maven-plugin</artifactId>
 				<version>1.24</version>
@@ -186,6 +188,15 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.central</groupId>
+				<artifactId>central-publishing-maven-plugin</artifactId>
+				<version>0.7.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<publishingServerId>sonatype-central</publishingServerId>
+				</configuration>
 			</plugin>
 		</plugins>
 		<pluginManagement>
@@ -332,6 +343,27 @@
 						</plugin>
 					</plugins>
 				</pluginManagement>
+			</build>
+		</profile>
+		<profile>
+			<id>sonatype-central</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>3.2.7</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
 			</build>
 		</profile>
 	</profiles>
