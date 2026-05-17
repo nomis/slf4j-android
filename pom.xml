@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>uk.uuid.slf4j</groupId>
 	<artifactId>slf4j-android</artifactId>
-	<version>2.0.18-0-SNAPSHOT</version>
+	<version>2.0.18-0</version>
 	<packaging>jar</packaging>
 	<name>slf4j-android</name>
 	<description>SLF4J binding for the Android logger</description>
@@ -18,7 +18,8 @@
 		<connection>scm:git:https://github.com/nomis/slf4j-android.git</connection>
 		<url>https://github.com/nomis/slf4j-android/</url>
 		<developerConnection>scm:git:ssh://git@github.com/nomis/slf4j-android.git</developerConnection>
-	</scm>
+	  <tag>slf4j-android-2.0.18-0</tag>
+  </scm>
 	<organization>
 		<name>Simon Arlott</name>
 	</organization>
