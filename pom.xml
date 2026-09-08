@@ -242,7 +242,6 @@
 				<configuration>
 					<excludeFilterFile>spotbugs-security-exclude.xml</excludeFilterFile>
 					<effort>Max</effort>
-					<fork>false</fork>
 					<includeTests>true</includeTests>
 					<threshold>Low</threshold>
 				</configuration>
