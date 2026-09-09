@@ -118,6 +118,9 @@
 				<version>3.12.0</version>
 				<configuration>
 					<source>${maven.compiler.source}</source>
+					<links>
+						<link>https://developer.android.com/reference</link>
+					</links>
 				</configuration>
 				<executions>
 					<execution>
