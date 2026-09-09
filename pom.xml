@@ -121,6 +121,7 @@
 					<links>
 						<link>https://developer.android.com/reference</link>
 					</links>
+					<legacyMode>true</legacyMode><!-- javadoc can't cope with the Java 1.5 Android dependency not having modules ("error: package android.util does not exist") -->
 				</configuration>
 				<executions>
 					<execution>

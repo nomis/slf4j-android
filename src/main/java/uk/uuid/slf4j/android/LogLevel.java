@@ -1,5 +1,5 @@
 /**
- * Copyright 2013  Simon Arlott
+ * Copyright 2013,2026  Simon Arlott
  *
  * Permission is hereby granted, free  of charge, to any person obtaining
  * a  copy  of this  software  and  associated  documentation files  (the
@@ -21,8 +21,6 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package uk.uuid.slf4j.android;
-
-import android.util.Log;
 
 /**
  * Configuration of Android logging level.
@@ -48,6 +46,6 @@ public enum LogLevel {
 	/** Log messages at TRACE level and above. */
 	VERBOSE,
 	
-	/** Use {@link Log#isLoggable(String, int)} to determine the log level. */
+	/** Use {@link android.util.Log#isLoggable(String, int)} to determine the log level. */
 	NATIVE;
 }
