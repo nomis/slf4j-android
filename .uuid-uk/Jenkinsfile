@@ -1,3 +1,5 @@
 @Library("uuid") _
 
-mavenPipeline()
+mavenPipeline{
+	release = true
+}
